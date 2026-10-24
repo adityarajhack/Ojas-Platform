@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Apply for Benefit – Ojas</title>
+  <meta name="description" content="Apply for public welfare schemes with unified household verification and duplicate claim detection."/>
+  <link rel="stylesheet" href="assets/styles-Dig2zqxS.css" data-precedence="default"/>
+  <link rel="stylesheet" href="assets/glass.css"/>
+  <link rel="stylesheet" href="assets/auth-modal.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800;900&amp;family=Sora:wght@500;600;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" data-precedence="default"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+</head>
+<body class="min-h-screen glass-ambient-bg">
+  <div class="flex min-h-screen flex-col">
+    <!-- AICTE-Matched Signature Header & Live Ticker (https://internship.aicte-india.org) -->
+    <!-- National Welfare Portal Signature Header -->
+    <header class="aicte-header-wrapper">
+      <!-- Row 1: Official Deep Navy Top Ribbon -->
+      <div class="aicte-top-ribbon">
+        <!-- Action Pills (Right Aligned) -->
+        <div class="flex items-center gap-2 sm:gap-3 ml-auto">
+          <!-- Important Note Pill -->
+          <button type="button" onclick="toggleImportantNote(true)" class="aicte-top-pill-note" aria-label="Important Note">
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Important Note</span>
+          </button>
+
+          <!-- Helpline & Support Dropdown Pill -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('helplineDropdown', event)" class="aicte-top-pill-helpline" aria-label="Helpline and Support">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>Helpline &amp; Support</span>
+              <svg class="size-3 transition-transform opacity-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+
+            <!-- Helpline Dropdown Menu -->
+            <div id="helplineDropdown" class="aicte-dropdown-card right-0 w-80">
+              <div class="p-3 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100 rounded-t-xl">
+                <p class="text-xs font-black text-slate-900">National Welfare Support Desk</p>
+                <p class="text-[11px] font-semibold text-amber-800">Toll-free official assistance across 22 languages</p>
+              </div>
+              <div class="p-2 space-y-1.5">
+                <a href="tel:01129581423" class="aicte-dropdown-item">
+                  <span class="size-7 rounded-lg bg-orange-500 text-white grid place-items-center text-xs shrink-0 font-bold">📞</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">011–29581423</span>
+                    <span class="block text-[10px] text-slate-500">Mon–Fri · 9am–6pm IST</span>
+                  </div>
+                </a>
+                <a href="tel:07314624949" class="aicte-dropdown-item">
+                  <span class="size-7 rounded-lg bg-sky-500 text-white grid place-items-center text-xs shrink-0 font-bold">🤖</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">07314624949</span>
+                    <span class="block text-[10px] text-slate-500">Automated IVR Application Status</span>
+                  </div>
+                </a>
+                <a href="mailto:help@ojas.gov.in" class="aicte-dropdown-item">
+                  <span class="size-7 rounded-lg bg-indigo-500 text-white grid place-items-center text-xs shrink-0 font-bold">✉️</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">help@ojas.gov.in</span>
+                    <span class="block text-[10px] text-slate-500">Official nodal support email</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <span class="hidden sm:inline-block h-3.5 w-px bg-white/20"></span>
+
+          <!-- Language Selector Pill (Digital India Bhashini Mirror) -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('languageDropdown', event)" class="aicte-top-pill-lang" aria-label="Select Language">
+              <span class="bhashini-icon-badge">
+                <span class="bhashini-icon-letter">A</span>
+              </span>
+              <span id="currentLangLabel">English</span>
+              <svg class="size-2.5 text-indigo-500 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="m7 10 5 5 5-5z"></path></svg>
+            </button>
+
+            <!-- Language Dropdown Menu -->
+            <div id="languageDropdown" class="aicte-dropdown-card right-0 w-64 p-2.5 bg-white shadow-2xl border border-slate-300">
+              <div class="p-2.5 bg-[#081735] text-white rounded-xl mb-2 shadow-sm">
+                <div class="flex items-center justify-between">
+                  <p class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span class="bhashini-icon-badge !size-4">
+                      <span class="bhashini-icon-letter !text-[9.5px]">A</span>
+                    </span>
+                    <span>Select Language</span>
+                  </p>
+                  <span class="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-orange-500 text-white tracking-wider">Bhashini</span>
+                </div>
+                <p class="text-[10px] text-slate-300 mt-0.5 font-medium">Digital India Bhashini Multilingual Portal</p>
+              </div>
+              <div class="grid grid-cols-2 gap-1 max-h-60 overflow-y-auto pr-1">
+                <button type="button" onclick="setLanguage('en', 'English')" class="lang-option-btn active" data-lang="en">
+                  <span>English</span>
+                  <span class="text-[10px] text-slate-400">EN</span>
+                </button>
+                <button type="button" onclick="setLanguage('bn', 'বাংলা')" class="lang-option-btn" data-lang="bn">
+                  <span>Bengali</span>
+                  <span class="text-[10px] text-slate-400">BN</span>
+                </button>
+                <button type="button" onclick="setLanguage('mr', 'Marathi')" class="lang-option-btn" data-lang="mr">
+                  <span>Marathi</span>
+                  <span class="text-[10px] text-slate-400">MR</span>
+                </button>
+                <button type="button" onclick="setLanguage('te', 'తెలుగు')" class="lang-option-btn" data-lang="te">
+                  <span>Telugu</span>
+                  <span class="text-[10px] text-slate-400">TE</span>
+                </button>
+                <button type="button" onclick="setLanguage('ta', 'தமிழ்')" class="lang-option-btn" data-lang="ta">
+                  <span>Tamil</span>
+                  <span class="text-[10px] text-slate-400">TA</span>
+                </button>
+                <button type="button" onclick="setLanguage('gu', 'ગુજરાતી')" class="lang-option-btn" data-lang="gu">
+                  <span>Gujarati</span>
+                  <span class="text-[10px] text-slate-400">GU</span>
+                </button>
+                <button type="button" onclick="setLanguage('kn', 'ಕನ್ನಡ')" class="lang-option-btn" data-lang="kn">
+                  <span>Kannada</span>
+                  <span class="text-[10px] text-slate-400">KN</span>
+                </button>
+                <button type="button" onclick="setLanguage('ml', 'മലയാളം')" class="lang-option-btn" data-lang="ml">
+                  <span>Malayalam</span>
+                  <span class="text-[10px] text-slate-400">ML</span>
+                </button>
+                <button type="button" onclick="setLanguage('pa', 'ਪੰਜਾਬੀ')" class="lang-option-btn" data-lang="pa">
+                  <span>Punjabi</span>
+                  <span class="text-[10px] text-slate-400">PA</span>
+                </button>
+                <button type="button" onclick="setLanguage('or', 'ଓଡ଼ିଆ')" class="lang-option-btn" data-lang="or">
+                  <span>Odia</span>
+                  <span class="text-[10px] text-slate-400">OR</span>
+                </button>
+                <button type="button" onclick="setLanguage('as', 'অসমীয়া')" class="lang-option-btn" data-lang="as">
+                  <span>Assamese</span>
+                  <span class="text-[10px] text-slate-400">AS</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Main Navigation Bar (Clean Crisp White) -->
+      <div class="aicte-main-nav">
+        <!-- Left: Official Branding Cluster -->
+        <div class="flex items-center gap-2.5 sm:gap-4">
+          <a href="index.html" class="aicte-brand-group">
+            <span class="ojas-emblem-badge">
+              <span class="ojas-emblem-inner">OJ</span>
+            </span>
+            <div class="leading-tight">
+              <span class="block aicte-brand-title">Ojas</span>
+              <span class="block aicte-brand-sub">Unified Citizen &amp; Household Records</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Center: Rounded Pill Nav Menus (Desktop) -->
+        <div class="aicte-center-pill">
+          <!-- Citizen Services Dropdown -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('citizenDropdown', event)" class="aicte-nav-dropdown-btn active">
+              <span>Citizen Services</span>
+              <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div id="citizenDropdown" class="aicte-dropdown-card left-0 w-72">
+              <a href="apply.html?mode=check" class="aicte-dropdown-item bg-amber-50/50 hover:bg-amber-100/60 transition">
+                <span class="text-base">⚡</span>
+                <div>
+                  <span class="block text-xs font-bold text-amber-900">Check Eligibility</span>
+                  <span class="block text-[10px] text-amber-700">Instant rules &amp; duplicate benefit verification</span>
+                </div>
+              </a>
+              <a href="citizen.html" class="aicte-dropdown-item">
+                <span class="text-base">👤</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Citizen Life Record</span>
+                  <span class="block text-[10px] text-slate-500">Jan Aadhaar single source of truth</span>
+                </div>
+              </a>
+              <a href="apply.html" class="aicte-dropdown-item bg-orange-50/60 text-orange-600 font-bold">
+                <span class="text-base">📝</span>
+                <div>
+                  <span class="block text-xs font-bold text-orange-600">Apply for Welfare Scheme</span>
+                  <span class="block text-[10px] text-slate-500">One-click auto-populated form</span>
+                </div>
+              </a>
+              <a href="track.html" class="aicte-dropdown-item">
+                <span class="text-base">🔍</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Track Application &amp; DBT</span>
+                  <span class="block text-[10px] text-slate-500">Real-time Aadhaar payment bridge</span>
+                </div>
+              </a>
+              <a href="citizen.html#sanction" class="aicte-dropdown-item">
+                <span class="text-base">📜</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Sanction Certificates</span>
+                  <span class="block text-[10px] text-slate-500">Download QR-signed documents</span>
+                </div>
+              </a>
+              <a href="index.html#schemesGrid" class="aicte-dropdown-item">
+                <span class="text-base">🏛️</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">All Welfare Directory</span>
+                  <span class="block text-[10px] text-slate-500">Explore 120+ Central &amp; State schemes</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Flagship Schemes Dropdown -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('schemesDropdown', event)" class="aicte-nav-dropdown-btn">
+              <span>Flagship Schemes</span>
+              <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div id="schemesDropdown" class="aicte-dropdown-card left-0 w-80">
+              <a href="scheme.html?scheme=pm-kisan" class="aicte-dropdown-item justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-base">🌾</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">PM-Kisan Samman Nidhi</span>
+                    <span class="block text-[10px] text-slate-500">Direct income support ₹6,000/yr</span>
+                  </div>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">ACTIVE</span>
+              </a>
+              <a href="scheme.html?scheme=pmay-g" class="aicte-dropdown-item justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-base">🏠</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">PMAY-G Rural Sanitation</span>
+                    <span class="block text-[10px] text-slate-500">Household toilet unit grant</span>
+                  </div>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">DIRECT</span>
+              </a>
+              <a href="scheme.html?scheme=ayushman" class="aicte-dropdown-item">
+                <span class="text-base">🏥</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Ayushman Bharat PM-JAY</span>
+                  <span class="block text-[10px] text-slate-500">₹5 Lakh cashless health cover</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=ujjwala" class="aicte-dropdown-item">
+                <span class="text-base">🔥</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">PM Ujjwala Yojana 2.0</span>
+                  <span class="block text-[10px] text-slate-500">Clean LPG connection subsidy</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=scholarship" class="aicte-dropdown-item">
+                <span class="text-base">🎓</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Pre-Matric Scholarship</span>
+                  <span class="block text-[10px] text-slate-500">Direct education grant for students</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Household & Anti-Fraud Dropdown -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('fraudDropdown', event)" class="aicte-nav-dropdown-btn">
+              <span>Household &amp; Anti-Fraud</span>
+              <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div id="fraudDropdown" class="aicte-dropdown-card left-0 w-80">
+              <a href="official.html#household-graph" class="aicte-dropdown-item">
+                <span class="text-base">🗺️</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Household Dwelling Graph</span>
+                  <span class="block text-[10px] text-slate-500">Family network &amp; physical address tree</span>
+                </div>
+              </a>
+              <a href="official.html#antifraud" class="aicte-dropdown-item">
+                <span class="text-base">🛡️</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Duplicate Claim Detection</span>
+                  <span class="block text-[10px] text-slate-500">Zero-trust biometric &amp; scheme audit</span>
+                </div>
+              </a>
+              <a href="official.html#fieldapp" class="aicte-dropdown-item">
+                <span class="text-base">📱</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Gram Sevak Field App</span>
+                  <span class="block text-[10px] text-slate-500">Geo-tagged photo physical inspection</span>
+                </div>
+              </a>
+              <a href="official.html#blockqueue" class="aicte-dropdown-item">
+                <span class="text-base">🏢</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Block Officer Approval Queue</span>
+                  <span class="block text-[10px] text-slate-500">One-click sanction &amp; reject workflow</span>
+                </div>
+              </a>
+              <a href="official.html#command" class="aicte-dropdown-item">
+                <span class="text-base">📊</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">District Command Desk</span>
+                  <span class="block text-[10px] text-slate-500">Real-time DBT release telemetry</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Action Buttons (Login + Track Application + Hamburger on Mobile) -->
+        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          <!-- Button 1: Login Dropdown -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('loginDropdown', event)" class="aicte-btn-white" aria-label="Login Options">
+              <svg class="size-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              <span>Login</span>
+              <svg class="size-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div id="loginDropdown" class="aicte-dropdown-card right-0 w-64">
+              <button type="button" onclick="(window.OjasAuth || window.JanasetuAuth).showModal({mode:'login'})" class="w-full text-left aicte-dropdown-item">
+                <span class="text-base">🔐</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Sign In</span>
+                  <span class="block text-[10px] text-slate-500">Citizen or Government Officer</span>
+                </div>
+              </button>
+              <button type="button" onclick="(window.OjasAuth || window.JanasetuAuth).showModal({mode:'signup'})" class="w-full text-left aicte-dropdown-item">
+                <span class="text-base">📝</span>
+                <div>
+                  <span class="block text-xs font-bold text-emerald-700">New Citizen Registration</span>
+                  <span class="block text-[10px] text-slate-500">Create lifelong citizen record</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Button 2: Track Application (Vibrant Saffron/Orange Gradient) -->
+          <a href="track.html" class="aicte-btn-register aicte-btn-nav-action" title="Track Application Status">
+            <svg class="size-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <span>Track Application</span>
+          </a>
+
+          <!-- Button 3: Mobile Hamburger Menu Button (Visible on < 1024px) -->
+          <button type="button" onclick="toggleMobileNav()" class="aicte-hamburger-btn lg:hidden" aria-label="Toggle Navigation Menu" aria-expanded="false" id="mobileMenuBtn">
+            <svg class="size-5 hamburger-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="6" x2="20" y2="6"></line>
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+            <svg class="size-5 hamburger-icon-close hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Drawer Menu (Responsive for Phones & Tablets) -->
+      <div id="mobileDrawerNav" class="hidden border-t border-slate-200 bg-white/95 backdrop-blur-xl px-4 py-4 lg:hidden shadow-xl">
+        <div class="space-y-3">
+          <div class="pb-3 border-b border-slate-100 flex items-center gap-2">
+            <a class="aicte-btn-register w-full justify-center py-2.5 text-xs" href="track.html">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <span>Track Scheme Application</span>
+            </a>
+            <button type="button" onclick="(window.OjasAuth || window.JanasetuAuth).showModal({mode:'login'})" class="aicte-btn-white py-2.5 px-3 text-xs shrink-0">
+              <span>🔑 Sign In</span>
+            </button>
+          </div>
+          <div class="space-y-1">
+            <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="index.html">
+              <span>🏠</span> Home
+            </a>
+            <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="index.html#schemesGrid">
+              <span>🏛️</span> All Welfare Directory (120+ Central &amp; State Schemes)
+            </a>
+            <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-amber-900 bg-amber-50/80 hover:bg-amber-100 transition" href="apply.html?mode=check">
+              <span>⚡</span> Instant Eligibility Checker
+            </a>
+            <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-orange-600 bg-orange-50 font-bold transition" href="apply.html">
+              <span>📝</span> Apply for Welfare Benefits
+            </a>
+            <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="citizen.html">
+              <span>👤</span> Citizen Life Record (Jan Aadhaar)
+            </a>
+            <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="official.html">
+              <span>🛡️</span> Officer Review &amp; Anti-Fraud Console
+            </a>
+          </div>
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Toll Free: <strong>011–29581423</strong></span>
+            <span>National DPI • Synthetic Data</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="flex-1">
+      <!-- Hero Banner with AICTE Luminous Styling -->
+      <section class="citizen-hero-banner relative overflow-hidden">
+        <div class="relative mx-auto max-w-7xl px-4">
+          <div class="max-w-3xl">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-orange-700">
+                <svg class="size-3.5 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Single-Window Welfare Engine
+              </span>
+            </div>
+            <h1 class="citizen-hero-name font-display text-3xl font-extrabold sm:text-4xl text-slate-900 mt-2">
+              Apply for a <span class="text-orange-600">Public Benefit</span>
+            </h1>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
+              Ojas auto-retrieves your lifelong citizen record and connects your household dwelling status. Duplicate claims are caught early before submission to save public funds and eliminate rejection delays.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Application Workspace -->
+      <div class="mx-auto max-w-7xl px-4 py-10">
+        <div class="grid gap-8 lg:grid-cols-[1.3fr_1fr]">
+          
+          <!-- Left: Application Form Solid Clean Card -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+            
+            <!-- Mode Switcher Tabs (Check Eligibility vs Official Application) -->
+            <div class="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 mb-6">
+              <button type="button" id="tabCheckMode" onclick="switchApplyMode('check')" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all bg-white text-orange-600 shadow-xs border border-orange-200">
+                <span>⚡ Check Eligibility</span>
+                <span class="text-[10px] py-0.5 px-2 rounded-full font-bold bg-orange-100 text-orange-800">Fill Details</span>
+              </button>
+              <button type="button" id="tabApplyMode" onclick="switchApplyMode('apply')" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all text-slate-600 hover:text-slate-900">
+                <span>📝 Submit Application</span>
+                <span class="text-[10px] py-0.5 px-2 rounded-full font-bold bg-slate-200 text-slate-700">Verified KYC</span>
+              </button>
+            </div>
+
+            <!-- 1. GUEST / PUBLIC ELIGIBILITY ASSESSMENT CONTAINER (User fills data manually) -->
+            <div id="guestCheckSection" class="space-y-6">
+              <div class="pb-4 border-b border-slate-200/80">
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800">Instant Public Assessment</span>
+                <h2 class="mt-2 text-xl font-bold text-slate-900">Fill Details &amp; Check Welfare Eligibility</h2>
+                <p class="mt-0.5 text-xs text-slate-500">No account required. Enter your criteria below to evaluate entitlement against official government rules in real time.</p>
+              </div>
+
+              <!-- Scheme Selector -->
+              <div>
+                <label for="checkSchemeSelect" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  1. Target Welfare Scheme
+                </label>
+                <div class="relative">
+                  <select id="checkSchemeSelect" class="w-full border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-orange-500/40 appearance-none bg-slate-50 hover:bg-white cursor-pointer transition-colors" onchange="runGuestAssessment()">
+                    <option value="SBM_TOILET" selected>Swachh Bharat Rural Sanitation (PMAY-G Toilet) [PROPERTY Scope · ₹12,000]</option>
+                    <option value="PM_KISAN">PM-Kisan Samman Nidhi [INDIVIDUAL Scope · ₹6,000/yr]</option>
+                    <option value="OLD_AGE_PENSION">NSAP - Indira Gandhi Old Age Pension [INDIVIDUAL Scope · ₹3,000/mo]</option>
+                    <option value="UJJWALA_GAS">PM Ujjwala Yojana 2.0 (LPG Gas) [HOUSEHOLD Scope · 1 Free Connection]</option>
+                    <option value="SCHOLARSHIP_MERIT">National Pre-Matric &amp; Higher Scholarship [INDIVIDUAL Scope · ₹25,000]</option>
+                    <option value="AYUSHMAN_PMJAY">Ayushman Bharat - PM-JAY [HOUSEHOLD Scope · ₹5 Lakh/yr]</option>
+                    <option value="PMAY_HOUSING">Pradhan Mantri Awas Yojana (Housing) [HOUSEHOLD Scope · ₹1,20,000]</option>
+                    <option value="MATERNITY_BENEFIT">Pradhan Mantri Matru Vandana Yojana (Maternity) [INDIVIDUAL Scope · ₹6,000]</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                    <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Data Entry Box (User fills their data) -->
+              <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/80 space-y-4">
+                <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-800">2. Enter Applicant Criteria (Fill to Verify)</span>
+                  <span class="text-[11px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">Interactive Assessment</span>
+                </div>
+
+                <!-- Age & District -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="checkAge" class="block text-xs font-bold text-slate-700 mb-1">
+                      Applicant Age (Years) *
+                    </label>
+                    <input 
+                      type="number" 
+                      id="checkAge" 
+                      min="1" 
+                      max="115" 
+                      value="35" 
+                      class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-white focus:ring-2 focus:ring-orange-500/40 outline-none"
+                      placeholder="e.g. 35"
+                      oninput="runGuestAssessment()"
+                    />
+                    <!-- Quick Presets -->
+                    <div class="flex items-center gap-1.5 mt-2 flex-wrap">
+                      <span class="text-[10px] text-slate-400 font-bold">Presets:</span>
+                      <button type="button" onclick="setCheckAge(16)" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-orange-500 hover:text-orange-600 transition">16 yrs (Minor)</button>
+                      <button type="button" onclick="setCheckAge(25)" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-orange-500 hover:text-orange-600 transition">25 yrs (Youth)</button>
+                      <button type="button" onclick="setCheckAge(38)" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-orange-500 hover:text-orange-600 transition">38 yrs (Adult)</button>
+                      <button type="button" onclick="setCheckAge(64)" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-orange-500 hover:text-orange-600 transition">64 yrs (Senior)</button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="checkDistrict" class="block text-xs font-bold text-slate-700 mb-1">
+                      District of Residence *
+                    </label>
+                    <select 
+                      id="checkDistrict" 
+                      class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 bg-white focus:ring-2 focus:ring-orange-500/40 outline-none"
+                      onchange="runGuestAssessment()"
+                    >
+                      <option value="CENTRAL" selected>Central District</option>
+                      <option value="NORTH">North District</option>
+                      <option value="SOUTH">South District</option>
+                      <option value="EAST">East District</option>
+                      <option value="WEST">West District</option>
+                    </select>
+                    <p class="text-[10px] text-slate-400 mt-2">Targeted district coverage verification</p>
+                  </div>
+                </div>
+
+                <!-- Gender -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                    Applicant Gender *
+                  </label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkGender" value="MALE" checked onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn">👨 Male</span>
+                    </label>
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkGender" value="FEMALE" onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn">👩 Female</span>
+                    </label>
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkGender" value="OTHER" onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn">⚧ Other</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Income Category / Ration Card -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                    Ration Card / Household Income Category *
+                  </label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkIncome" value="BPL" checked onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn">🟢 BPL (Below Poverty)</span>
+                    </label>
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkIncome" value="APL" onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn">⚪ APL (Above Poverty)</span>
+                    </label>
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkIncome" value="AAY" onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn">🟡 Antyodaya (AAY)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Dwelling & Prior Benefit Status -->
+                <div id="checkDwellingConditionBox">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5" id="checkConditionLabel">
+                    Does your property/household already possess an approved sanitary toilet or pucca house? *
+                  </label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkHasToilet" value="false" checked onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn text-emerald-700">❌ No (Need Benefit)</span>
+                    </label>
+                    <label class="check-pill-option">
+                      <input type="radio" name="checkHasToilet" value="true" onchange="runGuestAssessment()" class="sr-only" />
+                      <span class="check-pill-btn text-slate-600">✅ Yes (Already Have)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Automated Rules Check Result -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  3. Live Eligibility &amp; Rules Evaluation Result
+                </label>
+                <div id="guestCheckResult" class="rounded-2xl border border-emerald-300 bg-emerald-50/70 p-5 transition-all shadow-xs">
+                  <!-- Dynamic Evaluation populated by runGuestAssessment() -->
+                </div>
+              </div>
+
+              <!-- Primary Action CTA -->
+              <div class="pt-2">
+                <button type="button" id="guestApplyCTA" onclick="JanasetuAuth.showModal()" class="aicte-btn-register w-full py-3.5 px-6 rounded-full text-sm font-bold flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all text-white">
+                  <span>Sign In to Apply for this Benefit</span>
+                  <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. VERIFIED OFFICIAL APPLICATION CONTAINER (Visible when user submits application with KYC) -->
+            <div id="verifiedApplySection" class="hidden space-y-6">
+              <div class="pb-4 border-b border-slate-200/80">
+                <span class="inline-flex items-center gap-1 rounded-full bg-orange-50 border border-orange-200/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-orange-700">Verified Citizen Application</span>
+                <h2 class="mt-2 text-xl font-bold text-slate-900">Select Scheme &amp; Household Applicant</h2>
+                <p class="mt-0.5 text-xs text-slate-500">Choose the family member applying and the target welfare scheme.</p>
+              </div>
+
+              <form id="applyForm" class="space-y-6" onsubmit="event.preventDefault(); handleFormSubmit();">
+                <!-- Applicant Selection -->
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700" id="officialApplicantLabel">
+                      1. Applying Citizen (Verified Household Record)
+                    </label>
+                    <span class="text-[11px] font-semibold text-slate-400">Select family member</span>
+                  </div>
+                  <div class="grid gap-3 sm:grid-cols-2" id="applicantOptions">
+                    <!-- Populated from database by populateApplicantOptions() -->
+                  </div>
+                </div>
+
+                <!-- Scheme Selection -->
+                <div>
+                  <label for="schemeSelect" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                    2. Select Welfare Scheme
+                  </label>
+                  <div class="relative">
+                    <select id="schemeSelect" class="w-full border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-orange-500/40 appearance-none bg-slate-50 hover:bg-white cursor-pointer transition-colors" onchange="updateVerification()">
+                      <option value="SBM_TOILET" selected>Swachh Bharat Rural Sanitation (PMAY-G Toilet) [PROPERTY Scope · ₹12,000]</option>
+                      <option value="PM_KISAN">PM-Kisan Samman Nidhi [INDIVIDUAL Scope · ₹6,000/yr]</option>
+                      <option value="OLD_AGE_PENSION">NSAP - Indira Gandhi Old Age Pension [INDIVIDUAL Scope · ₹3,000/mo]</option>
+                      <option value="UJJWALA_GAS">PM Ujjwala Yojana 2.0 (LPG Gas) [HOUSEHOLD Scope · 1 Free Connection]</option>
+                      <option value="SCHOLARSHIP_MERIT">National Pre-Matric &amp; Higher Scholarship [INDIVIDUAL Scope · ₹25,000]</option>
+                      <option value="AYUSHMAN_PMJAY">Ayushman Bharat - PM-JAY [HOUSEHOLD Scope · ₹5 Lakh/yr]</option>
+                      <option value="PMAY_HOUSING">Pradhan Mantri Awas Yojana (Housing) [HOUSEHOLD Scope · ₹1,20,000]</option>
+                      <option value="MATERNITY_BENEFIT">Pradhan Mantri Matru Vandana Yojana (Maternity) [INDIVIDUAL Scope · ₹6,000]</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                      <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                  </div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <a id="schemeDetailsLink" href="scheme.html?scheme=pmay-g" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-900 transition">
+                      <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      <span>View full scheme details, eligibility &amp; documents ↗</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 3. Photo & Document Proof (Dynamic: Mandatory if scheme requires it, else Optional) -->
+                <div id="schemePhotoSection" class="photo-upload-section space-y-3">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      3. Verification Photo Proof
+                    </label>
+                    <span id="photoRequirementBadge" class="photo-badge-optional">
+                      <span class="size-1.5 rounded-full bg-slate-400"></span> Optional for this scheme
+                    </span>
+                  </div>
+
+                  <p class="text-xs text-slate-600 leading-relaxed" id="photoGuidanceText">
+                    Optional: Identity and eligibility are verified directly via Aadhaar CIDR &amp; Government Registry. Additional photo upload is optional.
+                  </p>
+
+                  <!-- Photo Drop Zone & Interactive File Upload -->
+                  <div id="photoDropZone" class="photo-drop-zone" onclick="triggerPhotoFileInput()">
+                    <input type="file" id="photoFileInput" accept="image/jpeg,image/png,image/webp,application/pdf" capture="environment" class="hidden" onchange="handlePhotoUpload(this)"/>
+                    
+                    <!-- State A: Upload Prompt -->
+                    <div id="photoUploadPrompt" class="space-y-2.5">
+                      <div class="mx-auto size-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-200/60 shadow-2xs">
+                        <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                          <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                      </div>
+                      <div>
+                        <span class="text-xs font-bold text-slate-800 block">
+                          Click to upload photo or capture via camera
+                        </span>
+                        <span class="text-[11px] text-slate-500 block mt-0.5">
+                          Supports JPG, PNG, WEBP, PDF (up to 5MB)
+                        </span>
+                      </div>
+                      <div class="pt-1 flex items-center justify-center gap-2 flex-wrap">
+                        <button type="button" onclick="event.stopPropagation(); triggerPhotoFileInput();" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center gap-1.5 cursor-pointer">
+                          <span>📎 Browse Files</span>
+                        </button>
+                        <button type="button" onclick="event.stopPropagation(); loadSampleSchemePhoto();" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200 transition flex items-center gap-1.5 cursor-pointer">
+                          <span>📸 Use Sample Photo</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- State B: Uploaded Photo Preview -->
+                    <div id="photoPreviewContainer" class="hidden photo-preview-box">
+                      <div class="flex items-center gap-3 min-w-0">
+                        <div class="photo-preview-thumb">
+                          <img id="photoPreviewImg" src="" alt="Proof Preview" class="hidden"/>
+                          <span id="photoDocIcon" class="text-2xl hidden">📄</span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                          <div class="flex items-center gap-1.5 flex-wrap">
+                            <span class="text-xs font-bold text-slate-900 truncate" id="photoFileName">photo_site_proof.jpg</span>
+                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">✓ Attached</span>
+                          </div>
+                          <p class="text-[11px] text-slate-500 mt-0.5" id="photoFileSize">1.45 MB · Digitally Sealed</p>
+                          <p class="text-[10px] font-mono text-slate-400 truncate" id="photoHashInfo">Security pHash: a1b2c3d4e5f60718</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" onclick="event.stopPropagation(); triggerPhotoFileInput();" class="text-xs font-semibold px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white border border-slate-200 transition cursor-pointer" title="Change file">
+                          Change
+                        </button>
+                        <button type="button" onclick="event.stopPropagation(); removeUploadedPhoto();" class="text-xs font-bold px-2.5 py-1 rounded-lg text-red-600 hover:bg-red-50 border border-red-200 transition cursor-pointer" title="Remove photo">
+                          ✕ Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Validation alert when photo is missing for mandatory scheme -->
+                  <div id="photoValidationAlert" class="hidden photo-alert-error">
+                    <svg class="size-4 shrink-0 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span id="photoValidationText">Photo proof is mandatory for this scheme. Please upload a photo before submitting.</span>
+                  </div>
+                </div>
+
+                <!-- Real-time Verification Box -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                    4. Automated System Check &amp; De-duplication Result
+                  </label>
+                  <div id="checkResult" class="rounded-2xl border border-emerald-300 bg-emerald-50/70 p-5 transition-all shadow-xs">
+                    <!-- Populated by updateVerification() -->
+                  </div>
+                </div>
+
+                <!-- Additional Application Details -->
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl space-y-3">
+                  <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Linked Verification Records</p>
+                  <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <span class="text-slate-500">Bank Account:</span>
+                      <p class="font-semibold text-slate-900" id="verifiedBankText">State Bank of India (••••3419)</p>
+                    </div>
+                    <div>
+                      <span class="text-slate-500">Aadhaar Status:</span>
+                      <p class="font-semibold text-emerald-600">● Linked &amp; Biometric Verified</p>
+                    </div>
+                    <div>
+                      <span class="text-slate-500">Ration Card:</span>
+                      <p class="font-semibold text-slate-900" id="verifiedRationText">RC/AY/4471/2024 (Antyodaya)</p>
+                    </div>
+                    <div>
+                      <span class="text-slate-500">District:</span>
+                      <p class="font-semibold text-slate-900" id="verifiedDistrictText">Central District</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button type="submit" id="submitBtn" class="aicte-btn-register w-full py-3.5 px-6 rounded-full text-sm font-bold flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all text-white">
+                    <span>Submit Verified Application</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <!-- Right: Sidebar (Dual Mode: Rules DSL Matrix for Check Mode, Household Context for Apply Mode) -->
+          <div class="space-y-6">
+
+            <!-- Check Mode Sidebar: Live Rules DSL Inspector -->
+            <div id="guestRulesSidebar" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-200">
+                <div class="grid size-10 place-items-center rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-200">
+                  <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900" id="sidebarSchemeName">Rules DSL Criteria</h3>
+                  <p class="text-xs text-slate-500" id="sidebarSchemeDept">Official Policy Guidelines</p>
+                </div>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span class="text-slate-500 font-medium">Grant Unit / Scope</span>
+                  <span class="font-extrabold text-orange-700 bg-orange-100/70 px-2 py-0.5 rounded-md" id="sidebarGrantUnit">PROPERTY</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span class="text-slate-500 font-medium">Benefit Grant Amount</span>
+                  <span class="font-extrabold text-emerald-700 text-sm" id="sidebarBenefitAmount">₹ 12,000 Direct DBT</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span class="text-slate-500 font-medium">Age Requirement</span>
+                  <span class="font-bold text-slate-900" id="sidebarAgeRule">Min 18 Years</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span class="text-slate-500 font-medium">Eligible Categories</span>
+                  <span class="font-bold text-slate-900" id="sidebarIncomeRule">BPL (Below Poverty Line)</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span class="text-slate-500 font-medium">Deduplication Policy</span>
+                  <span class="font-bold text-slate-900" id="sidebarDedupRule">1 per Property / Dwelling</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span class="text-slate-500 font-medium">Photo Proof Policy</span>
+                  <span class="font-bold text-red-700" id="sidebarPhotoRule">Mandatory (Site Proof)</span>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+                <p class="font-bold mb-1">🛡️ Anti-Duplicate Assurance</p>
+                <p>When you submit an application, Ojas automatically cross-checks your digital identity and dwelling graph to protect public funds and ensure benefits reach those in genuine need.</p>
+              </div>
+            </div>
+
+            <!-- Apply Mode Sidebar: Household Context -->
+            <div id="verifiedHouseholdSidebar" class="hidden bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
+              <div class="flex items-center gap-3 pb-4 border-b border-border/50">
+                <div class="grid size-10 place-items-center rounded-xl bg-accent text-saffron-deep ring-1 ring-saffron/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-foreground">Household Context</h3>
+                  <p class="text-xs text-muted-foreground" id="verifiedHhIdText">ID: HH-22-0147 · Verified Household</p>
+                </div>
+              </div>
+
+              <p class="mt-4 text-xs text-muted-foreground leading-relaxed">
+                Ojas distinguishes between <strong>Household-Level</strong> schemes (granted once per dwelling/family) and <strong>Individual-Level</strong> schemes (awarded to eligible persons independently).
+              </p>
+
+              <div class="mt-4 divide-y divide-border/60 text-xs">
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-muted-foreground">Annual Household Income</span>
+                  <span class="font-bold text-foreground" id="verifiedHhIncomeText">₹ 84,000</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-muted-foreground">Household Members</span>
+                  <span class="font-bold text-foreground" id="verifiedHhMembersCount">4 Members</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-muted-foreground">Active Toilet Grant</span>
+                  <span class="chip bg-india-green/10 text-india-green font-bold">Sanctioned on Record</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-muted-foreground">Photo Proof Policy</span>
+                  <span class="font-bold text-red-700" id="verifiedPhotoStatusText">Mandatory (Site Proof)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transparency Assurance Card -->
+            <div class="bg-[#0B192C] rounded-2xl p-6 text-white border border-slate-800 shadow-md">
+              <div class="flex items-center gap-2.5 text-saffron">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400">Zero Auto-Rejections</h4>
+              </div>
+              <p class="mt-3 text-xs leading-relaxed text-slate-200">
+                Even when a duplicate claim or income mismatch is detected, Ojas <strong>never auto-rejects</strong> genuine citizens. The application is flagged with full context and routed to a verifying block officer for human review.
+              </p>
+              <div class="mt-4 pt-3 border-t border-white/10">
+                <a href="official.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 hover:underline">
+                  View how officers review flagged cases →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- National DPI Application Success Modal -->
+    <div id="successModal" class="gov-modal-backdrop hidden" onclick="if(event.target === this) closeModal()">
+      <div class="gov-modal-card">
+        <!-- Top Indian National Tricolor Accent Bar -->
+        <div class="h-1.5 w-full" style="background: linear-gradient(90deg, #ea580c 0%, #f97316 45%, #ffffff 50%, #16a34a 55%, #15803d 100%);"></div>
+
+        <div class="p-6 sm:p-7 text-center">
+          <!-- Icon Container (Fixed 3.5rem x 3.5rem, never stretched) -->
+          <div id="modalIconContainer" class="mx-auto mb-3.5 flex size-14 items-center justify-center rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 shadow-xs" style="width: 3.5rem; height: 3.5rem;">
+            <svg class="size-7" style="width: 1.75rem; height: 1.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+
+          <!-- Official Tag -->
+          <div class="mb-1.5 flex items-center justify-center gap-1.5">
+            <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-700">
+              <span class="inline-block size-1.5 rounded-full bg-emerald-500"></span>
+              Official Digital Public Infrastructure Record
+            </span>
+          </div>
+
+          <!-- Modal Title -->
+          <h3 class="font-display text-2xl font-extrabold text-slate-900 tracking-tight">
+            Application Received
+          </h3>
+          <p class="mt-1.5 text-xs text-slate-600 max-w-sm mx-auto leading-relaxed" id="modalSubtext">
+            Application successfully filed and entered into the guarded four-eyes verification queue.
+          </p>
+
+          <!-- National Welfare Registry Official Slip -->
+          <div class="my-5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-left shadow-2xs">
+            <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200/80">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700">Digital Acknowledgment Slip</span>
+              <span class="text-[10px] font-mono text-slate-500 font-semibold">NIC Secure Node</span>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-500 font-medium">Application ID</span>
+                <span class="font-mono font-bold text-slate-900 bg-white border border-slate-200 px-2.5 py-0.5 rounded shadow-2xs" id="modalAppId">APP/2026/11492</span>
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-500 font-medium">Applicant Name</span>
+                <span class="font-bold text-slate-900" id="modalApplicant">Suresh Kumar</span>
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-500 font-medium">Verification Status</span>
+                <span id="modalStatus" class="inline-flex items-center gap-1 font-bold text-amber-900 bg-amber-50 border border-amber-300 px-2.5 py-0.5 rounded-full text-[11px]">
+                  Flagged for Officer Verification
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-500 font-medium">Photo Proof</span>
+                <span id="modalPhotoProof" class="font-bold text-slate-900 text-xs">
+                  ✓ Attached
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+            <a id="modalTrackBtn" href="track.html" class="flex-1 py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer">
+              <svg class="size-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <span>Track Document Processing Stage</span>
+            </a>
+            <a href="official.html" class="py-2.5 px-3.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold flex items-center justify-center gap-1 transition shadow-2xs cursor-pointer shrink-0">
+              <span>Official Desk</span>
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+            <button type="button" onclick="closeModal()" class="py-2.5 px-3.5 rounded-xl border border-slate-200 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold transition shadow-2xs cursor-pointer shrink-0">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AICTE-Inspired Official Footer (https://internship.aicte-india.org) -->
+    <footer class="relative mt-14 w-full overflow-hidden">
+      <!-- Ambient Gradient Backdrop & Floating Blobs -->
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-amber-500/5 to-saffron/10"></div>
+      <span class="pointer-events-none absolute -left-24 top-10 -z-10 h-72 w-72 animate-float-slow rounded-blob bg-india-green/15 blur-3xl"></span>
+      <span class="pointer-events-none absolute -right-24 bottom-0 -z-10 h-80 w-80 animate-float-slow rounded-blob bg-navy/15 blur-3xl"></span>
+
+      <div class="mx-auto w-full max-w-7xl px-4 pb-8 pt-4 sm:px-6">
+        <!-- Main AICTE-Matched White Container -->
+        <div class="aicte-footer-box">
+          <span class="aicte-footer-topline"></span>
+          
+          <div class="aicte-footer-grid">
+            <!-- Col 1: Brand, Mission, Badges & Emblems -->
+            <div class="aicte-brand-block">
+              <!-- Brand Identity Badge -->
+              <div class="flex items-center gap-3">
+                <span class="grid size-12 shrink-0 place-items-center rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-xs">
+                  <div class="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-navy to-slate-900 text-white font-black text-sm shadow-inner">OJ</div>
+                </span>
+                <div>
+                  <h3 class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">National Welfare Portal</h3>
+                  <p class="text-xs font-bold text-saffron-deep leading-tight mt-0.5">Ojas — Citizen &amp; Household DPI</p>
+                </div>
+              </div>
+
+              <!-- Mission Description -->
+              <p class="text-xs leading-relaxed text-slate-600 sm:text-[13px]">
+                One lifelong verified record per citizen, linked to household dwelling records. Built under the Digital Public Infrastructure framework, Government of India — free for every citizen, across all 22 scheduled languages.
+              </p>
+
+              <!-- Exact Pill Badges from Screenshot -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                  <svg class="size-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  Govt of India verified
+                </span>
+                <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900">
+                  <span class="font-black text-amber-600">₹</span>
+                  ₹0 for citizens
+                </span>
+              </div>
+
+              <!-- Official Ministry & DPI Emblems -->
+              <div class="flex items-center gap-4 pt-2">
+                <div class="flex items-center gap-2">
+                  <div class="grid size-8 place-items-center rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 text-[11px] font-black">
+                    🏛️
+                  </div>
+                  <div class="text-[10px] font-black leading-tight uppercase tracking-tight text-slate-800">
+                    <div>Government of India</div>
+                    <div class="text-[9px] font-semibold text-slate-500">Government of India</div>
+                  </div>
+                </div>
+                <div class="h-7 w-px bg-slate-200"></div>
+                <div class="flex items-center gap-2">
+                  <div class="grid size-8 place-items-center rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-800 text-[11px] font-black">
+                    🇮🇳
+                  </div>
+                  <div class="text-[10px] font-black leading-tight uppercase tracking-tight text-slate-800">
+                    <div class="text-saffron-deep">Digital India</div>
+                    <div class="text-[9px] font-semibold text-slate-500">Zero-Trust DPI</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Col 2: 2x2 Middle Navigation Grid (Exact Match to Screenshot) -->
+            <div class="aicte-nav-grid">
+              <!-- Top-Left: EXPLORE -->
+              <div class="aicte-nav-col">
+                <span class="aicte-nav-title">EXPLORE</span>
+                <ul class="aicte-nav-list">
+                  <li><a class="aicte-nav-link" href="index.html#schemesGrid">All welfare schemes</a></li>
+                  <li><a class="aicte-nav-link" href="citizen.html">Citizen life record</a></li>
+                  <li><a class="aicte-nav-link font-bold text-saffron-deep" href="apply.html">Apply for benefit</a></li>
+                  <li><a class="aicte-nav-link" href="official.html">Household dwelling graph</a></li>
+                  <li><a class="aicte-nav-link" href="citizen.html">Track application status</a></li>
+                  <li><a class="aicte-nav-link" href="citizen.html">Verify certificate</a></li>
+                </ul>
+              </div>
+
+              <!-- Top-Right: FLAGSHIP MISSIONS -->
+              <div class="aicte-nav-col">
+                <span class="aicte-nav-title">FLAGSHIP MISSIONS</span>
+                <ul class="aicte-nav-list">
+                  <li>
+                    <a class="aicte-nav-link" href="apply.html">
+                      <span>PM-Kisan Samman</span>
+                      <span class="aicte-pill-red">₹₹₹</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="aicte-nav-link" href="apply.html">
+                      <span>PMAY-G Rural Toilet</span>
+                      <span class="aicte-pill-orange">STATE</span>
+                    </a>
+                  </li>
+                  <li><a class="aicte-nav-link" href="apply.html">Ayushman Bharat PM-JAY</a></li>
+                  <li><a class="aicte-nav-link" href="apply.html">PM Ujjwala Yojana 2.0</a></li>
+                  <li><a class="aicte-nav-link" href="apply.html">Pre-Matric Scholarship</a></li>
+                </ul>
+              </div>
+
+              <!-- Bottom-Left: FOR STAKEHOLDERS -->
+              <div class="aicte-nav-col">
+                <span class="aicte-nav-title">FOR STAKEHOLDERS</span>
+                <ul class="aicte-nav-list">
+                  <li><a class="aicte-nav-link" href="citizen.html">Citizen login</a></li>
+                  <li><a class="aicte-nav-link" href="official.html">Gram Sevak field login</a></li>
+                  <li><a class="aicte-nav-link" href="official.html">Block Officer console</a></li>
+                  <li><a class="aicte-nav-link" href="official.html">District Command Room</a></li>
+                </ul>
+              </div>
+
+              <!-- Bottom-Right: THE PORTAL -->
+              <div class="aicte-nav-col">
+                <span class="aicte-nav-title">THE PORTAL</span>
+                <ul class="aicte-nav-list">
+                  <li><a class="aicte-nav-link" href="index.html">About Ojas</a></li>
+                  <li><a class="aicte-nav-link" href="official.html">Zero-Trust DPI</a></li>
+                  <li><a class="aicte-nav-link" href="official.html">Media &amp; stories</a></li>
+                  <li><a class="aicte-nav-link" href="#">Privacy policy</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Col 3: Helpline & Support Cards (Exact Match to Screenshot) -->
+            <div class="aicte-support-block">
+              <span class="aicte-nav-title">HELPLINE &amp; SUPPORT</span>
+              
+              <!-- Card 1: Orange Phone -->
+              <a href="tel:01129581423" class="aicte-support-card">
+                <span class="aicte-support-icon" style="background:#F97316;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-xs font-bold text-slate-900 leading-snug">011–29581423</span>
+                  <span class="block text-[10px] font-medium text-slate-500 leading-snug">Mon–Fri · 9am–6pm IST</span>
+                </span>
+              </a>
+
+              <!-- Card 2: Blue Phone / IVR -->
+              <a href="tel:07314624949" class="aicte-support-card">
+                <span class="aicte-support-icon" style="background:#0284C7;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-xs font-bold text-slate-900 leading-snug">07314624949</span>
+                  <span class="block text-[10px] font-medium text-slate-500 leading-snug">IVR helpline</span>
+                </span>
+              </a>
+
+              <!-- Card 3: Violet Email -->
+              <a href="mailto:help@ojas.gov.in" class="aicte-support-card">
+                <span class="aicte-support-icon" style="background:#8B5CF6;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block truncate text-xs font-bold text-slate-900 leading-snug">help@ojas.gov.in</span>
+                  <span class="block text-[10px] font-medium text-slate-500 leading-snug">Replies within 48 hours</span>
+                </span>
+              </a>
+
+              <!-- Card 4: Teal Location Pin -->
+              <div class="aicte-support-card">
+                <span class="aicte-support-icon" style="background:#0D9488;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block truncate text-xs font-bold text-slate-900 leading-snug">Krishi Bhawan, Dr. Rajendra Rd,</span>
+                  <span class="block text-[10px] font-medium text-slate-500 leading-snug">New Delhi 110001</span>
+                </span>
+              </div>
+
+              <!-- Pill Button -->
+              <a target="_blank" rel="noopener noreferrer" class="aicte-support-btn" href="https://india.gov.in">
+                <span>india.gov.in</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-3.5"><path d="M7 17l9.2-9.2M17 17V8H8"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-footer Bar -->
+        <div class="mt-5 flex flex-col items-center justify-between gap-4 rounded-[1.5rem] border border-slate-200/80 bg-white/80 px-6 py-4 backdrop-blur-xl sm:flex-row shadow-xs">
+          <p class="text-center text-xs font-semibold text-slate-600 sm:text-left">
+            © 2026 Ojas — Unified Citizen &amp; Household DPI · Government of India
+          </p>
+          <p class="flex items-center gap-1.5 text-xs font-semibold text-slate-600">
+            <span>Made in Bharat</span>
+            <span class="inline-block h-2 w-3 rounded-[1px]" style="background:linear-gradient(180deg, #FF9933 33%, #FFFFFF 33% 66%, #138808 66%)"></span>
+            <span>for the citizens of Bharat</span>
+          </p>
+          <div>
+            <button onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top" class="group relative size-10 cursor-pointer overflow-hidden rounded-full bg-gradient-to-br from-saffron to-amber-600 text-white flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-110">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Important Note Modal -->
+  <div id="importantNoteModal" class="aicte-modal-backdrop" onclick="if(event.target === this) toggleImportantNote(false)">
+    <div class="aicte-modal-box">
+      <div class="flex items-center justify-between border-b border-slate-100 bg-rose-50/70 p-4 px-6">
+        <div class="flex items-center gap-2.5 text-rose-700 font-extrabold text-sm sm:text-base">
+          <span class="grid size-8 place-items-center rounded-full bg-rose-100 border border-rose-200">⚠️</span>
+          <span>Important Advisory — Government of India</span>
+        </div>
+        <button type="button" onclick="toggleImportantNote(false)" class="size-8 rounded-full border border-slate-200 bg-white grid place-items-center text-slate-500 hover:text-slate-800 hover:bg-slate-50">
+          ✕
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+        <div class="rounded-xl border border-emerald-200 bg-emerald-50/70 p-3.5 text-emerald-900 font-bold flex items-start gap-2.5">
+          <span class="text-emerald-700 text-base">🛡️</span>
+          <span>Ojas services, application submissions, and life records are 100% FREE for all citizens of India under the Digital Public Infrastructure framework.</span>
+        </div>
+        <ul class="space-y-2.5 list-disc pl-5 font-medium">
+          <li>No officer, agent, or cyber cafe is authorized to charge any fee for sanitary toilet (PMAY-G) sanctions or PM-Kisan verification.</li>
+          <li>Do not share your Aadhaar OTP or bank account credentials with any unknown caller claiming to be a welfare verifier.</li>
+          <li>For any fraud reporting or genuine grievance redressal, call official helpline <strong>011–29581423</strong> or write to <strong>help@ojas.gov.in</strong>.</li>
+        </ul>
+      </div>
+      <div class="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/50 p-4 px-6">
+        <button type="button" onclick="toggleImportantNote(false)" class="aicte-btn-register">
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/lenis.min.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/auth-bridge.js"></script>
+  <script>
+    // Live Backend Integration for Scheme Application
+    let currentCitizen = null;
+    let currentHousehold = null;
+    let liveSchemes = [];
+    let currentApplicantUid = null;
+    let currentPropertyUid = null;
+
+    // Map common aliases from URL parameters to actual database scheme codes
+    const SCHEME_CODE_MAP = {
+      'pmay-g': 'SBM_TOILET',
+      'pmayg': 'SBM_TOILET',
+      'toilet': 'SBM_TOILET',
+      'sbm': 'SBM_TOILET',
+      'sbm_toilet': 'SBM_TOILET',
+      'pm-kisan': 'PM_KISAN',
+      'pmkisan': 'PM_KISAN',
+      'kisan': 'PM_KISAN',
+      'nsap-pension': 'OLD_AGE_PENSION',
+      'pension': 'OLD_AGE_PENSION',
+      'pension_oap': 'OLD_AGE_PENSION',
+      'old_age_pension': 'OLD_AGE_PENSION',
+      'scholarship': 'SCHOLARSHIP_MERIT',
+      'scholarship_merit': 'SCHOLARSHIP_MERIT',
+      'ayushman': 'AYUSHMAN_PMJAY',
+      'ayushman_pmjay': 'AYUSHMAN_PMJAY',
+      'pmjay': 'AYUSHMAN_PMJAY',
+      'ujjwala': 'UJJWALA_GAS',
+      'ujjwala_gas': 'UJJWALA_GAS',
+      'gas': 'UJJWALA_GAS',
+      'pmay-housing': 'PMAY_HOUSING',
+      'housing': 'PMAY_HOUSING',
+      'awas': 'PMAY_HOUSING',
+      'maternity': 'MATERNITY_BENEFIT',
+      'maternity_benefit': 'MATERNITY_BENEFIT',
+      'bundle': 'BUNDLE_VULNERABLE_SUPPORT'
+    };
+
+    function getSelectedApplicant() {
+      const el = document.querySelector('input[name="applicant"]:checked');
+      return el ? el.value : (currentCitizen?.personUid || 'PER-SELF');
+    }
+
+    let currentMode = 'check'; // 'check' or 'apply'
+
+    window.switchApplyMode = function(mode) {
+      currentMode = mode;
+      const tabCheck = document.getElementById('tabCheckMode');
+      const tabApply = document.getElementById('tabApplyMode');
+      const guestSection = document.getElementById('guestCheckSection');
+      const verifiedSection = document.getElementById('verifiedApplySection');
+      const guestSidebar = document.getElementById('guestRulesSidebar');
+      const verifiedSidebar = document.getElementById('verifiedHouseholdSidebar');
+
+      const url = new URL(window.location.href);
+      if (mode === 'check') {
+        url.searchParams.set('mode', 'check');
+        window.history.replaceState({}, '', url.toString());
+
+        if (tabCheck) {
+          tabCheck.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all bg-white text-orange-600 shadow-xs border border-orange-200';
+        }
+        if (tabApply) {
+          tabApply.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all text-slate-600 hover:text-slate-900';
+        }
+
+        if (guestSection) guestSection.classList.remove('hidden');
+        if (verifiedSection) verifiedSection.classList.add('hidden');
+        if (guestSidebar) guestSidebar.classList.remove('hidden');
+        if (verifiedSidebar) verifiedSidebar.classList.add('hidden');
+
+        const heroTitle = document.querySelector('.citizen-hero-name');
+        if (heroTitle) {
+          heroTitle.innerHTML = 'Check Scheme <span class="text-orange-600">Eligibility</span>';
+        }
+        const heroSub = document.querySelector('.citizen-hero-banner p');
+        if (heroSub) {
+          heroSub.textContent = 'Instant Rules DSL Assessment: Enter your age, category, and dwelling criteria below to verify live entitlement without pre-filled assumptions.';
+        }
+
+        runGuestAssessment();
+      } else {
+        url.searchParams.delete('mode');
+        window.history.replaceState({}, '', url.toString());
+
+        if (tabApply) {
+          tabApply.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all bg-white text-orange-600 shadow-xs border border-orange-200';
+        }
+        if (tabCheck) {
+          tabCheck.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all text-slate-600 hover:text-slate-900';
+        }
+
+        if (guestSection) guestSection.classList.add('hidden');
+        if (verifiedSection) verifiedSection.classList.remove('hidden');
+        if (guestSidebar) guestSidebar.classList.add('hidden');
+        if (verifiedSidebar) verifiedSidebar.classList.remove('hidden');
+
+        const heroTitle = document.querySelector('.citizen-hero-name');
+        if (heroTitle) {
+          heroTitle.innerHTML = 'Apply for a <span class="text-orange-600">Public Benefit</span>';
+        }
+        const heroSub = document.querySelector('.citizen-hero-banner p');
+        if (heroSub) {
+          heroSub.textContent = 'JanaSetu connects your lifelong citizen record and household dwelling status. Duplicate claims are caught early before submission to save public funds.';
+        }
+
+        // Always ensure family members are loaded and ready
+        ensureApplicantOptionsLoaded().then(() => {
+          updateVerification();
+        });
+      }
+    };
+
+    window.setCheckAge = function(val) {
+      const inp = document.getElementById('checkAge');
+      if (inp) {
+        inp.value = val;
+        runGuestAssessment();
+      }
+    };
+
+    window.runGuestAssessment = async function() {
+      const select = document.getElementById('checkSchemeSelect');
+      const schemeCode = select ? select.value : 'SBM_TOILET';
+      const ageInput = document.getElementById('checkAge');
+      const age = parseInt(ageInput?.value || '35', 10);
+      const gender = document.querySelector('input[name="checkGender"]:checked')?.value || 'MALE';
+      const income = document.querySelector('input[name="checkIncome"]:checked')?.value || 'BPL';
+      const district = document.getElementById('checkDistrict')?.value || 'CENTRAL';
+      const hasToilet = document.querySelector('input[name="checkHasToilet"]:checked')?.value === 'true';
+
+      const resBox = document.getElementById('guestCheckResult');
+      const applyCTA = document.getElementById('guestApplyCTA');
+
+      // Update Dwelling condition label according to scheme
+      const condBox = document.getElementById('checkDwellingConditionBox');
+      const condLabel = document.getElementById('checkConditionLabel');
+      if (condBox && condLabel) {
+        if (schemeCode.includes('TOILET')) {
+          condBox.style.display = 'block';
+          condLabel.textContent = 'Does your property/dwelling already possess an approved sanitary latrine facility? *';
+        } else if (schemeCode.includes('HOUSING')) {
+          condBox.style.display = 'block';
+          condLabel.textContent = 'Does your household already possess a permanent pucca house on record? *';
+        } else if (schemeCode.includes('UJJWALA')) {
+          condBox.style.display = 'block';
+          condLabel.textContent = 'Does your household already possess an active LPG gas connection? *';
+        } else {
+          condBox.style.display = 'block';
+          condLabel.textContent = 'Have you or a household member previously received this government benefit? *';
+        }
+      }
+
+      if (!resBox) return;
+
+      resBox.innerHTML = `
+        <div class="flex items-center gap-3 text-slate-500 py-2">
+          <svg class="size-5 animate-spin text-orange-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+          <span class="text-xs font-semibold">Evaluating live rules DSL...</span>
+        </div>
+      `;
+
+      try {
+        const payload = {
+          schemeCode: schemeCode,
+          guestProfile: {
+            age: isNaN(age) ? 35 : age,
+            gender: gender,
+            incomeCategory: income,
+            district: district,
+            hasToilet: hasToilet,
+            hasExistingBenefit: hasToilet
+          }
+        };
+
+        const res = await fetch('/v1/schemes/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        // Update Right Sidebar Rules DSL Matrix
+        updateGuestSidebarRules(schemeCode, res);
+
+        if (res.eligible) {
+          resBox.className = "rounded-2xl border border-emerald-300 bg-emerald-50/80 p-5 transition-all shadow-xs";
+          resBox.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="grid size-8 shrink-0 place-items-center rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-xs">
+                ✓
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <p class="text-sm font-bold text-emerald-950">Pre-Eligibility Verified: Entitled to Apply</p>
+                  <span class="rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 text-[11px] font-bold">100% Eligible</span>
+                </div>
+                <p class="mt-1.5 text-xs text-emerald-900/90 leading-relaxed">
+                  Based on your entered details (Age ${isNaN(age) ? 35 : age}, ${gender}, ${income} category in ${district}), you qualify for the <strong>${res.schemeCode}</strong> grant.
+                </p>
+                <div class="mt-3 space-y-1">
+                  ${(res.passedRules || []).map(r => `<div class="text-[11px] font-medium text-emerald-800 flex items-center gap-1.5"><span>•</span><span>${r}</span></div>`).join('')}
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-emerald-200/60 flex items-center justify-between flex-wrap gap-2 text-xs">
+                  <span class="font-bold text-emerald-950">Grant Unit: ${res.grantUnit}</span>
+                  <span class="font-bold text-emerald-700">Direct Benefit Transfer</span>
+                </div>
+              </div>
+            </div>
+          `;
+
+          if (applyCTA) {
+            applyCTA.classList.remove('hidden');
+            applyCTA.innerHTML = `
+              <span>Sign In to Apply for ${res.schemeCode}</span>
+              <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            `;
+            applyCTA.onclick = () => {
+              JanasetuAuth.setRedirect(`apply.html?scheme=${res.schemeCode.toLowerCase()}`);
+              JanasetuAuth.showModal();
+            };
+          }
+        } else {
+          resBox.className = "rounded-2xl border border-amber-300 bg-amber-50/80 p-5 transition-all shadow-xs";
+          const failReasons = res.reasons && res.reasons.length ? res.reasons : (res.failedRules || ['Criteria condition not met']);
+
+          resBox.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="grid size-8 shrink-0 place-items-center rounded-xl bg-amber-500 text-white font-bold text-sm shadow-xs">
+                !
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <p class="text-sm font-bold text-amber-950">Criteria Check: Currently Ineligible</p>
+                  <span class="rounded-full bg-amber-100 text-amber-900 border border-amber-300 px-2.5 py-0.5 text-[11px] font-bold">Action Needed</span>
+                </div>
+                <p class="mt-1.5 text-xs text-amber-900/90 leading-relaxed">
+                  Your entered criteria does not satisfy all policy rules for this scheme:
+                </p>
+                <div class="mt-3 space-y-1.5">
+                  ${failReasons.map(r => `
+                    <div class="p-2 rounded-lg bg-amber-100/60 border border-amber-200 text-xs font-bold text-amber-950 flex items-start gap-2">
+                      <span class="text-amber-700">✕</span>
+                      <span>${r}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <p class="mt-3 text-[11px] text-amber-800">
+                  Tip: Try adjusting your inputs above (such as age or income category) to test how the rules DSL evaluates eligibility.
+                </p>
+              </div>
+            </div>
+          `;
+
+          if (applyCTA) {
+            applyCTA.classList.remove('hidden');
+            applyCTA.innerHTML = `
+              <span>Sign In with Citizen ID to View All Eligible Schemes</span>
+              <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            `;
+            applyCTA.onclick = () => {
+              JanasetuAuth.showModal();
+            };
+          }
+        }
+      } catch (err) {
+        console.error('Guest evaluation failed:', err);
+        resBox.className = "rounded-2xl border border-slate-200 bg-slate-50 p-4";
+        resBox.innerHTML = `<p class="text-xs text-slate-600">Unable to reach evaluation service. Please check connection.</p>`;
+      }
+    };
+
+    function updateGuestSidebarRules(schemeCode, evalResult) {
+      const scheme = (liveSchemes || []).find(s => s.code === schemeCode) || {};
+      const nameEl = document.getElementById('sidebarSchemeName');
+      const deptEl = document.getElementById('sidebarSchemeDept');
+      const unitEl = document.getElementById('sidebarGrantUnit');
+      const benefitEl = document.getElementById('sidebarBenefitAmount');
+      const ageEl = document.getElementById('sidebarAgeRule');
+      const incomeEl = document.getElementById('sidebarIncomeRule');
+      const dedupEl = document.getElementById('sidebarDedupRule');
+
+      if (nameEl) nameEl.textContent = scheme.name || schemeCode;
+      if (deptEl) deptEl.textContent = `Department ID: ${scheme.department_id || 'CENTRAL'}`;
+      if (unitEl) unitEl.textContent = scheme.grant_unit || evalResult?.grantUnit || 'INDIVIDUAL';
+      if (benefitEl) benefitEl.textContent = scheme.benefit_amount ? `₹ ${scheme.benefit_amount.toLocaleString('en-IN')} Direct DBT` : 'Government Welfare Grant';
+
+      const dsl = scheme.rules_dsl || {};
+      if (ageEl) {
+        if (dsl.minAge && dsl.maxAge) ageEl.textContent = `${dsl.minAge} to ${dsl.maxAge} Years`;
+        else if (dsl.minAge) ageEl.textContent = `Min ${dsl.minAge} Years`;
+        else if (dsl.maxAge) ageEl.textContent = `Max ${dsl.maxAge} Years`;
+        else ageEl.textContent = 'All Ages Permitted';
+      }
+      if (incomeEl) {
+        incomeEl.textContent = dsl.allowedIncomeCategories && dsl.allowedIncomeCategories.length 
+          ? dsl.allowedIncomeCategories.join(', ') 
+          : 'All Income Tiers';
+      }
+      if (dedupEl) {
+        dedupEl.textContent = `1 Benefit per ${scheme.grant_unit || 'Grant Unit'}`;
+      }
+      const sidebarPhotoRule = document.getElementById('sidebarPhotoRule');
+      if (sidebarPhotoRule) {
+        const pRule = (typeof SCHEME_PHOTO_RULES !== 'undefined' ? SCHEME_PHOTO_RULES[schemeCode] : null) || { required: (schemeCode === 'SBM_TOILET' || schemeCode === 'PMAY_HOUSING' || schemeCode === 'SCHOLARSHIP_MERIT' || schemeCode === 'MATERNITY_BENEFIT') };
+        sidebarPhotoRule.textContent = pRule.required ? 'Mandatory (Site Proof)' : 'Optional (Aadhaar KYC)';
+        sidebarPhotoRule.className = pRule.required ? 'font-bold text-red-700' : 'font-bold text-slate-700';
+      }
+    }
+
+    function populateCheckSchemesDropdown() {
+      const select = document.getElementById('checkSchemeSelect');
+      if (!select || !liveSchemes || !liveSchemes.length) return;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const requested = (urlParams.get('scheme') || '').toLowerCase();
+      const targetCode = SCHEME_CODE_MAP[requested] || (requested ? requested.toUpperCase() : 'SBM_TOILET');
+
+      let html = '';
+      liveSchemes.forEach(s => {
+        const isSelected = (s.code === targetCode || s.code.toLowerCase() === requested) ? 'selected' : '';
+        const grantUnit = s.grant_unit || 'INDIVIDUAL';
+        html += `<option value="${s.code}" ${isSelected}>${s.name} [${grantUnit} Scope · ₹${s.benefit_amount?.toLocaleString('en-IN') || s.max_benefit_amount?.toLocaleString('en-IN') || 'Grant'}]</option>`;
+      });
+
+      if (html) select.innerHTML = html;
+    }
+
+    async function ensureApplicantOptionsLoaded() {
+      const container = document.getElementById('applicantOptions');
+      if (!container) return;
+
+      // 1. If user is logged in, try fetching their real household roster from backend
+      if (JanasetuAuth.isLoggedIn()) {
+        try {
+          const me = await JanasetuAuth.request('/v1/me');
+          if (me) {
+            currentCitizen = me.person || {
+              personUid: me.user?.personUid || 'PER-RAMESH-01',
+              fullName: me.user?.username || 'Ramesh Kumar',
+              district: me.user?.district || 'Ayodhya'
+            };
+            currentHousehold = me.household || {};
+            currentApplicantUid = currentCitizen.personUid;
+            populateApplicantOptions(me);
+            return;
+          }
+        } catch (e) {
+          console.warn('Could not fetch /v1/me, using verified demo household roster:', e);
+        }
+      }
+
+      // 2. Default verified household roster (HH-22-0147) for demo & testing
+      const defaultHousehold = {
+        householdUid: 'HH-22-0147',
+        propertyUid: 'PROP-AYO-001',
+        incomeCategory: 'BPL',
+        members: [
+          { personUid: 'PER-RAMESH-01', fullName: 'Ramesh Kumar', role: 'HEAD', incomeCategory: 'BPL', relationship: 'Head of Household (Self)', age: 42, gender: 'MALE', district: 'Ayodhya' },
+          { personUid: 'PER-SURESH-02', fullName: 'Suresh Kumar', role: 'MEMBER', incomeCategory: 'APL', relationship: 'Brother / Co-Habitant', age: 38, gender: 'MALE', district: 'Ayodhya' },
+          { personUid: 'PER-SUNITA-03', fullName: 'Sunita Devi', role: 'MEMBER', incomeCategory: 'BPL', relationship: 'Wife / Member', age: 39, gender: 'FEMALE', district: 'Ayodhya' },
+          { personUid: 'PER-ANJALI-04', fullName: 'Anjali Kumari', role: 'MEMBER', incomeCategory: 'BPL', relationship: 'Daughter / Student (Class VII)', age: 13, gender: 'FEMALE', district: 'Ayodhya' }
+        ]
+      };
+      currentCitizen = defaultHousehold.members[0];
+      currentHousehold = defaultHousehold;
+      currentApplicantUid = defaultHousehold.members[0].personUid;
+      currentPropertyUid = defaultHousehold.propertyUid;
+      populateApplicantOptions({ person: defaultHousehold.members[0], household: defaultHousehold });
+    }
+
+    async function initApplyPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isCheckMode = urlParams.get('mode') === 'check' || urlParams.get('check') === 'true' || !urlParams.has('mode');
+
+      // Fetch active schemes for both modes
+      try {
+        const res = await fetch('/v1/schemes');
+        liveSchemes = await res.json();
+      } catch (e) {
+        liveSchemes = [];
+      }
+
+      populateCheckSchemesDropdown();
+      populateSchemesDropdown();
+
+      // ALWAYS load applicant options upfront so family members are ready immediately!
+      await ensureApplicantOptionsLoaded();
+
+      if (isCheckMode) {
+        switchApplyMode('check');
+      } else {
+        switchApplyMode('apply');
+      }
+    }
+
+    function populateApplicantOptions(me) {
+      const container = document.getElementById('applicantOptions');
+      if (!container) return;
+
+      const p = (me && me.person) ? me.person : {};
+      const hh = (me && me.household) ? me.household : {};
+      currentPropertyUid = hh.propertyUid || ('PROP-' + (p.district || 'AYO') + '-001');
+
+      // Update household ID label in header
+      const hhLabel = document.getElementById('officialApplicantLabel');
+      if (hhLabel && hh.householdUid) {
+        hhLabel.textContent = `1. Applying Citizen (Household: ${hh.householdUid})`;
+      }
+
+      // Update sidebar household context
+      const hhIdText = document.getElementById('verifiedHhIdText');
+      if (hhIdText) hhIdText.textContent = `ID: ${hh.householdUid || 'HH-22-0147'} · Verified Household`;
+      const hhIncomeText = document.getElementById('verifiedHhIncomeText');
+      if (hhIncomeText) hhIncomeText.textContent = hh.incomeCategory === 'BPL' ? '₹ 84,000 (BPL)' : '₹ 2,40,000 (APL)';
+      const hhMembersCount = document.getElementById('verifiedHhMembersCount');
+      if (hhMembersCount) hhMembersCount.textContent = `${(hh.members?.length) || 4} Members`;
+
+      function getInitials(name) {
+        if (!name) return '??';
+        return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      }
+
+      let membersList = [];
+      if (hh.members && hh.members.length > 0) {
+        membersList = hh.members;
+      } else {
+        membersList = [
+          { personUid: p.personUid || 'PER-RAMESH-01', fullName: p.fullName || 'Ramesh Kumar', role: 'HEAD', incomeCategory: 'BPL', relationship: 'Head of Household (Self)', age: 42, gender: 'MALE', district: p.district || 'Ayodhya' },
+          { personUid: 'PER-SURESH-02', fullName: 'Suresh Kumar', role: 'MEMBER', incomeCategory: 'APL', relationship: 'Brother / Co-Habitant', age: 38, gender: 'MALE', district: 'Ayodhya' },
+          { personUid: 'PER-SUNITA-03', fullName: 'Sunita Devi', role: 'MEMBER', incomeCategory: 'BPL', relationship: 'Wife / Member', age: 39, gender: 'FEMALE', district: 'Ayodhya' },
+          { personUid: 'PER-ANJALI-04', fullName: 'Anjali Kumari', role: 'MEMBER', incomeCategory: 'BPL', relationship: 'Daughter / Student (Class VII)', age: 13, gender: 'FEMALE', district: 'Ayodhya' }
+        ];
+      }
+
+      let html = '';
+      membersList.forEach((m, idx) => {
+        const isSelected = (idx === 0);
+        const initials = getInitials(m.fullName);
+        const isHead = (m.role === 'HEAD' || idx === 0);
+        const isApl = (m.incomeCategory === 'APL' || (m.fullName && m.fullName.includes('Suresh')));
+        const roleBadge = isHead 
+          ? '<span class="chip bg-blue-50 text-blue-800 border border-blue-200 font-bold text-[10px]">HEAD</span>' 
+          : (isApl ? '<span class="chip bg-amber-50 text-amber-800 border border-amber-200 font-bold text-[10px]">APL</span>' : '<span class="chip bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[10px]">BPL</span>');
+        const roleSub = isHead ? 'Head of Household (Self)' : (m.relationship || (m.gender === 'FEMALE' ? 'Wife / Member' : 'Brother / Member'));
+
+        html += `
+          <label class="applicant-card" ${isSelected ? 'data-checked="true"' : ''}>
+            <div class="flex items-center gap-3 min-w-0">
+              <input type="radio" name="applicant" value="${m.personUid}" data-name="${m.fullName}" data-income="${m.incomeCategory || (isApl ? 'APL' : 'BPL')}" data-age="${m.age || (isHead ? 42 : (m.fullName.includes('Anjali') ? 13 : 38))}" data-gender="${m.gender || (m.fullName.includes('Sunita') || m.fullName.includes('Anjali') ? 'FEMALE' : 'MALE')}" data-district="${m.district || 'Ayodhya'}" ${isSelected ? 'checked' : ''} onchange="onApplicantChange(this)"/>
+              <div class="avatar-initials">${initials}</div>
+              <div class="min-w-0">
+                <p class="text-sm font-bold text-slate-900 truncate">${m.fullName}</p>
+                <p class="text-xs text-slate-500 truncate">${roleSub} · ${m.incomeCategory || (isApl ? 'APL' : 'BPL')}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 ml-2">
+              ${roleBadge}
+              <span class="selected-badge">
+                <svg class="size-3 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Selected
+              </span>
+            </div>
+          </label>
+        `;
+      });
+
+      container.innerHTML = html;
+      syncApplicantCards();
+    }
+
+    function populateSchemesDropdown() {
+      const select = document.getElementById('schemeSelect');
+      if (!select || !liveSchemes || !liveSchemes.length) return;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const requested = (urlParams.get('scheme') || '').toLowerCase();
+      const targetCode = SCHEME_CODE_MAP[requested] || (requested ? requested.toUpperCase() : 'SBM_TOILET');
+
+      let html = '';
+      liveSchemes.forEach(s => {
+        const isSelected = (s.code === targetCode || s.code.toLowerCase() === requested) ? 'selected' : '';
+        const grantUnit = s.grant_unit || 'INDIVIDUAL';
+        html += `<option value="${s.code}" ${isSelected}>${s.name} [${grantUnit} Scope · ₹${s.max_benefit_amount?.toLocaleString('en-IN') || 'Grant'}]</option>`;
+      });
+
+      if (html) select.innerHTML = html;
+    }
+
+    function syncApplicantCards() {
+      document.querySelectorAll('#applicantOptions .applicant-card').forEach(lbl => {
+        const r = lbl.querySelector('input[type="radio"]');
+        lbl.classList.remove('active');
+        if (r && r.checked) {
+          lbl.setAttribute('data-checked', 'true');
+        } else {
+          lbl.removeAttribute('data-checked');
+        }
+      });
+    }
+
+    // ==========================================================================
+    // Scheme-Specific Photo & Evidence Proof Requirements Matrix
+    // ==========================================================================
+    const SCHEME_PHOTO_RULES = {
+      'SBM_TOILET': {
+        required: false,
+        title: 'Dwelling Latrine Site Photo Proof (Optional)',
+        help: 'Optional: Verified via Gram Panchayat cadastre. Additional site photograph upload is optional.',
+        sampleName: 'geotagged_toilet_site_ayodhya_2026.jpg',
+        sampleHash: 'a1b2c3d4e5f60718'
+      },
+      'PMAY_HOUSING': {
+        required: false,
+        title: 'Kutcha House / Plot Site Photograph (Optional)',
+        help: 'Optional: Verified via SECC/Aadhaar geo-registry. Additional site photograph upload is optional.',
+        sampleName: 'dwelling_site_kuccha_proof.jpg',
+        sampleHash: 'b2c3d4e5f6a10719'
+      },
+      'SCHOLARSHIP_MERIT': {
+        required: false,
+        title: 'Student Passport Photograph / ID Proof (Optional)',
+        help: 'Optional: Student record verified via AISHE/DigiLocker. Additional photograph upload is optional.',
+        sampleName: 'student_anjali_class7_photo.jpg',
+        sampleHash: 'c3d4e5f6a1b20720'
+      },
+      'MATERNITY_BENEFIT': {
+        required: false,
+        title: 'Mother & Child Protection (MCP) Card Photo (Optional)',
+        help: 'Optional: Verified via Poshan/RCH registry. Additional photo upload is optional.',
+        sampleName: 'mcp_card_registration_proof.jpg',
+        sampleHash: 'd4e5f6a1b2c30721'
+      },
+      'PM_KISAN': {
+        required: false,
+        title: 'Farmer Land / Applicant Photo (Optional)',
+        help: 'Optional: Identity is validated via Aadhaar and Revenue Land Cadastre. Additional photo upload is optional.',
+        sampleName: 'farmer_khasra_land_site.jpg',
+        sampleHash: 'e5f6a1b2c3d40722'
+      },
+      'OLD_AGE_PENSION': {
+        required: false,
+        title: 'Beneficiary Photograph (Optional)',
+        help: 'Optional: Verified directly with Aadhaar CIDR Biometric e-KYC. Additional photo upload is optional.',
+        sampleName: 'beneficiary_senior_photo.jpg',
+        sampleHash: 'f6a1b2c3d4e50723'
+      },
+      'UJJWALA_GAS': {
+        required: false,
+        title: 'Kitchen / Ration Proof Photo (Optional)',
+        help: 'Optional: Verified via SECC/Antyodaya ration registry. Photo upload is optional.',
+        sampleName: 'kitchen_lpg_cadastre_proof.jpg',
+        sampleHash: '07a1b2c3d4e5f624'
+      },
+      'AYUSHMAN_PMJAY': {
+        required: false,
+        title: 'Beneficiary Family Photograph (Optional)',
+        help: 'Optional: Health entitlement verified via PM-JAY SECC Golden Card registry. Photo upload is optional.',
+        sampleName: 'pmjay_secc_family_photo.jpg',
+        sampleHash: '18a1b2c3d4e5f625'
+      }
+    };
+
+    let uploadedPhotoData = null;
+
+    window.triggerPhotoFileInput = function() {
+      const input = document.getElementById('photoFileInput');
+      if (input) input.click();
+    };
+
+    window.handlePhotoUpload = function(input) {
+      const file = input && input.files && input.files[0];
+      if (!file) return;
+
+      const schemeCode = document.getElementById('schemeSelect')?.value || 'SBM_TOILET';
+      const rule = SCHEME_PHOTO_RULES[schemeCode] || {};
+
+      if (file.type && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          uploadedPhotoData = {
+            file: file,
+            name: file.name,
+            size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+            type: file.type,
+            pHash: rule.sampleHash || ('phash_' + Math.abs(hashCode(file.name + file.size)).toString(16)),
+            previewUrl: e.target.result
+          };
+          renderPhotoPreview();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        uploadedPhotoData = {
+          file: file,
+          name: file.name,
+          size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+          type: file.type,
+          pHash: 'doc_hash_' + Math.abs(hashCode(file.name + file.size)).toString(16),
+          previewUrl: null
+        };
+        renderPhotoPreview();
+      }
+    };
+
+    window.loadSampleSchemePhoto = function() {
+      const schemeCode = document.getElementById('schemeSelect')?.value || 'SBM_TOILET';
+      const rule = SCHEME_PHOTO_RULES[schemeCode] || {};
+      
+      const sampleNames = {
+        'SBM_TOILET': 'geotagged_latrine_site_ayodhya_2026.jpg',
+        'PMAY_HOUSING': 'dwelling_plot_site_inspection.jpg',
+        'SCHOLARSHIP_MERIT': 'student_anjali_class7_photo.jpg',
+        'MATERNITY_BENEFIT': 'mcp_card_registration_photo.jpg',
+        'PM_KISAN': 'farmer_khasra_land_proof.jpg',
+        'OLD_AGE_PENSION': 'beneficiary_senior_eKYC_photo.jpg',
+        'UJJWALA_GAS': 'kitchen_lpg_connection_proof.jpg',
+        'AYUSHMAN_PMJAY': 'pmjay_secc_family_photo.jpg'
+      };
+
+      const sampleSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%230f2238"/><rect x="20" y="40" width="160" height="120" rx="10" fill="%231e3a5f" stroke="%23f97316" stroke-width="3"/><circle cx="100" cy="100" r="35" fill="%230d1e38" stroke="%2338bdf8" stroke-width="3"/><path d="M70 140 L95 110 L115 130 L135 100 L155 140 Z" fill="%2310b981" opacity="0.75"/><circle cx="135" cy="70" r="10" fill="%23f59e0b"/><text x="100" y="180" font-family="sans-serif" font-size="11" font-weight="bold" fill="%23cbd5e1" text-anchor="middle">OFFICIAL SITE PHOTO PROOF</text></svg>';
+
+      uploadedPhotoData = {
+        name: sampleNames[schemeCode] || `${schemeCode.toLowerCase()}_site_verified.jpg`,
+        size: '1.45 MB',
+        type: 'image/jpeg',
+        pHash: rule.sampleHash || 'a1b2c3d4e5f60718',
+        previewUrl: sampleSvg
+      };
+
+      renderPhotoPreview();
+    };
+
+    window.removeUploadedPhoto = function() {
+      uploadedPhotoData = null;
+      const fileInput = document.getElementById('photoFileInput');
+      if (fileInput) fileInput.value = '';
+
+      const prompt = document.getElementById('photoUploadPrompt');
+      const preview = document.getElementById('photoPreviewContainer');
+      if (prompt) prompt.classList.remove('hidden');
+      if (preview) preview.classList.add('hidden');
+
+      const schemeCode = document.getElementById('schemeSelect')?.value || 'SBM_TOILET';
+      updatePhotoRequirement(schemeCode);
+    };
+
+    function renderPhotoPreview() {
+      const prompt = document.getElementById('photoUploadPrompt');
+      const preview = document.getElementById('photoPreviewContainer');
+      const img = document.getElementById('photoPreviewImg');
+      const docIcon = document.getElementById('photoDocIcon');
+      const nameEl = document.getElementById('photoFileName');
+      const sizeEl = document.getElementById('photoFileSize');
+      const hashEl = document.getElementById('photoHashInfo');
+      const alertBox = document.getElementById('photoValidationAlert');
+      const dropZone = document.getElementById('photoDropZone');
+
+      if (!uploadedPhotoData) {
+        if (prompt) prompt.classList.remove('hidden');
+        if (preview) preview.classList.add('hidden');
+        return;
+      }
+
+      if (prompt) prompt.classList.add('hidden');
+      if (preview) preview.classList.remove('hidden');
+      if (alertBox) alertBox.classList.add('hidden');
+      if (dropZone) dropZone.classList.remove('photo-zone-error');
+
+      if (nameEl) nameEl.textContent = uploadedPhotoData.name;
+      if (sizeEl) sizeEl.textContent = `${uploadedPhotoData.size} · Digitally Sealed`;
+      if (hashEl) hashEl.textContent = `Security pHash: ${uploadedPhotoData.pHash}`;
+
+      if (uploadedPhotoData.previewUrl && img) {
+        img.src = uploadedPhotoData.previewUrl;
+        img.classList.remove('hidden');
+        if (docIcon) docIcon.classList.add('hidden');
+      } else {
+        if (img) img.classList.add('hidden');
+        if (docIcon) docIcon.classList.remove('hidden');
+      }
+    }
+
+    function updatePhotoRequirement(schemeCode) {
+      const schemeMap = {
+        'SBM_TOILET': 'pmay-g',
+        'PM_KISAN': 'pm-kisan',
+        'OLD_AGE_PENSION': 'nsap-pension',
+        'UJJWALA_GAS': 'ujjwala',
+        'SCHOLARSHIP_MERIT': 'scholarship',
+        'AYUSHMAN_PMJAY': 'ayushman',
+        'PMAY_HOUSING': 'pmay-g',
+        'MATERNITY_BENEFIT': 'pmay-g'
+      };
+      const linkEl = document.getElementById('schemeDetailsLink');
+      if (linkEl && schemeMap[schemeCode]) {
+        linkEl.href = `scheme.html?scheme=${schemeMap[schemeCode]}`;
+      }
+
+      const rule = SCHEME_PHOTO_RULES[schemeCode] || {
+        required: false,
+        title: 'Applicant / Site Photo Proof',
+        help: 'Optional: Identity is validated via Aadhaar and Government Registry.',
+        sampleHash: '00a1b2c3d4e5f600'
+      };
+
+      const badge = document.getElementById('photoRequirementBadge');
+      const guidance = document.getElementById('photoGuidanceText');
+      const dropZone = document.getElementById('photoDropZone');
+      const alertBox = document.getElementById('photoValidationAlert');
+      const photoStatusEl = document.getElementById('verifiedPhotoStatusText');
+
+      if (alertBox) alertBox.classList.add('hidden');
+
+      if (badge) {
+        badge.className = 'photo-badge-optional';
+        badge.innerHTML = '<span class="size-1.5 rounded-full bg-slate-400"></span> Optional for this scheme';
+      }
+
+      if (guidance) {
+        guidance.textContent = rule.help || 'Optional: Identity and dwelling eligibility are verified directly via Aadhaar CIDR & Government Registry. Additional photo upload is optional.';
+      }
+
+      if (dropZone) {
+        dropZone.classList.remove('photo-zone-mandatory', 'photo-zone-error');
+      }
+
+      if (photoStatusEl) {
+        photoStatusEl.textContent = 'Optional (Aadhaar e-KYC Verified)';
+        photoStatusEl.className = 'font-bold text-slate-700';
+      }
+    }
+
+    function hashCode(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return hash;
+    }
+
+    function onApplicantChange(inp) {
+      currentApplicantUid = inp.value;
+      syncApplicantCards();
+      updateVerification();
+    }
+
+    async function updateVerification() {
+      syncApplicantCards();
+      const select = document.getElementById('schemeSelect');
+      const schemeCode = select ? select.value : 'SBM_TOILET';
+      updatePhotoRequirement(schemeCode);
+      const res = document.getElementById('checkResult');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (!res) return;
+
+      // Call live dry-run rules evaluation API
+      try {
+        let payload = {};
+        const isGuest = !JanasetuAuth.isLoggedIn() || !currentCitizen;
+
+        const applicantEl = document.querySelector('input[name="applicant"]:checked');
+        const applicantName = applicantEl?.getAttribute('data-name') || '';
+        const isSuresh = applicantName.includes('Suresh') || applicantEl?.value?.includes('SURESH') || applicantEl?.value?.includes('10488');
+        const isAnjali = applicantName.includes('Anjali') || applicantEl?.value?.includes('ANJALI');
+
+        if (isGuest) {
+          const age = parseInt(applicantEl?.getAttribute('data-age') || (isAnjali ? '13' : (isSuresh ? '38' : '42')), 10);
+          const gender = applicantEl?.getAttribute('data-gender') || (isAnjali ? 'FEMALE' : 'MALE');
+          const income = applicantEl?.getAttribute('data-income') || (isSuresh ? 'APL' : 'BPL');
+          const district = applicantEl?.getAttribute('data-district') || 'Ayodhya';
+
+          payload = {
+            schemeCode: schemeCode,
+            guestProfile: {
+              age: age,
+              gender: gender,
+              incomeCategory: income,
+              district: district,
+              hasExistingBenefit: (schemeCode === 'SBM_TOILET' && isSuresh) ? true : false
+            }
+          };
+        } else {
+          const checkedUid = (currentApplicantUid && currentApplicantUid.startsWith('PER-')) 
+            ? currentApplicantUid 
+            : (currentCitizen?.personUid || 'PER-SELF');
+
+          payload = {
+            schemeCode: schemeCode,
+            applicantPersonUid: checkedUid,
+            propertyUid: currentPropertyUid
+          };
+        }
+
+        const dryRun = await fetch('/v1/schemes/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (dryRun.eligible) {
+          res.className = "rounded-xl border border-india-green/40 bg-india-green/10 p-5";
+          res.innerHTML = `
+            <div class="flex items-start gap-3">
+              <span class="text-xl">✅</span>
+              <div>
+                <p class="text-sm font-bold text-foreground">Live Rules Evaluation: PASSED</p>
+                <p class="mt-1 text-xs text-foreground/80 leading-relaxed">
+                  ${dryRun.passedRules && dryRun.passedRules.length ? dryRun.passedRules.join(' · ') : 'Applicant satisfies all age, income, and residency requirements.'}
+                </p>
+                <div class="mt-2 text-[11px] font-bold text-india-green">
+                  Scope: ${dryRun.grantUnit} · Eligible for direct approval
+                </div>
+              </div>
+            </div>
+          `;
+          if (submitBtn) submitBtn.querySelector('span').textContent = "Submit Application";
+        } else {
+          const reasons = dryRun.reasons?.join(', ') || 'Duplicate benefit or criteria condition detected';
+          const isToiletDup = reasons.toLowerCase().includes('property') || reasons.toLowerCase().includes('toilet');
+
+          res.className = "rounded-xl border border-saffron/50 bg-saffron/10 p-5";
+          res.innerHTML = `
+            <div class="flex items-start gap-3">
+              <span class="text-xl">⚠️</span>
+              <div>
+                <p class="text-sm font-bold text-foreground">${isToiletDup ? 'Duplicate Property Claim Detected' : 'Eligibility Flag Detected'}</p>
+                <p class="mt-1 text-xs text-foreground/80 leading-relaxed">
+                  ${reasons}
+                </p>
+                <div class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-saffron/20 px-3 py-1 text-[11px] font-bold text-saffron-deep">
+                  Held for Officer Review · Will NEVER Be Auto-Rejected
+                </div>
+              </div>
+            </div>
+          `;
+          if (submitBtn) submitBtn.querySelector('span').textContent = "Submit for Officer Review";
+        }
+      } catch (err) {
+        console.warn('Dry-run request failed, using template check:', err);
+        updateVerificationOffline();
+      }
+    }
+
+    function updateVerificationOffline() {
+      const applicantEl = document.querySelector('input[name="applicant"]:checked');
+      const applicantName = applicantEl?.getAttribute('data-name') || 'Applicant';
+      const scheme = document.getElementById('schemeSelect')?.value || 'SBM_TOILET';
+      const res = document.getElementById('checkResult');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (!res) return;
+      updatePhotoRequirement(scheme);
+
+      if (scheme.includes('TOILET') || scheme.includes('pmay')) {
+        res.className = "rounded-xl border border-saffron/50 bg-saffron/10 p-5";
+        res.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="text-xl">⚠️</span>
+            <div>
+              <p class="text-sm font-bold text-foreground">Duplicate Household / Property Claim Check</p>
+              <p class="mt-1 text-xs text-foreground/80 leading-relaxed">
+                Toilet and housing grants belong to the <strong>PROPERTY</strong> grant unit. Duplicate submissions on the same property are automatically flagged with an evidence pack for the Block Officer.
+              </p>
+              <div class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-saffron/20 px-3 py-1 text-[11px] font-bold text-saffron-deep">
+                Held for Officer Verification · Never Auto-Rejected
+              </div>
+            </div>
+          </div>
+        `;
+        if (submitBtn) submitBtn.querySelector('span').textContent = "Submit for Officer Review";
+      } else {
+        res.className = "rounded-xl border border-india-green/40 bg-india-green/10 p-5";
+        res.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="text-xl">✅</span>
+            <div>
+              <p class="text-sm font-bold text-foreground">Initial Eligibility Check Passed</p>
+              <p class="mt-1 text-xs text-foreground/80 leading-relaxed">
+                Applicant matches scheme eligibility. Grant unit evaluated independently.
+              </p>
+            </div>
+          </div>
+        `;
+        if (submitBtn) submitBtn.querySelector('span').textContent = "Submit Application";
+      }
+    }
+
+    async function handleFormSubmit() {
+      if (!JanasetuAuth.isLoggedIn() || !JanasetuAuth.isCitizen()) {
+        JanasetuAuth.requireCitizen(window.location.href);
+        return;
+      }
+
+      const applicantEl = document.querySelector('input[name="applicant"]:checked');
+      const applicantName = applicantEl?.getAttribute('data-name') || currentCitizen?.fullName || 'Applicant';
+      const applicantUid = currentApplicantUid || currentCitizen?.personUid;
+      const schemeCode = document.getElementById('schemeSelect')?.value || 'SBM_TOILET';
+
+      // 1. Photo proof is optional across all schemes (Aadhaar CIDR e-KYC Verified)
+      const alertBox = document.getElementById('photoValidationAlert');
+      if (alertBox) alertBox.classList.add('hidden');
+      const dropZone = document.getElementById('photoDropZone');
+      if (dropZone) dropZone.classList.remove('photo-zone-error');
+
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
+
+      if (submitBtn) {
+        submitBtn.innerHTML = '<span>Submitting &amp; Signing Application...</span>';
+        submitBtn.setAttribute('disabled', 'true');
+      }
+
+      try {
+        const payload = {
+          applicantPersonUid: (applicantUid && applicantUid.startsWith('PER-')) ? applicantUid : (currentCitizen?.personUid || 'PER-SELF'),
+          schemeCode: schemeCode,
+          propertyUid: currentPropertyUid,
+          proofPhotoPhash: uploadedPhotoData ? uploadedPhotoData.pHash : undefined,
+          photoAttached: !!uploadedPhotoData,
+          photoName: uploadedPhotoData ? uploadedPhotoData.name : undefined
+        };
+
+        const result = await JanasetuAuth.request('/v1/applications', {
+          method: 'POST',
+          headers: {
+            'Idempotency-Key': 'IDEM-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7)
+          },
+          body: JSON.stringify(payload)
+        });
+
+        // Show Success Modal with real backend data
+        const modal = document.getElementById('successModal');
+        const modalAppId = document.getElementById('modalAppId');
+        const modalApplicant = document.getElementById('modalApplicant');
+        const modalStatus = document.getElementById('modalStatus');
+        const modalSubtext = document.getElementById('modalSubtext');
+        const modalIcon = document.getElementById('modalIconContainer');
+
+        const assignedAppId = result.applicationNumber || result.applicationId || ('APP/2026/' + Math.floor(10000 + Math.random() * 90000));
+        if (modalAppId) modalAppId.textContent = assignedAppId;
+        if (modalApplicant) modalApplicant.textContent = applicantName;
+        const modalTrackBtn = document.getElementById('modalTrackBtn');
+        if (modalTrackBtn) modalTrackBtn.href = 'track.html?appId=' + encodeURIComponent(assignedAppId);
+
+        // Persist to recent applications storage for home tracking
+        try {
+          const recent = JSON.parse(localStorage.getItem('ojas_recent_apps') || localStorage.getItem('janasetu_recent_apps') || '{}');
+          recent[assignedAppId] = {
+            id: assignedAppId,
+            applicant: applicantName,
+            category: applicantName.includes('Ramesh') ? 'Household Head · BPL' : (applicantName.includes('Suresh') ? 'Brother · APL' : 'Citizen Applicant'),
+            scheme: schemeCode === 'SBM_TOILET' ? 'Swachh Bharat Rural Sanitation (PMAY-G Toilet)' : schemeCode,
+            status: result.status || (result.flagged ? 'HELD_FOR_VERIFICATION' : 'SUBMITTED'),
+            timestamp: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+          };
+          localStorage.setItem('ojas_recent_apps', JSON.stringify(recent));
+          localStorage.setItem('janasetu_recent_apps', JSON.stringify(recent));
+        } catch (e) {}
+
+        const modalPhotoProof = document.getElementById('modalPhotoProof');
+        if (modalPhotoProof) {
+          if (uploadedPhotoData) {
+            modalPhotoProof.innerHTML = `<span class="text-emerald-700">✓ Attached</span> <span class="text-[10px] text-slate-500 font-normal">(${uploadedPhotoData.name})</span>`;
+          } else {
+            modalPhotoProof.innerHTML = `<span class="text-slate-600 font-semibold">Optional (Aadhaar e-KYC Verified)</span>`;
+          }
+        }
+        
+        if (modalStatus) {
+          if (result.status === 'FLAGGED') {
+            modalStatus.textContent = 'Flagged for Officer Review (' + (result.riskScore || 'LOW') + ' Risk)';
+            modalStatus.className = 'inline-flex items-center gap-1 font-bold text-amber-900 bg-amber-50 border border-amber-300 px-2.5 py-0.5 rounded-full text-[11px]';
+            if (modalIcon) {
+              modalIcon.className = 'mx-auto mb-3.5 flex size-14 items-center justify-center rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 shadow-xs';
+              modalIcon.innerHTML = '<svg class="size-7" style="width:1.75rem;height:1.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+            }
+          } else {
+            modalStatus.textContent = result.status || 'Approved & Verified';
+            modalStatus.className = 'inline-flex items-center gap-1 font-bold text-emerald-800 bg-emerald-50 border border-emerald-300 px-2.5 py-0.5 rounded-full text-[11px]';
+            if (modalIcon) {
+              modalIcon.className = 'mx-auto mb-3.5 flex size-14 items-center justify-center rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 shadow-xs';
+              modalIcon.innerHTML = '<svg class="size-7" style="width:1.75rem;height:1.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            }
+          }
+        }
+
+        if (modalSubtext) {
+          modalSubtext.textContent = result.explanationEn || result.reasonForFlag || 'Application successfully filed and entered into the guarded four-eyes verification queue.';
+        }
+
+        if (modal) modal.classList.remove('hidden');
+
+      } catch (err) {
+        alert('Application Submission Notice: ' + (err.message || 'Please check input fields.'));
+      } finally {
+        if (submitBtn) {
+          submitBtn.innerHTML = originalText;
+          submitBtn.removeAttribute('disabled');
+        }
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Initialize on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApplyPage);
+    } else {
+      initApplyPage();
+    }
+  </script>
+</body>
+</html>

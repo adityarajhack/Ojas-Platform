@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Scheme Details – Ojas National Welfare Portal</title>
+  <meta name="description" content="Comprehensive scheme guidelines, financial assistance breakdown, eligibility criteria, required documents, and deduplication rules on Ojas."/>
+  <link rel="stylesheet" href="assets/styles-Dig2zqxS.css" data-precedence="default"/>
+  <link rel="stylesheet" href="assets/glass.css"/>
+  <link rel="stylesheet" href="assets/auth-modal.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800;900&amp;family=Sora:wght@500;600;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" data-precedence="default"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+  <style>
+    .scheme-details-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 4rem 1rem;
+    }
+    .scheme-nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #334155;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .scheme-nav-pill:hover {
+      background: #f8fafc;
+      border-color: #ea580c;
+      color: #ea580c;
+      transform: translateY(-1px);
+    }
+    .scheme-nav-pill.active {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: #ffffff;
+      border-color: #ea580c;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+    }
+    .spec-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1.25rem;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      transition: all 0.2s ease;
+    }
+    .spec-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+    .checklist-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .checklist-row:last-child {
+      border-bottom: none;
+    }
+    .faq-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      user-select: none;
+    }
+    .faq-summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-details[open] .faq-summary {
+      border-bottom: 1px solid #e2e8f0;
+      color: #ea580c;
+    }
+    .faq-details {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.85rem;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .faq-details[open] {
+      border-color: #fdba74;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen glass-ambient-bg font-sans antialiased text-slate-800">
+  <div class="flex min-h-screen flex-col">
+    <!-- National Welfare Portal Signature Header -->
+    <header class="aicte-header-wrapper">
+      <!-- Row 1: Official Deep Navy Top Ribbon -->
+      <div class="aicte-top-ribbon">
+        <div class="flex items-center gap-2 sm:gap-3 ml-auto">
+          <!-- Important Note Pill -->
+          <button type="button" onclick="toggleImportantNote(true)" class="aicte-top-pill-note" aria-label="Important Note">
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Important Note</span>
+          </button>
+
+          <!-- Helpline & Support Dropdown Pill -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('helplineDropdown', event)" class="aicte-top-pill-helpline" aria-label="Helpline and Support">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>Helpline &amp; Support</span>
+              <svg class="size-3 transition-transform opacity-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+
+            <!-- Helpline Dropdown Menu -->
+            <div id="helplineDropdown" class="aicte-dropdown-card right-0 w-80">
+              <div class="p-3 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100 rounded-t-xl">
+                <p class="text-xs font-black text-slate-900">National Welfare Support Desk</p>
+                <p class="text-[11px] font-semibold text-amber-800">Toll-free official assistance across 22 languages</p>
+              </div>
+              <div class="p-2 space-y-1.5">
+                <a href="tel:01129581423" class="aicte-dropdown-item">
+                  <span class="size-7 rounded-lg bg-orange-500 text-white grid place-items-center text-xs shrink-0 font-bold">📞</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">011–29581423</span>
+                    <span class="block text-[10px] text-slate-500">Mon–Fri · 9am–6pm IST</span>
+                  </div>
+                </a>
+                <a href="tel:07314624949" class="aicte-dropdown-item">
+                  <span class="size-7 rounded-lg bg-sky-500 text-white grid place-items-center text-xs shrink-0 font-bold">🤖</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">07314624949</span>
+                    <span class="block text-[10px] text-slate-500">Automated IVR Application Status</span>
+                  </div>
+                </a>
+                <a href="mailto:help@ojas.gov.in" class="aicte-dropdown-item">
+                  <span class="size-7 rounded-lg bg-indigo-500 text-white grid place-items-center text-xs shrink-0 font-bold">✉️</span>
+                  <div>
+                    <span class="block text-xs font-bold text-slate-900">help@ojas.gov.in</span>
+                    <span class="block text-[10px] text-slate-500">Official nodal support email</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <span class="hidden sm:inline-block h-3.5 w-px bg-white/20"></span>
+
+          <!-- Language Selector Pill -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('languageDropdown', event)" class="aicte-top-pill-lang" aria-label="Select Language">
+              <span class="bhashini-icon-badge">
+                <span class="bhashini-icon-letter">A</span>
+              </span>
+              <span id="currentLangLabel">English</span>
+              <svg class="size-2.5 text-indigo-500 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="m7 10 5 5 5-5z"></path></svg>
+            </button>
+
+            <!-- Language Dropdown Menu -->
+            <div id="languageDropdown" class="aicte-dropdown-card right-0 w-64 p-2.5 bg-white shadow-2xl border border-slate-300">
+              <div class="p-2.5 bg-[#081735] text-white rounded-xl mb-2 shadow-sm">
+                <div class="flex items-center justify-between">
+                  <p class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span class="bhashini-icon-badge !size-4">
+                      <span class="bhashini-icon-letter !text-[9.5px]">A</span>
+                    </span>
+                    <span>Select Language</span>
+                  </p>
+                  <span class="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-orange-500 text-white tracking-wider">Bhashini</span>
+                </div>
+                <p class="text-[10px] text-slate-300 mt-0.5 font-medium">Digital India Bhashini Multilingual Portal</p>
+              </div>
+              <div class="grid grid-cols-2 gap-1 max-h-60 overflow-y-auto pr-1">
+                <button type="button" onclick="setLanguage('en', 'English')" class="lang-option-btn active" data-lang="en">
+                  <span>English</span>
+                  <span class="text-[10px] text-slate-400">EN</span>
+                </button>
+                <button type="button" onclick="setLanguage('bn', 'Bengali')" class="lang-option-btn" data-lang="bn">
+                  <span>Bengali</span>
+                  <span class="text-[10px] text-slate-400">BN</span>
+                </button>
+                <button type="button" onclick="setLanguage('mr', 'Marathi')" class="lang-option-btn" data-lang="mr">
+                  <span>Marathi</span>
+                  <span class="text-[10px] text-slate-400">MR</span>
+                </button>
+                <button type="button" onclick="setLanguage('te', 'Telugu')" class="lang-option-btn" data-lang="te">
+                  <span>Telugu</span>
+                  <span class="text-[10px] text-slate-400">TE</span>
+                </button>
+                <button type="button" onclick="setLanguage('ta', 'Tamil')" class="lang-option-btn" data-lang="ta">
+                  <span>Tamil</span>
+                  <span class="text-[10px] text-slate-400">TA</span>
+                </button>
+                <button type="button" onclick="setLanguage('gu', 'Gujarati')" class="lang-option-btn" data-lang="gu">
+                  <span>Gujarati</span>
+                  <span class="text-[10px] text-slate-400">GU</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Main Navigation Bar -->
+      <div class="aicte-main-nav">
+        <!-- Left: Official Branding Cluster -->
+        <div class="flex items-center gap-2.5 sm:gap-4">
+          <a href="index.html" class="aicte-brand-group">
+            <span class="ojas-emblem-badge">
+              <span class="ojas-emblem-inner">OJ</span>
+            </span>
+            <div class="leading-tight">
+              <span class="block aicte-brand-title">Ojas</span>
+              <span class="block aicte-brand-sub">Unified Citizen &amp; Household Records</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Center: Nav Items -->
+        <div class="aicte-center-pill">
+          <a href="index.html#schemesGrid" class="aicte-nav-pill-item">
+            <span>All Schemes</span>
+          </a>
+
+          <!-- Citizen Services Dropdown -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('citizenDropdown', event)" class="aicte-nav-dropdown-btn">
+              <span>Citizen Services</span>
+              <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div id="citizenDropdown" class="aicte-dropdown-card left-0 w-72">
+              <a href="apply.html?mode=check" class="aicte-dropdown-item bg-amber-50/50 hover:bg-amber-100/60 transition">
+                <span class="text-base">⚡</span>
+                <div>
+                  <span class="block text-xs font-bold text-amber-900">Check Instant Eligibility</span>
+                  <span class="block text-[10px] text-amber-700">Instant rules &amp; duplicate benefit verification</span>
+                </div>
+              </a>
+              <a href="apply.html" class="aicte-dropdown-item">
+                <span class="text-base">📝</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Apply for Benefit</span>
+                  <span class="block text-[10px] text-slate-500">1-tap submission with Aadhaar e-KYC</span>
+                </div>
+              </a>
+              <a href="track.html" class="aicte-dropdown-item">
+                <span class="text-base">🔍</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Track Application</span>
+                  <span class="block text-[10px] text-slate-500">Live SLA status &amp; DBT sanction record</span>
+                </div>
+              </a>
+              <a href="citizen.html" class="aicte-dropdown-item">
+                <span class="text-base">👤</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Citizen Self-Service Portal</span>
+                  <span class="block text-[10px] text-slate-500">View household registry, locker &amp; claims</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Scheme Switcher Dropdown -->
+          <div class="relative aicte-dropdown-wrap">
+            <button type="button" onclick="toggleDropdown('schemesMenuDropdown', event)" class="aicte-nav-dropdown-btn active">
+              <span>Flagship Schemes</span>
+              <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div id="schemesMenuDropdown" class="aicte-dropdown-card left-0 w-80">
+              <a href="scheme.html?scheme=pmay-g" class="aicte-dropdown-item">
+                <span class="text-base">🏠</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">PMAY-G Rural Toilet (IHL)</span>
+                  <span class="block text-[10px] text-slate-500">₹12,000 Direct Support · MoRD</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=pm-kisan" class="aicte-dropdown-item">
+                <span class="text-base">🌾</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">PM-Kisan Samman Nidhi</span>
+                  <span class="block text-[10px] text-slate-500">₹6,000 / Year DBT · MoA&amp;FW</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=nsap-pension" class="aicte-dropdown-item">
+                <span class="text-base">👵</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">NSAP – Old Age Pension</span>
+                  <span class="block text-[10px] text-slate-500">Monthly Social Security · MoRD</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=ujjwala" class="aicte-dropdown-item">
+                <span class="text-base">🔥</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">PM Ujjwala Yojana 2.0</span>
+                  <span class="block text-[10px] text-slate-500">Deposit-free LPG Cylinder &amp; Stove · MoPNG</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=scholarship" class="aicte-dropdown-item">
+                <span class="text-base">🎓</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Pre-Matric Scholarship</span>
+                  <span class="block text-[10px] text-slate-500">Class I–X Academic Aid · MoE</span>
+                </div>
+              </a>
+              <a href="scheme.html?scheme=ayushman" class="aicte-dropdown-item">
+                <span class="text-base">🏥</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">Ayushman Bharat PM-JAY</span>
+                  <span class="block text-[10px] text-slate-500">₹5 Lakh Cashless Cover · MoHFW</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Action Buttons -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="apply.html" class="aicte-btn-primary" id="topNavApplyBtn">
+            <span>Apply Now</span>
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+          <a href="official.html" class="aicte-btn-outline hidden sm:inline-flex">
+            <span>Officer Portal</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Scheme Content Area -->
+    <main class="flex-1">
+      <div class="scheme-details-container">
+        <!-- Breadcrumbs Navigation -->
+        <nav class="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6 flex-wrap" aria-label="Breadcrumb">
+          <a href="index.html" class="hover:text-orange-600 transition flex items-center gap-1">
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            Home
+          </a>
+          <span>/</span>
+          <a href="index.html#schemesGrid" class="hover:text-orange-600 transition">Flagship Welfare Schemes</a>
+          <span>/</span>
+          <span class="text-slate-900 font-bold" id="bcSchemeName">Scheme Details</span>
+        </nav>
+
+        <!-- Scheme Quick-Switch Horizontal Bar -->
+        <div class="mb-8">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5 flex items-center gap-1.5">
+            <svg class="size-3.5 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            Select Scheme to Inspect:
+          </div>
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin" id="schemeTabsNav">
+            <a href="scheme.html?scheme=pmay-g" class="scheme-nav-pill" data-scheme="pmayg">
+              <span>🏠</span>
+              <span>PMAY-G Toilet</span>
+            </a>
+            <a href="scheme.html?scheme=pm-kisan" class="scheme-nav-pill" data-scheme="pmkisan">
+              <span>🌾</span>
+              <span>PM-Kisan</span>
+            </a>
+            <a href="scheme.html?scheme=nsap-pension" class="scheme-nav-pill" data-scheme="pension">
+              <span>👵</span>
+              <span>Old Age Pension</span>
+            </a>
+            <a href="scheme.html?scheme=ujjwala" class="scheme-nav-pill" data-scheme="ujjwala">
+              <span>🔥</span>
+              <span>PM Ujjwala</span>
+            </a>
+            <a href="scheme.html?scheme=scholarship" class="scheme-nav-pill" data-scheme="scholarship">
+              <span>🎓</span>
+              <span>Pre-Matric Scholarship</span>
+            </a>
+            <a href="scheme.html?scheme=ayushman" class="scheme-nav-pill" data-scheme="ayushman">
+              <span>🏥</span>
+              <span>Ayushman Bharat</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Card Section -->
+        <section class="bg-white rounded-2xl border border-slate-200 shadow-soft overflow-hidden mb-8 border-t-4 border-t-orange-600">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+            <!-- Left Info Panel (8 Cols) -->
+            <div class="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <!-- Ministry & Category Tags -->
+                <div class="flex items-center gap-2 flex-wrap mb-3.5">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-800 border border-orange-200" id="schemeMinistryTag">
+                    <svg class="size-3.5 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span id="schemeMinistry">Ministry of Rural Development</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200" id="schemeSector">
+                    Housing &amp; Sanitation
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200" id="schemeScopeBadge">
+                    🏠 Household Scope
+                  </span>
+                </div>
+
+                <!-- Scheme Official Title -->
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 font-heading tracking-tight mb-3" id="schemeTitle">
+                  PMAY-G – Rural Toilet (IHL)
+                </h1>
+
+                <!-- Brief Tagline / Mission -->
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6" id="schemeSummary">
+                  Individual Household Latrine (IHL) incentive for eligible households. One unit per family dwelling — duplicate household claims held for field verification.
+                </p>
+
+                <!-- Core Benefits Strip -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                  <div class="bg-amber-50/70 border border-amber-200/80 rounded-xl p-3">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-amber-800 mb-0.5">Benefit Outlay</span>
+                    <span class="block text-base sm:text-lg font-black text-amber-950 font-heading" id="schemeBenefitAmount">₹12,000 Direct</span>
+                  </div>
+                  <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-xl p-3">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-emerald-800 mb-0.5">Disbursement</span>
+                    <span class="block text-sm sm:text-base font-bold text-emerald-950" id="schemeDisbursement">Aadhaar DBT</span>
+                  </div>
+                  <div class="bg-sky-50/70 border border-sky-200/80 rounded-xl p-3 col-span-2 sm:col-span-1">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-sky-800 mb-0.5">Verification SLA</span>
+                    <span class="block text-sm sm:text-base font-bold text-sky-950" id="schemeSla">48 - 72 Hours</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Action CTA Row -->
+              <div class="pt-4 border-t border-slate-100 flex items-center gap-3 flex-wrap">
+                <a href="apply.html?scheme=pmay-g" class="aicte-btn-primary shadow-lg !py-3 !px-6" id="heroApplyBtn">
+                  <span>Apply for this Scheme Online</span>
+                  <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+                <a href="apply.html?mode=check&scheme=pmay-g" class="aicte-btn-outline !py-3 !px-5" id="heroCheckBtn">
+                  <svg class="size-4 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>Check Instant Eligibility</span>
+                </a>
+                <a href="track.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-orange-600 transition px-3 py-2">
+                  <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                  <span>Track Status</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Visual Banner (5 Cols) -->
+            <div class="lg:col-span-5 bg-slate-900 relative min-h-[260px] lg:min-h-full flex items-center justify-center p-6 overflow-hidden">
+              <img id="schemeHeroImg" src="assets/scheme-pmayg.jpg" alt="Scheme Banner" class="absolute inset-0 w-full h-full object-cover opacity-85 transition duration-700 hover:scale-105"/>
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20"></div>
+              
+              <div class="relative z-10 text-white p-4 max-w-sm text-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 text-xs font-bold backdrop-blur-md mb-3">
+                  <span class="size-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Direct Benefit Transfer Active</span>
+                </div>
+                <h3 class="text-lg font-bold font-heading mb-1" id="schemeCardHeading">Official Welfare Sanction</h3>
+                <p class="text-xs text-slate-300 leading-relaxed" id="schemeHeroSubtext">
+                  Direct government assistance credited directly to verified Aadhaar-linked bank account without intermediaries.
+                </p>
+                <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-around text-xs text-slate-300 font-semibold">
+                  <div>
+                    <span class="block text-white font-extrabold text-sm" id="schemeStatCode">SBM-G</span>
+                    <span>National Code</span>
+                  </div>
+                  <div class="h-6 w-px bg-white/20"></div>
+                  <div>
+                    <span class="block text-white font-extrabold text-sm" id="schemeStatScope">Property</span>
+                    <span>Validation Unit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Detailed Specifications Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <!-- Main Content (2 Cols) -->
+          <div class="lg:col-span-2 space-y-8">
+            <!-- 1. Scheme Objectives & Narrative -->
+            <div class="spec-card">
+              <div class="flex items-center gap-2.5 pb-3 mb-4 border-b border-slate-100">
+                <div class="size-8 rounded-lg bg-orange-100 text-orange-700 grid place-items-center font-bold text-sm">01</div>
+                <div>
+                  <h2 class="text-lg font-bold text-slate-900 font-heading">Scheme Objectives &amp; Purpose</h2>
+                  <p class="text-xs text-slate-500">Core national mandate and intended socioeconomic impact</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed mb-4" id="schemeFullDesc">
+                <!-- Injected via JS -->
+              </p>
+              <div class="space-y-2.5" id="schemeObjectivesList">
+                <!-- Objectives Injected via JS -->
+              </div>
+            </div>
+
+            <!-- 2. Financial Benefit & Payment Schedule -->
+            <div class="spec-card">
+              <div class="flex items-center gap-2.5 pb-3 mb-4 border-b border-slate-100">
+                <div class="size-8 rounded-lg bg-emerald-100 text-emerald-700 grid place-items-center font-bold text-sm">02</div>
+                <div>
+                  <h2 class="text-lg font-bold text-slate-900 font-heading">Financial Benefit &amp; Release Milestones</h2>
+                  <p class="text-xs text-slate-500">Scheduled transfer breakdown and Aadhaar NPCI credit criteria</p>
+                </div>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-4" id="schemeFinancialSchedule">
+                <!-- Financial Breakdown Injected via JS -->
+              </div>
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-900 font-medium">
+                <svg class="size-4 text-blue-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Benefits are directly credited into the applicant's Aadhaar-linked bank account (DBT) through the Public Financial Management System (PFMS). No cash or physical cheques are issued.</span>
+              </div>
+            </div>
+
+            <!-- 3. Eligibility Criteria Checklist -->
+            <div class="spec-card">
+              <div class="flex items-center gap-2.5 pb-3 mb-4 border-b border-slate-100">
+                <div class="size-8 rounded-lg bg-sky-100 text-sky-700 grid place-items-center font-bold text-sm">03</div>
+                <div>
+                  <h2 class="text-lg font-bold text-slate-900 font-heading">Eligibility Criteria &amp; Exclusions</h2>
+                  <p class="text-xs text-slate-500">Automated criteria evaluated before application sanction</p>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Who is Eligible -->
+                <div class="bg-emerald-50/50 rounded-xl p-4 border border-emerald-200">
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-900 mb-3 flex items-center gap-1.5">
+                    <svg class="size-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Eligible Beneficiaries
+                  </h3>
+                  <div class="space-y-2 text-xs text-slate-700" id="schemeEligibleList">
+                    <!-- Injected via JS -->
+                  </div>
+                </div>
+
+                <!-- Who is Disqualified -->
+                <div class="bg-rose-50/50 rounded-xl p-4 border border-rose-200">
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-rose-900 mb-3 flex items-center gap-1.5">
+                    <svg class="size-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    Exclusions &amp; Disqualifications
+                  </h3>
+                  <div class="space-y-2 text-xs text-slate-700" id="schemeIneligibleList">
+                    <!-- Injected via JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Step-by-Step How to Apply -->
+            <div class="spec-card">
+              <div class="flex items-center gap-2.5 pb-3 mb-4 border-b border-slate-100">
+                <div class="size-8 rounded-lg bg-indigo-100 text-indigo-700 grid place-items-center font-bold text-sm">04</div>
+                <div>
+                  <h2 class="text-lg font-bold text-slate-900 font-heading">How to Apply (1-Tap Submission)</h2>
+                  <p class="text-xs text-slate-500">Paperless application process powered by Digital Public Infrastructure</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center">
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div class="size-7 rounded-full bg-orange-600 text-white font-bold text-xs mx-auto mb-2 grid place-items-center">1</div>
+                  <h4 class="text-xs font-bold text-slate-900 mb-1">Aadhaar Auth</h4>
+                  <p class="text-[11px] text-slate-600">Authenticate via instant Aadhaar OTP or biometric e-KYC.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div class="size-7 rounded-full bg-orange-600 text-white font-bold text-xs mx-auto mb-2 grid place-items-center">2</div>
+                  <h4 class="text-xs font-bold text-slate-900 mb-1">Auto-Fetch</h4>
+                  <p class="text-[11px] text-slate-600">Ojas automatically pulls land/ration/SECC data seamlessly.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div class="size-7 rounded-full bg-orange-600 text-white font-bold text-xs mx-auto mb-2 grid place-items-center">3</div>
+                  <h4 class="text-xs font-bold text-slate-900 mb-1">Instant Submit</h4>
+                  <p class="text-[11px] text-slate-600">De-duplication engine screens claim in real-time.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div class="size-7 rounded-full bg-emerald-600 text-white font-bold text-xs mx-auto mb-2 grid place-items-center">4</div>
+                  <h4 class="text-xs font-bold text-slate-900 mb-1">DBT Sanction</h4>
+                  <p class="text-[11px] text-slate-600">Direct sanction letter issued with live tracking link.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 text-center">
+                <a href="apply.html?scheme=pmay-g" class="aicte-btn-primary inline-flex !py-3 !px-8 shadow-md" id="stepApplyBtn">
+                  <span>Start Online Application</span>
+                  <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- 5. Frequently Asked Questions (FAQ) -->
+            <div class="spec-card">
+              <div class="flex items-center gap-2.5 pb-3 mb-4 border-b border-slate-100">
+                <div class="size-8 rounded-lg bg-amber-100 text-amber-700 grid place-items-center font-bold text-sm">05</div>
+                <div>
+                  <h2 class="text-lg font-bold text-slate-900 font-heading">Frequently Asked Questions</h2>
+                  <p class="text-xs text-slate-500">Common citizen queries regarding rules, disbursement, and documents</p>
+                </div>
+              </div>
+              <div id="schemeFaqContainer">
+                <!-- FAQs Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar (1 Col) -->
+          <div class="space-y-6">
+            <!-- Required Documents Checklist -->
+            <div class="spec-card">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 font-heading mb-3 flex items-center gap-2">
+                <svg class="size-4 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Required Documents
+              </h3>
+              <p class="text-xs text-slate-500 mb-4">Most records are pre-verified via Aadhaar. Supporting files can be uploaded or verified from DigiLocker.</p>
+              
+              <div class="space-y-3" id="schemeDocumentsList">
+                <!-- Injected via JS -->
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 leading-tight">
+                * Note: Site photographs (if applicable) are optional during initial submission and can be verified by local field officers.
+              </div>
+            </div>
+
+            <!-- Deduplication & Anti-Fraud Protection -->
+            <div class="spec-card bg-gradient-to-br from-slate-900 to-slate-950 text-white border-slate-800">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="size-7 rounded-lg bg-orange-600/30 text-orange-400 border border-orange-500/40 grid place-items-center text-xs">🛡️</span>
+                <div>
+                  <h3 class="text-sm font-bold font-heading text-white">Anti-Fraud Protection</h3>
+                  <span class="text-[10px] text-slate-400">Ojas Verification Engine</span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3" id="schemeAntiFraudDesc">
+                Every application is cross-referenced in real-time against central and state registries.
+              </p>
+              <div class="space-y-2 text-xs">
+                <div class="p-2.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
+                  <span class="text-slate-300">Deduplication Unit:</span>
+                  <span class="font-bold text-orange-400" id="schemeDedupUnit">1 per Dwelling</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
+                  <span class="text-slate-300">Registry Cross-Check:</span>
+                  <span class="font-bold text-emerald-400">SECC + State Land</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
+                  <span class="text-slate-300">Audit Trail:</span>
+                  <span class="font-bold text-sky-400">Tamper-Evident</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Official Helpline & Nodal Ministry Contacts -->
+            <div class="spec-card">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 font-heading mb-3 flex items-center gap-2">
+                <svg class="size-4 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                Official Nodal Desk
+              </h3>
+              <div class="space-y-3 text-xs">
+                <div>
+                  <span class="block text-slate-500 font-medium">Nodal Helpline</span>
+                  <a href="tel:01129581423" class="text-sm font-bold text-slate-900 hover:text-orange-600 transition" id="schemeContactPhone">011-29581423</a>
+                  <span class="block text-[11px] text-slate-400">Toll-free 9:00 AM - 6:00 PM</span>
+                </div>
+                <div>
+                  <span class="block text-slate-500 font-medium">Official Email</span>
+                  <a href="mailto:help@ojas.gov.in" class="font-bold text-slate-900 hover:text-orange-600 transition" id="schemeContactEmail">help@ojas.gov.in</a>
+                </div>
+                <div>
+                  <span class="block text-slate-500 font-medium">Grievance Escalation SLA</span>
+                  <span class="font-bold text-slate-900">7 Working Days</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Apply Sticky Card -->
+            <div class="bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl p-5 text-white shadow-lg text-center">
+              <h4 class="text-base font-extrabold font-heading mb-1">Ready to Claim?</h4>
+              <p class="text-xs text-orange-100 mb-4">Complete your paperless application in under 3 minutes with Aadhaar OTP.</p>
+              <a href="apply.html?scheme=pmay-g" class="w-full bg-white text-orange-700 hover:bg-orange-50 font-bold text-xs uppercase tracking-wider py-3 px-4 rounded-xl shadow transition inline-flex items-center justify-center gap-2" id="sidebarApplyBtn">
+                <span>Apply for this Benefit</span>
+                <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Important Note Modal -->
+    <div id="importantNoteModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm grid place-items-center p-4">
+      <div class="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl border border-slate-200">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <span class="size-8 rounded-lg bg-amber-500 text-white grid place-items-center text-sm font-bold">⚠️</span>
+            <h3 class="text-base font-bold text-slate-900 font-heading">Important Public Notice</h3>
+          </div>
+          <button type="button" onclick="toggleImportantNote(false)" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <div class="py-4 space-y-3 text-xs text-slate-600 leading-relaxed">
+          <p>1. <strong>Zero Application Fee:</strong> Government welfare scheme applications through Ojas are 100% free of charge. No intermediary is authorized to collect fees.</p>
+          <p>2. <strong>One Benefit per Household / Individual:</strong> Automated deduplication prevents duplicate claims across central and state welfare databases.</p>
+          <p>3. <strong>Never Share Aadhaar OTP:</strong> Government officials will never call asking for your Aadhaar OTP or bank PIN.</p>
+        </div>
+        <div class="pt-4 border-t border-slate-100 text-right">
+          <button type="button" onclick="toggleImportantNote(false)" class="aicte-btn-primary !py-2 !px-5 text-xs">
+            I Understand
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Official Portal Footer -->
+    <footer class="bg-slate-950 text-slate-400 text-xs py-12 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center gap-2.5 text-white font-extrabold text-base mb-3">
+            <span class="ojas-emblem-badge !size-8 !text-xs">OJ</span>
+            <span>Ojas Portal</span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed mb-4">
+            Unified Public Documentation &amp; Welfare Platform under Digital India. Ensuring transparent, duplicate-free welfare distribution.
+          </p>
+          <span class="inline-block px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] text-slate-300">
+            Compliant with DPI Standards
+          </span>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Flagship Schemes</h4>
+          <ul class="space-y-2">
+            <li><a href="scheme.html?scheme=pmay-g" class="hover:text-white transition">PMAY-G Rural Toilet</a></li>
+            <li><a href="scheme.html?scheme=pm-kisan" class="hover:text-white transition">PM-Kisan Samman Nidhi</a></li>
+            <li><a href="scheme.html?scheme=nsap-pension" class="hover:text-white transition">NSAP Old Age Pension</a></li>
+            <li><a href="scheme.html?scheme=ujjwala" class="hover:text-white transition">PM Ujjwala Yojana 2.0</a></li>
+            <li><a href="scheme.html?scheme=scholarship" class="hover:text-white transition">Pre-Matric Scholarship</a></li>
+            <li><a href="scheme.html?scheme=ayushman" class="hover:text-white transition">Ayushman Bharat PM-JAY</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Citizen Services</h4>
+          <ul class="space-y-2">
+            <li><a href="apply.html?mode=check" class="hover:text-white transition">Instant Eligibility Screener</a></li>
+            <li><a href="apply.html" class="hover:text-white transition">Direct Scheme Application</a></li>
+            <li><a href="track.html" class="hover:text-white transition">Live Application Tracker</a></li>
+            <li><a href="citizen.html" class="hover:text-white transition">Citizen Self-Service Dashboard</a></li>
+            <li><a href="official.html" class="hover:text-white transition">Verification Officer Login</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Nodal Assistance</h4>
+          <p class="text-slate-400 mb-2">Toll-free Citizen Helpline:</p>
+          <p class="text-white font-bold text-sm mb-2">011–29581423 / 07314624949</p>
+          <p class="text-slate-400 mb-1">Official Support Desk:</p>
+          <a href="mailto:help@ojas.gov.in" class="text-orange-400 hover:underline">help@ojas.gov.in</a>
+          <p class="text-[11px] text-slate-500 mt-4">
+            &copy; 2026 Government Welfare Unified Platform. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Dynamic Scheme Engine & Interactivity Scripts -->
+  <script>
+    // Master Registry of Welfare Schemes
+    const SCHEME_DATABASE = {
+      'pmayg': {
+        id: 'pmayg',
+        codeKey: 'pmay-g',
+        applyKey: 'pmay-g',
+        code: 'SBM-G / PMAY-G',
+        title: 'PMAY-G – Rural Toilet (IHL)',
+        shortTitle: 'PMAY-G Toilet',
+        ministry: 'Ministry of Rural Development (MoRD)',
+        ministryShort: 'MoRD',
+        sector: 'Housing & Sanitation',
+        scope: 'Household / Property',
+        scopeBadge: '🏠 Household Scope',
+        benefitAmount: '₹12,000 Direct',
+        benefitFull: '₹12,000 One-time Direct Support',
+        disbursement: 'Aadhaar DBT (2 Installments)',
+        sla: '48 – 72 Hours',
+        image: 'assets/scheme-pmayg.jpg',
+        summary: 'Individual Household Latrine (IHL) incentive for eligible rural households. Sanctioned on a property-level unit basis (one unit per family dwelling). Automated deduplication ensures duplicate claims from the same property are identified and held.',
+        fullDesc: 'The Swachh Bharat Mission (Grameen) in convergence with Pradhan Mantri Awaas Yojana (Grameen) provides an incentive of ₹12,000 for the construction of individual household latrines (IHL) to eligible rural families lacking hygienic sanitation facilities. The primary aim is to eliminate open defecation, promote dignity, and improve environmental sanitation in rural India.',
+        objectives: [
+          'Ensure 100% access to improved, safe sanitary facilities across all rural habitations.',
+          'Prevent infectious waterborne diseases and protect community health.',
+          'Provide direct monetary incentive without delays or leakage through Aadhaar Direct Benefit Transfer.',
+          'Maintain transparent, georeferenced records of toilet assets created under government grants.'
+        ],
+        financialSchedule: `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Installment 1: ₹6,000</span>
+              <span class="text-slate-600">Released upon sanction approval and foundation/plinth milestone confirmation.</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Installment 2: ₹6,000</span>
+              <span class="text-slate-600">Credited upon completion of super-structure and dual-pit soak construction.</span>
+            </div>
+          </div>
+        `,
+        eligible: [
+          'Rural households listed under Socio-Economic and Caste Census (SECC) / Awaas+ list.',
+          'Below Poverty Line (BPL) families without existing sanitary latrine.',
+          'Identified Above Poverty Line (APL) households belonging to SC/ST, small/marginal farmers, or female-headed households.',
+          'Dwelling unit registered in the name of the applicant or family head.'
+        ],
+        ineligible: [
+          'Households that already possess an active or previously funded functional sanitary latrine.',
+          'Properties where another family member has already claimed an IHL grant.',
+          'Urban municipal corporation residences (governed by SBM Urban).',
+          'Regular government employees and active income tax payees.'
+        ],
+        documents: [
+          { name: 'Aadhaar Card (Applicant & Spouse)', status: 'Mandatory', desc: 'Used for instant e-KYC and NPCI bank seeding check' },
+          { name: 'Ration Card / Family Composition ID', status: 'Mandatory', desc: 'Validates household roster and prevents duplicate claims' },
+          { name: 'Bank Passbook / NPCI Account', status: 'Mandatory', desc: 'Active bank account linked to Aadhaar for DBT transfer' },
+          { name: 'Site / Dwelling Unit Photograph', status: 'Optional', desc: 'Can be submitted online or captured by field verification officer' }
+        ],
+        dedupUnit: '1 per Dwelling Unit',
+        antiFraudDesc: 'Strict Property/Dwelling deduplication: Ojas verifies geo-coordinates and household roster against the National Rural Sanitation registry. Submissions matching an existing property claim trigger automated verification holds.',
+        phone: '011-29581423',
+        email: 'help@ojas.gov.in',
+        faqs: [
+          { q: 'Can two brothers living in the same ancestral house apply separately?', a: 'Under PMAY-G sanitary latrine rules, one incentive grant is permissible per registered dwelling unit. If independent separate households with distinct kitchen/ration cards reside in partitioned units, field officer verification is required.' },
+          { q: 'Is physical submission of paper forms necessary?', a: 'No. The entire application process on Ojas is 100% paperless and authenticated through Aadhaar OTP.' },
+          { q: 'What if my bank account is not Aadhaar-linked?', a: 'DBT mandates Aadhaar-seeding with your bank through NPCI mapper. You can seed your account at your local bank branch or Post Office in 24 hours.' }
+        ]
+      },
+
+      'pmkisan': {
+        id: 'pmkisan',
+        codeKey: 'pm-kisan',
+        applyKey: 'pm-kisan',
+        code: 'PM-KISAN',
+        title: 'PM-Kisan Samman Nidhi',
+        shortTitle: 'PM-Kisan',
+        ministry: 'Ministry of Agriculture & Farmers Welfare (MoA&FW)',
+        ministryShort: 'MoA&FW',
+        sector: 'Agriculture & Farmers',
+        scope: 'Individual / Landholder',
+        scopeBadge: '👤 Individual Scope',
+        benefitAmount: '₹6,000 / Yr',
+        benefitFull: '₹6,000 / Year in 3 Installments',
+        disbursement: 'Direct Bank DBT (PFMS)',
+        sla: '24 – 48 Hours',
+        image: 'assets/scheme-pmkisan.jpg',
+        summary: 'Direct income support of ₹6,000 annually in three 4-monthly installments of ₹2,000 transferred straight to landholding farmer families via Aadhaar DBT. Evaluated against individual land ownership records.',
+        fullDesc: 'Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) is a 100% centrally sponsored scheme launched by the Government of India to provide income support to all landholding farmer families in the country to supplement their financial needs in procuring various inputs related to agriculture and allied activities as well as domestic needs.',
+        objectives: [
+          'Provide assured income support to landholding farmers across India.',
+          'Help farmers meet input costs such as seeds, fertilizers, and equipment ahead of agricultural cropping cycles.',
+          'Prevent farmers from falling into the trap of non-institutional moneylenders.',
+          'Facilitate timely digital disbursement directly into verified bank accounts.'
+        ],
+        financialSchedule: `
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Period 1: ₹2,000</span>
+              <span class="text-slate-600">April – July cropping cycle tranche.</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Period 2: ₹2,000</span>
+              <span class="text-slate-600">August – November festive &amp; harvest tranche.</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Period 3: ₹2,000</span>
+              <span class="text-slate-600">December – March winter rabi tranche.</span>
+            </div>
+          </div>
+        `,
+        eligible: [
+          'All landholding farmer families with cultivable land parcels registered in their name.',
+          'Both small and marginal farmers as per updated state digital land records.',
+          'Applicant must have completed Aadhaar e-KYC on the portal.'
+        ],
+        ineligible: [
+          'Institutional landholders and non-agricultural plot owners.',
+          'Constitutional post holders, former/current Ministers, MPs, MLAs, and Mayors.',
+          'Serving or retired officers and employees of Central/State Government ministries.',
+          'All individuals who paid income tax in the last assessment year.',
+          'Professionals like Doctors, Engineers, Lawyers, Chartered Accountants holding farm land.'
+        ],
+        documents: [
+          { name: 'Aadhaar Card (Mandatory)', status: 'Mandatory', desc: 'Primary identity and biometric validation document' },
+          { name: 'Land Record (RoR / Khasra-Khatauni)', status: 'Mandatory', desc: 'Pre-fetched automatically from State Land Registry API' },
+          { name: 'Aadhaar-Linked Bank Account', status: 'Mandatory', desc: 'Direct recipient account seeded in NPCI mapper' },
+          { name: 'Mobile Number registered with Aadhaar', status: 'Mandatory', desc: 'For OTP authentication and SMS transaction notifications' }
+        ],
+        dedupUnit: '1 per Landholding Beneficiary',
+        antiFraudDesc: 'Strict Individual de-duplication: Synchronized with the Central PM-Kisan registry, Income Tax PAN database, and State Land Records to block ineligible non-farmers and prevent duplicate installment disbursement.',
+        phone: '155261 / 011-24300606',
+        email: 'pmkisan-ict@gov.in',
+        faqs: [
+          { q: 'How do I know if my e-KYC is completed?', a: 'Ojas displays your live e-KYC status instantly when you enter your Aadhaar number. If pending, you can complete it with an instant OTP.' },
+          { q: 'Is there any minimum or maximum land limit?', a: 'All landholding farmer families with cultivable land are eligible regardless of farm size, subject to exclusion criteria.' },
+          { q: 'What happens if my name in land records differs slightly from Aadhaar?', a: 'Ojas employs fuzzy transliteration matching. Minor spelling discrepancies are automatically cross-validated without rejecting the application.' }
+        ]
+      },
+
+      'pension': {
+        id: 'pension',
+        codeKey: 'nsap-pension',
+        applyKey: 'nsap-pension',
+        code: 'IGNOAPS - NSAP',
+        title: 'NSAP – Old Age Pension',
+        shortTitle: 'Old Age Pension',
+        ministry: 'Ministry of Rural Development (MoRD)',
+        ministryShort: 'MoRD',
+        sector: 'Social Security',
+        scope: 'Individual Scope',
+        scopeBadge: '👤 Individual Scope',
+        benefitAmount: '₹1,000 - ₹3,000/mo',
+        benefitFull: 'Monthly Direct Social Security Pension',
+        disbursement: 'Monthly Direct Bank DBT',
+        sla: '3 – 5 Working Days',
+        image: 'assets/scheme-pension.jpg',
+        summary: 'Monthly financial security for senior citizens aged 60+ in Below Poverty Line households. Assessed against applicant\'s own individual life record without blocking other family members.',
+        fullDesc: 'Indira Gandhi National Old Age Pension Scheme (IGNOAPS) is a vital component of the National Social Assistance Programme (NSAP). It extends social protection to senior citizens living below poverty line to ensure dignity, self-reliance, and health security in their old age.',
+        objectives: [
+          'Provide regular monthly social security pension to destitute senior citizens.',
+          'Eliminate financial vulnerability and elder abandonment.',
+          'Enable seamless digital life certificate verification via Jeevan Pramaan without requiring physical travel to offices.',
+          'Ensure continuous social welfare delivery through direct bank credits.'
+        ],
+        financialSchedule: `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Age Group: 60 to 79 Years</span>
+              <span class="text-slate-600">Standard monthly pension credit (Central + State top-up, typically ₹1,000 – ₹1,500/month).</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-slate-200">
+              <span class="block font-bold text-slate-900">Age Group: 80 Years and Above</span>
+              <span class="text-slate-600">Enhanced monthly pension tier (typically ₹2,000 – ₹3,000/month based on State welfare policy).</span>
+            </div>
+          </div>
+        `,
+        eligible: [
+          'Senior citizens who have attained the age of 60 years or above.',
+          'Applicant must belong to a household living Below Poverty Line (BPL) as per central criteria.',
+          'Resident of the applying State / Union Territory.'
+        ],
+        ineligible: [
+          'Persons below the age of 60 years.',
+          'Senior citizens receiving regular retirement pensions from central/state government or organized sector provident funds.',
+          'Individuals living above the poverty threshold.'
+        ],
+        documents: [
+          { name: 'Aadhaar Card', status: 'Mandatory', desc: 'Validates age, residence, and identity proof' },
+          { name: 'BPL Certificate / SECC Record', status: 'Mandatory', desc: 'Verifies economic status under BPL norms' },
+          { name: 'Bank or Post Office Passbook', status: 'Mandatory', desc: 'For monthly DBT pension deposit' },
+          { name: 'Digital Life Certificate (Jeevan Pramaan)', status: 'Annual', desc: 'Facial or biometric recognition submitted once a year' }
+        ],
+        dedupUnit: '1 per Senior Citizen Record',
+        antiFraudDesc: 'Individual Scope: Each eligible senior in the same family can receive pension independently. Cross-checked with the National Death Registry and Social Security registries to prevent ghost pensions.',
+        phone: '1800-111-555',
+        email: 'nsap-help@nic.in',
+        faqs: [
+          { q: 'Can both husband and wife aged 60+ receive this pension?', a: 'Yes! NSAP Old Age Pension is an individual entitlement. Both husband and wife can receive monthly pensions if both fulfill age and BPL eligibility.' },
+          { q: 'Do senior citizens need to visit government offices for annual life verification?', a: 'No. Annual life certificates can be submitted from home using the Jeevan Pramaan mobile application with smartphone camera facial authentication.' }
+        ]
+      },
+
+      'ujjwala': {
+        id: 'ujjwala',
+        codeKey: 'ujjwala',
+        applyKey: 'ujjwala',
+        code: 'PMUY 2.0',
+        title: 'PM Ujjwala Yojana 2.0',
+        shortTitle: 'PM Ujjwala',
+        ministry: 'Ministry of Petroleum & Natural Gas (MoPNG)',
+        ministryShort: 'MoPNG',
+        sector: 'Clean Energy & LPG',
+        scope: 'Household Scope',
+        scopeBadge: '🏠 Household Scope',
+        benefitAmount: 'Free Connection',
+        benefitFull: 'Free LPG Connection + 1st Refill + Stove',
+        disbursement: 'Equipment & Subsidy Release',
+        sla: '3 – 5 Days',
+        image: 'assets/scheme-ujjwala.jpg',
+        summary: 'Deposit-free LPG connection, first refill and hotplate stove to adult women of poor families. Household-level benefit: one active connection per home to ensure clean cooking fuel.',
+        fullDesc: 'Pradhan Mantri Ujjwala Yojana (PMUY 2.0) empowers rural women and protects family health by replacing hazardous cooking fuels like firewood and coal with clean, pressurized LPG gas. Beneficiaries receive a complete deposit-free gas connection along with their first cylinder refill and gas stove totally free of cost.',
+        objectives: [
+          'Protect the health of women and children from indoor smoke and respiratory illnesses.',
+          'Promote women empowerment by issuing gas connections in the name of the adult female head of the family.',
+          'Eliminate deforestation caused by firewood cutting in rural areas.',
+          'Ensure universal coverage of clean cooking fuels across Indian households.'
+        ],
+        financialSchedule: `
+          <div class="bg-white p-3.5 rounded-lg border border-slate-200 text-xs">
+            <span class="block font-bold text-slate-900 mb-1">100% Financial Subsidy Package:</span>
+            <ul class="list-disc list-inside space-y-1 text-slate-600">
+              <li>Security deposit of 14.2 kg LPG cylinder (₹1,600 value) — Fully Waived</li>
+              <li>Security deposit of Pressure Regulator (₹150 value) — Fully Waived</li>
+              <li>LPG Gas Hose Pipe and Domestic Gas Consumer Card (DGCC) booklet — Free</li>
+              <li>First 14.2 kg LPG Cylinder Refill — 100% Free of Cost</li>
+              <li>ISI-Certified Two-Burner Gas Stove (Hotplate) — 100% Free of Cost</li>
+            </ul>
+          </div>
+        `,
+        eligible: [
+          'Adult woman (aged 18 years or above) belonging to a BPL household.',
+          'No other active LPG connection in the same household under any Oil Marketing Company (IOCL, BPCL, HPCL).',
+          'Categories include: SC/ST households, PMAY beneficiaries, Antyodaya Anna Yojana (AAY), Most Backward Classes (MBC), Tea tribes, and forest dwellers.'
+        ],
+        ineligible: [
+          'Households that already possess an active domestic LPG connection under any family member\'s name.',
+          'Male applicants (scheme is dedicated to adult female family members).',
+          'Families lacking valid ration card or family composition proof.'
+        ],
+        documents: [
+          { name: 'Aadhaar of Adult Female Applicant', status: 'Mandatory', desc: 'Proof of identity and address' },
+          { name: 'Aadhaar of All Adult Family Members', status: 'Mandatory', desc: 'Required to clear inter-OMC deduplication checks' },
+          { name: 'Ration Card / Family Composition Proof', status: 'Mandatory', desc: 'Validates family composition to prevent multiple connections' },
+          { name: 'Bank Passbook / Account details', status: 'Mandatory', desc: 'Required for future cylinder refill subsidies' }
+        ],
+        dedupUnit: '1 per Household Dwelling',
+        antiFraudDesc: 'Household Scope: Every application is screened against the centralized OMC registry (Indane, Bharat Gas, HP Gas). If any member of the household already has a gas connection, the application is held automatically.',
+        phone: '1800-266-6696 / 1906',
+        email: 'ujjwala-support@gov.in',
+        faqs: [
+          { q: 'Can migrant families without permanent address apply?', a: 'Yes! Under Ujjwala 2.0, migrant families do not need to submit local domicile or rent agreements; a self-declaration is sufficient to obtain an LPG connection.' },
+          { q: 'Can the connection be registered in a male member\'s name?', a: 'No. PM Ujjwala connections are exclusively issued in the name of the adult female head of the household.' }
+        ]
+      },
+
+      'scholarship': {
+        id: 'scholarship',
+        codeKey: 'scholarship',
+        applyKey: 'scholarship',
+        code: 'PRE-MATRIC-NSP',
+        title: 'Pre-Matric Scholarship',
+        shortTitle: 'Pre-Matric Aid',
+        ministry: 'Ministry of Education (MoE)',
+        ministryShort: 'MoE',
+        sector: 'Education & Student Aid',
+        scope: 'Individual / Student',
+        scopeBadge: '👤 Individual Scope',
+        benefitAmount: 'Annual Aid',
+        benefitFull: 'Class I–X Academic Aid & Maintenance Allowance',
+        disbursement: 'Direct Bank DBT to Student/Guardian',
+        sla: '5 Working Days',
+        image: 'assets/scheme-scholarship.jpg',
+        summary: 'Financial scholarship for Class I–X school students in eligible categories covering admission fees, books, and uniforms. Applied per child, per academic year with UDISE+ school verification.',
+        fullDesc: 'The Pre-Matric Scholarship Scheme supports parents from economically disadvantaged communities to educate their children studying in classes I to X. It reduces school dropout rates, encourages regular attendance, and bridges the gap in primary and secondary educational attainment.',
+        objectives: [
+          'Support children from low-income families to continue their foundational schooling without financial barriers.',
+          'Eliminate child labor and reduce school dropouts especially at the upper primary level.',
+          'Provide grants for school admission fees, books, stationery, and uniforms.',
+          'Encourage high attendance and academic performance.'
+        ],
+        financialSchedule: `
+          <div class="bg-white p-3.5 rounded-lg border border-slate-200 text-xs">
+            <span class="block font-bold text-slate-900 mb-1">Annual Financial Scholarship:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+              <div class="p-2.5 rounded bg-slate-50 border border-slate-100">
+                <span class="block font-bold text-slate-800">Day Scholars (Class I – X)</span>
+                <span class="text-slate-600">₹2,250 – ₹4,000 / year + book grant.</span>
+              </div>
+              <div class="p-2.5 rounded bg-slate-50 border border-slate-100">
+                <span class="block font-bold text-slate-800">Hostellers (Class VI – X)</span>
+                <span class="text-slate-600">₹5,000 – ₹7,500 / year maintenance grant.</span>
+              </div>
+            </div>
+          </div>
+        `,
+        eligible: [
+          'Students studying in Classes I to X in recognized government, local body, or aided schools.',
+          'Annual family income of parents/guardians not exceeding ₹2,50,000.',
+          'Minimum 75% attendance record in previous academic session.',
+          'Applicable to SC, ST, OBC, Minority, and EWS categories as per state notification.'
+        ],
+        ineligible: [
+          'Students already holding another full scholarship for the same academic year from any other government scheme.',
+          'Students studying in unrecognized private un-aided institutions without government affiliation.',
+          'Students with family income exceeding statutory ceiling.'
+        ],
+        documents: [
+          { name: 'Student Aadhaar / Child ID', status: 'Mandatory', desc: 'Validates child identity and date of birth' },
+          { name: 'School Enrollment Certificate / UDISE+ ID', status: 'Mandatory', desc: 'Verifies active enrollment in recognized school' },
+          { name: 'Parent Income Certificate', status: 'Mandatory', desc: 'Issued by competent revenue authority' },
+          { name: 'Bank Passbook (Student or Joint with Guardian)', status: 'Mandatory', desc: 'Account for direct electronic scholarship credit' }
+        ],
+        dedupUnit: '1 per Student per Academic Year',
+        antiFraudDesc: 'Individual Scope: Each child in a household can apply independently. Applications are validated against the national UDISE+ school registry to prevent double claiming for the same student in the same year.',
+        phone: '0120-6619540',
+        email: 'helpdesk@nsp.gov.in',
+        faqs: [
+          { q: 'Can two children from the same family receive scholarships?', a: 'Yes! Pre-Matric Scholarship is an individual student benefit. Multiple siblings in eligible school grades can each receive their own scholarship.' },
+          { q: 'Is a bank account in the child\'s name compulsory?', a: 'For minor students below age 10, a joint bank account with the mother/father or guardian is accepted.' }
+        ]
+      },
+
+      'ayushman': {
+        id: 'ayushman',
+        codeKey: 'ayushman',
+        applyKey: 'ayushman',
+        code: 'PM-JAY',
+        title: 'Ayushman Bharat PM-JAY',
+        shortTitle: 'Ayushman Bharat',
+        ministry: 'Ministry of Health & Family Welfare (MoHFW)',
+        ministryShort: 'MoHFW / NHA',
+        sector: 'Healthcare & Insurance',
+        scope: 'Household Scope',
+        scopeBadge: '🏠 Household Scope',
+        benefitAmount: '₹5 Lakh / Family',
+        benefitFull: '₹5,00,000 Cashless Health Cover / Year',
+        disbursement: '100% Cashless at Empanelled Hospitals',
+        sla: 'Instant Golden Card',
+        image: 'assets/scheme-ayushman.jpg',
+        summary: 'World\'s largest public health assurance scheme providing up to ₹5 Lakh per family per year for secondary and tertiary care hospitalization across 27,000+ public and private empanelled hospitals.',
+        fullDesc: 'Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (PM-JAY) provides cashless medical treatment up to ₹5,00,000 per family per year across India. Over 12 crore vulnerable and low-income families are covered. Recently expanded to cover all senior citizens aged 70 and above, regardless of income.',
+        objectives: [
+          'Eliminate catastrophic out-of-pocket medical expenditures that push families into poverty.',
+          'Provide 100% cashless and paperless access to top-tier private and public hospitals.',
+          'Cover pre-existing conditions from Day 1 of enrollment with no waiting periods.',
+          'Provide comprehensive secondary and tertiary surgical and medical care across 1,949 medical packages.'
+        ],
+        financialSchedule: `
+          <div class="bg-white p-3.5 rounded-lg border border-slate-200 text-xs">
+            <span class="block font-bold text-slate-900 mb-1">Cashless Hospitalization Entitlements:</span>
+            <ul class="list-disc list-inside space-y-1 text-slate-600">
+              <li>Up to <strong>₹5,00,000</strong> per family per year on a family floater basis.</li>
+              <li>Covers 3 days of pre-hospitalization and 15 days of post-hospitalization diagnostics &amp; medicines.</li>
+              <li>Zero enrollment fee, zero premium, and zero deductibles for the beneficiary family.</li>
+              <li>Portability across any empanelled hospital anywhere in India.</li>
+            </ul>
+          </div>
+        `,
+        eligible: [
+          'Families identified under Socio-Economic and Caste Census (SECC 2011) rural deprivation and urban occupational criteria.',
+          'Beneficiaries enrolled under Rashtriya Swasthya Bima Yojana (RSBY).',
+          'ALL Senior Citizens aged 70 years and above (irrespective of income or family status).',
+          'All family members listed in the ration card or PM-JAY family record.'
+        ],
+        ineligible: [
+          'Families covered under government healthcare schemes (e.g. CGHS, ECHS, Railways).',
+          'Households with four-wheeler motorized vehicles or government salaried personnel (except seniors 70+).'
+        ],
+        documents: [
+          { name: 'Aadhaar Card (Each Family Member)', status: 'Mandatory', desc: 'Used for biometric verification and instant Ayushman Card generation' },
+          { name: 'Ration Card / PM-JAY Family ID', status: 'Mandatory', desc: 'Proves family link to SECC household database' },
+          { name: 'Active Mobile Number', status: 'Mandatory', desc: 'To receive digital Ayushman Card and hospital OTP' }
+        ],
+        dedupUnit: '1 Common Wallet per Household',
+        antiFraudDesc: 'Household Scope with Individual Cards: The ₹5 Lakh wallet is shared across the family. Each family member receives their own unique Ayushman Card with biometric locking to prevent fraudulent claims by outsiders.',
+        phone: '14555 / 1800-111-565',
+        email: 'pmjay@nha.gov.in',
+        faqs: [
+          { q: 'Is there a limit on family size or age?', a: 'No! There is no cap on family size or age. Every legitimate member of the household is covered under the family floater.' },
+          { q: 'Are pre-existing diseases like diabetes or heart conditions covered?', a: 'Yes! All pre-existing conditions are covered from the very first day of enrollment without any exclusion period.' },
+          { q: 'How do I avail treatment at a hospital?', a: 'Simply show your Ayushman Card or Aadhaar number at the "Ayushman Mitra" desk located in any empanelled hospital across India for 100% cashless treatment.' }
+        ]
+      }
+    };
+
+    // Normalize URL Parameter
+    function getSchemeFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      let s = (params.get('scheme') || params.get('id') || '').toLowerCase().trim();
+      if (!s) {
+        const hash = window.location.hash.replace('#', '').toLowerCase().trim();
+        if (hash) s = hash;
+      }
+
+      if (s === 'pmay-g' || s === 'pmayg' || s === 'toilet' || s === 'sbm' || s === 'sbm_toilet') return 'pmayg';
+      if (s === 'pm-kisan' || s === 'pmkisan' || s === 'kisan' || s === 'pm_kisan') return 'pmkisan';
+      if (s === 'nsap-pension' || s === 'pension' || s === 'nsap' || s === 'old_age_pension') return 'pension';
+      if (s === 'ujjwala' || s === 'pmuy' || s === 'ujjwala_gas' || s === 'gas') return 'ujjwala';
+      if (s === 'scholarship' || s === 'pre-matric' || s === 'scholarship_merit') return 'scholarship';
+      if (s === 'ayushman' || s === 'pmjay' || s === 'ayushman_pmjay') return 'ayushman';
+
+      return 'pmayg'; // Default
+    }
+
+    // Render Scheme Details
+    function renderScheme(schemeKey) {
+      const data = SCHEME_DATABASE[schemeKey] || SCHEME_DATABASE['pmayg'];
+
+      // Update Page Title
+      document.title = `${data.title} – Ojas Welfare Details`;
+
+      // Update Breadcrumbs & Tags
+      document.getElementById('bcSchemeName').textContent = data.title;
+      document.getElementById('schemeMinistry').textContent = data.ministry;
+      document.getElementById('schemeSector').textContent = data.sector;
+      document.getElementById('schemeScopeBadge').textContent = data.scopeBadge;
+
+      // Update Title & Summary
+      document.getElementById('schemeTitle').textContent = data.title;
+      document.getElementById('schemeSummary').textContent = data.summary;
+      document.getElementById('schemeFullDesc').textContent = data.fullDesc;
+
+      // Update Metrics
+      document.getElementById('schemeBenefitAmount').textContent = data.benefitAmount;
+      document.getElementById('schemeDisbursement').textContent = data.disbursement;
+      document.getElementById('schemeSla').textContent = data.sla;
+
+      // Update Hero Media
+      document.getElementById('schemeHeroImg').src = data.image;
+      document.getElementById('schemeHeroImg').alt = data.title;
+      document.getElementById('schemeCardHeading').textContent = data.shortTitle;
+      document.getElementById('schemeStatCode').textContent = data.code;
+      document.getElementById('schemeStatScope').textContent = data.scope.split('/')[0].trim();
+
+      // Update Objectives
+      const objList = document.getElementById('schemeObjectivesList');
+      objList.innerHTML = data.objectives.map((obj, i) => `
+        <div class="flex items-start gap-2.5 text-xs text-slate-700 bg-slate-50/70 p-2.5 rounded-lg border border-slate-200/60">
+          <svg class="size-4 text-orange-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <span class="leading-relaxed">${obj}</span>
+        </div>
+      `).join('');
+
+      // Update Financial Schedule
+      document.getElementById('schemeFinancialSchedule').innerHTML = data.financialSchedule;
+
+      // Update Eligibility
+      const eligList = document.getElementById('schemeEligibleList');
+      eligList.innerHTML = data.eligible.map(e => `
+        <div class="checklist-row">
+          <svg class="size-3.5 text-emerald-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span class="leading-relaxed">${e}</span>
+        </div>
+      `).join('');
+
+      const ineligList = document.getElementById('schemeIneligibleList');
+      ineligList.innerHTML = data.ineligible.map(ie => `
+        <div class="checklist-row">
+          <svg class="size-3.5 text-rose-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <span class="leading-relaxed">${ie}</span>
+        </div>
+      `).join('');
+
+      // Update Documents
+      const docsList = document.getElementById('schemeDocumentsList');
+      docsList.innerHTML = data.documents.map(d => `
+        <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-slate-900">${d.name}</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${d.status === 'Mandatory' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-slate-200 text-slate-700'}">${d.status}</span>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-tight">${d.desc}</p>
+        </div>
+      `).join('');
+
+      // Update Deduplication Info
+      document.getElementById('schemeAntiFraudDesc').textContent = data.antiFraudDesc;
+      document.getElementById('schemeDedupUnit').textContent = data.dedupUnit;
+
+      // Update Contacts
+      document.getElementById('schemeContactPhone').textContent = data.phone;
+      document.getElementById('schemeContactPhone').href = `tel:${data.phone.split('/')[0].replace(/[^0-9]/g, '')}`;
+      document.getElementById('schemeContactEmail').textContent = data.email;
+      document.getElementById('schemeContactEmail').href = `mailto:${data.email}`;
+
+      // Update FAQs
+      const faqContainer = document.getElementById('schemeFaqContainer');
+      faqContainer.innerHTML = data.faqs.map((f, i) => `
+        <details class="faq-details" ${i === 0 ? 'open' : ''}>
+          <summary class="faq-summary text-xs sm:text-sm">
+            <span>${f.q}</span>
+            <svg class="size-4 text-slate-400 shrink-0 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="p-3.5 bg-slate-50/50 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            ${f.a}
+          </div>
+        </details>
+      `).join('');
+
+      // Update CTA Links
+      const applyUrl = `apply.html?scheme=${data.applyKey}`;
+      const checkUrl = `apply.html?mode=check&scheme=${data.applyKey}`;
+      
+      document.getElementById('heroApplyBtn').href = applyUrl;
+      document.getElementById('heroCheckBtn').href = checkUrl;
+      document.getElementById('stepApplyBtn').href = applyUrl;
+      document.getElementById('sidebarApplyBtn').href = applyUrl;
+      document.getElementById('topNavApplyBtn').href = applyUrl;
+
+      // Update Active Navigation Pill
+      document.querySelectorAll('#schemeTabsNav .scheme-nav-pill').forEach(pill => {
+        if (pill.getAttribute('data-scheme') === schemeKey) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+    }
+
+    // Toggle Dropdowns
+    function toggleDropdown(id, event) {
+      if (event) {
+        event.stopPropagation();
+      }
+      const el = document.getElementById(id);
+      if (!el) return;
+      const isOpen = el.classList.contains('show');
+      document.querySelectorAll('.aicte-dropdown-card').forEach(d => d.classList.remove('show'));
+      if (!isOpen) {
+        el.classList.add('show');
+      }
+    }
+
+    // Toggle Important Note Modal
+    function toggleImportantNote(show) {
+      const modal = document.getElementById('importantNoteModal');
+      if (modal) {
+        if (show) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
+      }
+    }
+
+    // Language Selector Hook
+    function setLanguage(code, name) {
+      document.getElementById('currentLangLabel').textContent = name;
+      document.querySelectorAll('.lang-option-btn').forEach(btn => {
+        if (btn.getAttribute('data-lang') === code) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      document.getElementById('languageDropdown').classList.remove('show');
+    }
+
+    // Close Dropdowns on Click Outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.aicte-dropdown-wrap')) {
+        document.querySelectorAll('.aicte-dropdown-card').forEach(d => d.classList.remove('show'));
+      }
+    });
+
+    // Intercept Scheme Switcher Tabs for Instant Switching without page reload
+    document.addEventListener('DOMContentLoaded', () => {
+      const initialScheme = getSchemeFromUrl();
+      renderScheme(initialScheme);
+
+      // Add smooth tab click listener
+      document.querySelectorAll('#schemeTabsNav .scheme-nav-pill').forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetKey = pill.getAttribute('data-scheme');
+          if (targetKey) {
+            window.history.pushState({}, '', `scheme.html?scheme=${SCHEME_DATABASE[targetKey].codeKey}`);
+            renderScheme(targetKey);
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+          }
+        });
+      });
+    });
+
+    // Listen to browser Back/Forward navigation
+    window.addEventListener('popstate', () => {
+      renderScheme(getSchemeFromUrl());
+    });
+  </script>
+</body>
+</html>

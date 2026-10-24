@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ojas · Officer Review Portal - Unified Welfare Platform</title>
+  <link rel="stylesheet" href="/assets/panel.css">
+</head>
+<body>
+  <div class="tricolor"></div>
+
+  <!-- LOGIN VIEW -->
+  <div id="view-login" class="login-wrap">
+    <div class="login-card">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+        <div style="font-size: 28px;">🛡️</div>
+        <div>
+          <h2>Ojas · Official Review Portal</h2>
+          <div class="muted small">Ojas Welfare Administration, Approvals & Audit</div>
+        </div>
+      </div>
+
+      <form onsubmit="handleStaffLogin(event)">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" id="login-username" value="officer_sharma" required>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-password" value="Demo@Password123" required>
+        </div>
+        <div class="field">
+          <label>TOTP 2FA Token (Optional unless enabled)</label>
+          <input type="text" id="login-totp" placeholder="6-digit code">
+        </div>
+        <button type="submit" class="btn primary" style="width: 100%; justify-content: center; margin-top: 10px;">Authenticate Official Session</button>
+      </form>
+
+      <div class="demo-creds">
+        <strong>Quick Demo Login Switcher (All Official Roles):</strong>
+        <div class="btn-row" style="margin-top: 8px; flex-wrap: wrap; gap: 6px;">
+          <button type="button" class="btn sm" onclick="setRoleCreds('sysadmin_rao')">👑 Super Admin / SysAdmin</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('senior_officer_patel')">🏛️ Senior Review Officer</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('officer_sharma')">🛡️ Officer Sharma (Step 1)</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('officer_verma')">🛡️ Officer Verma (Step 2)</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('dept_admin_singh')">🏢 Dept Admin</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('auditor_gupta')">🔍 Auditor</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('field_worker_ram')">📱 Field Worker</button>
+          <button type="button" class="btn sm" onclick="setRoleCreds('clerk_demo')">📝 Intake Clerk</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATED ADMIN / OFFICER PORTAL -->
+  <div id="view-dashboard" class="hidden">
+    <div class="topbar">
+      <div class="brand">
+        <a href="/index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+          <div class="emblem">🛡️</div>
+          <span>Ojas · Officer Console</span>
+        </a>
+        <span class="role" id="header-user-role">OFFICER</span>
+        <span class="role" id="header-user-district" style="background: rgba(255,255,255,0.2);">CENTRAL</span>
+
+        <!-- Back to Main Website Button in Header -->
+        <a href="/index.html" class="btn-back-home" title="Return to Main Ojas Welfare Portal">
+          <span>←</span>
+          <span>Back to Main Website</span>
+        </a>
+      </div>
+
+      <!-- Navigation Links to Main Website Sections -->
+      <div class="topbar-nav">
+        <a href="/index.html"><span>🏠</span> Home</a>
+        <a href="/index.html#schemesGrid"><span>🏛️</span> All Schemes</a>
+        <a href="/apply.html"><span>📝</span> Apply Online</a>
+        <a href="/citizen.html"><span>👤</span> Citizen Life Record</a>
+        <a href="/official.html"><span>🛡️</span> Verification Desk</a>
+      </div>
+
+      <div class="who">
+        <span id="header-user-name">officer_sharma</span>
+        <a href="/panel/citizen" class="btn sm" style="background: rgba(255,255,255,0.15); color: #fff; border: none;">Citizen View</a>
+        <button class="btn sm" onclick="logout()" style="background: rgba(255,255,255,0.2); color: #fff; border: none; font-weight: 600; cursor: pointer;">Logout</button>
+      </div>
+    </div>
+
+    <div class="shell">
+      <div class="sidebar">
+        <!-- Official Profile Card -->
+        <div class="sidebar-profile-card">
+          <div class="sidebar-profile-avatar" id="sidebar-officer-avatar" style="background: linear-gradient(135deg, #1e3a8a 0%, #081735 100%);">OS</div>
+          <div class="sidebar-profile-info">
+            <div class="sidebar-profile-name" id="sidebar-officer-title">Officer Sharma</div>
+            <div class="sidebar-profile-uid" id="sidebar-officer-uid">OFFICER · CENTRAL</div>
+            <div class="sidebar-profile-status">
+              <span class="pulse-dot"></span>
+              <span>Four-Eyes Protocol Active</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-label">Operations</div>
+        <div class="nav-item active" onclick="showAdminTab('overview')">📊 Overview & Savings</div>
+        <div class="nav-item" onclick="showAdminTab('queue')">📥 Review Queue <span class="count" id="badge-queue-count">0</span></div>
+        <div class="nav-item" onclick="showAdminTab('appeals')">⚖️ Citizen Appeals</div>
+        <div class="nav-item" onclick="showAdminTab('persons')">🔍 Citizen Search & ABAC</div>
+
+        <div class="section-label">Fraud & Intelligence</div>
+        <div class="nav-item" onclick="showAdminTab('fraud')">🕸️ Fraud Rings & Anomalies</div>
+        <div class="nav-item" onclick="showAdminTab('simulation')">🔮 What-if Policy Simulator</div>
+
+        <div class="section-label">Trust & Compliance</div>
+        <div class="nav-item" onclick="showAdminTab('audit')">🔗 Hash Chain & Merkle Audit</div>
+        <div class="nav-item" onclick="showAdminTab('breakglass')">🚨 Break-Glass Access Log</div>
+        <div class="nav-item" onclick="showAdminTab('outbox')">📤 Outbox Delivery Monitor</div>
+        <div class="nav-item" onclick="showAdminTab('users')">👥 Staff Accounts</div>
+
+        <div class="section-label" style="margin-top: 18px;">National Portal</div>
+        <a href="/index.html" class="nav-link-item"><span>🏠</span> Main Home</a>
+        <a href="/index.html#schemesGrid" class="nav-link-item"><span>🏛️</span> Welfare Directory</a>
+        <a href="/apply.html" class="nav-link-item"><span>📝</span> Apply for Benefit</a>
+        <a href="/official.html" class="nav-link-item"><span>🛡️</span> Officer Console</a>
+      </div>
+
+      <div class="main">
+        <!-- TAB 1: OVERVIEW & SAVINGS -->
+        <div id="tab-overview">
+          <div class="page-head">
+            <div>
+              <h2>Executive Welfare Intelligence & Savings Dashboard</h2>
+              <div class="muted">Live counter of intercepted fraud, public funds disbursed, and SLA compliance metrics.</div>
+            </div>
+            <button class="btn" onclick="loadOverview()">🔄 Refresh Dashboard</button>
+          </div>
+
+          <div class="grid cols-4">
+            <div class="stat accent">
+              <div class="label">Public Funds Saved (Fraud Intercepted)</div>
+              <div class="value" id="stat-savings">₹0</div>
+              <div class="small muted" style="margin-top: 4px;">Caught before DBT disbursement</div>
+            </div>
+            <div class="stat">
+              <div class="label">Disbursed via Mock DBT</div>
+              <div class="value" id="stat-disbursed">₹0</div>
+              <div class="small muted" style="margin-top: 4px;">Direct to verified citizen accounts</div>
+            </div>
+            <div class="stat warn">
+              <div class="label">Duplicates Intercepted</div>
+              <div class="value" id="stat-duplicates">0</div>
+              <div class="small muted" style="margin-top: 4px;">Property & Household collisions</div>
+            </div>
+            <div class="stat">
+              <div class="label">SLA Breaches Auto-Escalated</div>
+              <div class="value" id="stat-sla">0</div>
+              <div class="small muted" style="margin-top: 4px;">Forwarded to Senior Officer queue</div>
+            </div>
+          </div>
+
+          <div class="grid cols-2" style="margin-top: 16px;">
+            <div class="card">
+              <h3>Scheme Utilisation & Applications</h3>
+              <div id="scheme-utilisation-box">Loading scheme utilisation...</div>
+            </div>
+            <div class="card">
+              <h3>Flags by District</h3>
+              <div id="district-flags-box">Loading district breakdown...</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Officer Approval Rates & Behaviour Monitoring</h3>
+            <div id="officer-rates-box">Loading officer metrics...</div>
+          </div>
+        </div>
+
+        <!-- TAB 2: REVIEW QUEUE (CORE WORKFLOW) -->
+        <div id="tab-queue" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Welfare Applications Review Queue</h2>
+              <div class="muted">Ranked by explainable Risk Score (High/Medium/Low) and SLA urgency. Four-eyes protocol enforced on high value.</div>
+            </div>
+            <div class="btn-row">
+              <select id="queue-filter-status" onchange="loadReviewQueue()" style="width: auto;">
+                <option value="">All Reviewable Statuses</option>
+                <option value="FLAGGED">FLAGGED (Duplicates & Risk)</option>
+                <option value="UNDER_VERIFICATION">UNDER_VERIFICATION (Normal / Four-Eyes Stage 2)</option>
+                <option value="SUBMITTED">SUBMITTED</option>
+              </select>
+              <button class="btn" onclick="loadReviewQueue()">🔄 Refresh Queue</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Application Number</th>
+                    <th>Scheme</th>
+                    <th>Grant Level</th>
+                    <th>Applicant</th>
+                    <th>District</th>
+                    <th>Risk Rating</th>
+                    <th>Status</th>
+                    <th>SLA Urgency</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="queue-table-body">
+                  <tr><td colspan="9" class="muted">Loading review queue...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: APPEALS -->
+        <div id="tab-appeals" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Citizen Appeals Queue</h2>
+              <div class="muted">Independent judicial oversight: Appeals must be reviewed by a different officer than the original rejector.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Appeal ID</th>
+                    <th>Application</th>
+                    <th>Appellant Grounds</th>
+                    <th>Status</th>
+                    <th>Original Officer</th>
+                    <th>Filed Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="appeals-table-body">
+                  <tr><td colspan="7" class="muted">Loading appeals...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: PERSON SEARCH & ABAC -->
+        <div id="tab-persons" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Citizen Registry Search & ABAC Scoping</h2>
+              <div class="muted">District-scoped access control. Accessing citizen outside your jurisdiction requires emergency break-glass.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="btn-row" style="margin-bottom: 14px;">
+              <input type="text" id="person-search-input" placeholder="Search citizen by name or UID (e.g. Sharma, PER-...)" style="max-width: 400px;">
+              <button class="btn primary" onclick="searchPersons()">Search Registry</button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Citizen UID</th>
+                    <th>Full Name</th>
+                    <th>Date of Birth</th>
+                    <th>District</th>
+                    <th>In-Scope?</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="person-search-table">
+                  <tr><td colspan="7" class="muted">Enter a search query above to look up records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: FRAUD & INTELLIGENCE -->
+        <div id="tab-fraud" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Fraud Intelligence & Graph Analytics</h2>
+              <div class="muted">Syndicate detection over shared bank accounts, addresses, and anomalous officer approval trends.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>🕸️ Surfaced Fraud Rings (Shared Identifiers)</h3>
+            <p class="small muted">Identifies clusters of multiple independent households sharing the exact same blind HMAC bank account or phone hash.</p>
+            <div id="fraud-rings-container">Loading fraud rings...</div>
+          </div>
+
+          <div class="card">
+            <h3>⚠️ Officer Behaviour Anomalies</h3>
+            <p class="small muted">Automated alerts flag officers with >98% approval rates or unauthorized off-hours access (23:00 - 05:00).</p>
+            <div id="officer-anomalies-container">Loading officer anomalies...</div>
+          </div>
+        </div>
+
+        <!-- TAB 6: WHAT-IF SIMULATOR -->
+        <div id="tab-simulation" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>What-if Policy Impact Simulator</h2>
+              <div class="muted">Test proposed welfare eligibility modifications against the synthetic population before policy enactment.</div>
+            </div>
+          </div>
+
+          <div class="grid cols-2">
+            <div class="card">
+              <h3>Configure Proposed Policy</h3>
+              <form onsubmit="handleRunSimulation(event)">
+                <div class="field">
+                  <label>Simulation Title</label>
+                  <input type="text" id="sim-name" value="Expand Senior Citizen Pension (Age 55)" required>
+                </div>
+                <div class="field">
+                  <label>Target Scheme</label>
+                  <select id="sim-scheme">
+                    <option value="OLD_AGE_PENSION">Senior Citizen Pension (OLD_AGE_PENSION)</option>
+                    <option value="SBM_TOILET">Swachh Bharat Toilet Grant (SBM_TOILET)</option>
+                    <option value="PMAY_HOUSING">PMAY Housing Grant (PMAY_HOUSING)</option>
+                    <option value="SCHOLARSHIP_MERIT">Merit Scholarship (SCHOLARSHIP_MERIT)</option>
+                  </select>
+                </div>
+                <div class="form-grid">
+                  <div class="field">
+                    <label>New Minimum Age</label>
+                    <input type="number" id="sim-min-age" value="55">
+                  </div>
+                  <div class="field">
+                    <label>New Maximum Age</label>
+                    <input type="number" id="sim-max-age" placeholder="None">
+                  </div>
+                </div>
+                <div class="field">
+                  <label>New Benefit Amount (₹)</label>
+                  <input type="number" id="sim-benefit" value="3500">
+                </div>
+                <button type="submit" class="btn primary">Run Async Simulation across Population</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Simulation Results & Budget Impact</h3>
+              <div id="sim-result-box" class="empty">
+                Configure policy parameters and click "Run Async Simulation" to view projected budgetary impact.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 7: HASH CHAIN AUDIT & MERKLE -->
+        <div id="tab-audit" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Cryptographic Hash-Chained Audit Log</h2>
+              <div class="muted">Tamper-evident SHA-256 chain and signed Ed25519 Merkle checkpoints. Verify integrity on demand.</div>
+            </div>
+            <div class="btn-row">
+              <button class="btn primary" onclick="verifyAuditChain()">🛡️ Verify Hash Chain</button>
+              <button class="btn" onclick="createMerkleCheckpoint()">✍️ Create Merkle Checkpoint</button>
+            </div>
+          </div>
+
+          <!-- Tamper Simulation (Demo Scenario 7) -->
+          <div class="card" style="border: 1px dashed var(--saffron); background: #fffcf8;">
+            <div class="btn-row" style="justify-content: space-between;">
+              <div>
+                <strong>🧪 Hackathon Demo Scenario 7: Audit Tamper Simulation</strong>
+                <div class="small muted">Simulate an unauthorized rogue database row modification and verify that the chain detects it instantly.</div>
+              </div>
+              <div class="btn-row">
+                <button class="btn sm danger" onclick="simulateTamper()">Tamper Row in Memory</button>
+                <button class="btn sm" onclick="restoreTamper()">Restore Row Integrity</button>
+              </div>
+            </div>
+            <div id="tamper-status" style="margin-top: 8px;"></div>
+          </div>
+
+          <div class="card">
+            <h3>Chain Verification Output</h3>
+            <div id="audit-verify-output" class="empty">Click "Verify Hash Chain" to scan all sequential links.</div>
+          </div>
+
+          <div class="card">
+            <h3>Recent Cryptographic Audit Records</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Seq #</th>
+                    <th>Timestamp</th>
+                    <th>Actor</th>
+                    <th>Action</th>
+                    <th>Entity</th>
+                    <th>Previous Hash</th>
+                    <th>Current Hash</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-log-table">
+                  <tr><td colspan="7" class="muted">Loading audit log...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 8: BREAK-GLASS ACCESS LOG -->
+        <div id="tab-breakglass" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Emergency Break-Glass Audit Trail</h2>
+              <div class="muted">All out-of-district or emergency overrides are flagged and logged here with mandatory written justifications.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Official User</th>
+                    <th>Official Role</th>
+                    <th>Target Citizen UID</th>
+                    <th>Emergency Justification Reason</th>
+                  </tr>
+                </thead>
+                <tbody id="breakglass-table">
+                  <tr><td colspan="5" class="muted">Loading break-glass access logs...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 9: OUTBOX MONITOR -->
+        <div id="tab-outbox" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Guaranteed Delivery Outbox Monitor</h2>
+              <div class="muted">Transactional outbox pattern: Events recorded in database transaction and delivered by background queue worker.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Event ID</th>
+                    <th>Event Type</th>
+                    <th>Aggregate Type & ID</th>
+                    <th>Status</th>
+                    <th>Retries</th>
+                    <th>Scheduled For</th>
+                  </tr>
+                </thead>
+                <tbody id="outbox-table">
+                  <tr><td colspan="6" class="muted">Loading outbox events...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 10: USERS -->
+        <div id="tab-users" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Staff & Official Accounts</h2>
+              <div class="muted">Role-Based Access Control (RBAC) and department scoping management.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>District</th>
+                    <th>2FA Enabled?</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="users-table">
+                  <tr><td colspan="7" class="muted">Loading staff accounts...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/panel.js"></script>
+  <script>
+    Panel.init('gov_admin_session', () => {
+      document.getElementById('view-login').classList.remove('hidden');
+      document.getElementById('view-dashboard').classList.add('hidden');
+    });
+
+    let currentOfficial = null;
+
+    function setRoleCreds(username) {
+      document.getElementById('login-username').value = username;
+      document.getElementById('login-password').value = 'Demo@Password123';
+    }
+
+    async function handleStaffLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+      const totpToken = document.getElementById('login-totp').value.trim();
+
+      try {
+        const res = await Panel.api('POST', '/v1/auth/login', { username, password, totpToken: totpToken || undefined }, { noAuth: true });
+        if (res.requires2fa) {
+          Panel.toast('TOTP 2FA required for this official account!', 'warn');
+          return;
+        }
+        Panel.saveSession(res);
+        Panel.toast(`Authenticated as ${res.user.role}!`, 'ok');
+        initAdminDashboard();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    function logout() {
+      Panel.clearSession();
+      location.reload();
+    }
+
+    function showAdminTab(tabName) {
+      document.querySelectorAll('.sidebar .nav-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.main > div').forEach(el => el.classList.add('hidden'));
+
+      const target = document.getElementById(`tab-${tabName}`);
+      if (target) target.classList.remove('hidden');
+      event.currentTarget.classList.add('active');
+
+      if (tabName === 'overview') loadOverview();
+      if (tabName === 'queue') loadReviewQueue();
+      if (tabName === 'appeals') loadAppeals();
+      if (tabName === 'fraud') loadFraudIntel();
+      if (tabName === 'audit') loadAuditLog();
+      if (tabName === 'breakglass') loadBreakGlass();
+      if (tabName === 'outbox') loadOutbox();
+      if (tabName === 'users') loadUsers();
+    }
+
+    async function initAdminDashboard() {
+      const s = Panel.session();
+      if (!s || !s.accessToken) {
+        document.getElementById('view-login').classList.remove('hidden');
+        document.getElementById('view-dashboard').classList.add('hidden');
+        return;
+      }
+
+      currentOfficial = s.user;
+      document.getElementById('view-login').classList.add('hidden');
+      document.getElementById('view-dashboard').classList.remove('hidden');
+
+      document.getElementById('header-user-name').textContent = currentOfficial.username;
+      document.getElementById('header-user-role').textContent = currentOfficial.role;
+      document.getElementById('header-user-district').textContent = currentOfficial.district || 'ALL';
+
+      const sTitle = document.getElementById('sidebar-officer-title');
+      const sUid = document.getElementById('sidebar-officer-uid');
+      if (sTitle) sTitle.textContent = currentOfficial.username.replace(/_/g, ' ').toUpperCase();
+      if (sUid) sUid.textContent = `${currentOfficial.role} · ${currentOfficial.district || 'CENTRAL'}`;
+
+      loadOverview();
+      loadReviewQueue();
+    }
+
+    async function loadOverview() {
+      try {
+        const data = await Panel.api('GET', '/v1/analytics/dashboard');
+
+        document.getElementById('stat-savings').textContent = Panel.money(data.overview.liveSavingsInr);
+        document.getElementById('stat-disbursed').textContent = Panel.money(data.overview.totalDisbursedInr);
+        document.getElementById('stat-duplicates').textContent = data.overview.duplicatesCaughtCount;
+        document.getElementById('stat-sla').textContent = data.overview.slaBreaches;
+
+        // Scheme utilisation
+        const schemeBox = document.getElementById('scheme-utilisation-box');
+        schemeBox.innerHTML = Object.entries(data.schemeUtilisation).map(([code, s]) => `
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+              <span>${s.name} (${code})</span>
+              <span>${Panel.money(s.disbursed)} (${s.applications} apps)</span>
+            </div>
+            <div class="bar" style="margin-top: 4px;">
+              <span style="width: ${Math.min(100, Math.max(5, s.applications * 15))}%;"></span>
+            </div>
+          </div>
+        `).join('');
+
+        // District flags
+        const distBox = document.getElementById('district-flags-box');
+        distBox.innerHTML = Object.entries(data.flagsByDistrict).map(([d, count]) => `
+          <div class="bar-row">
+            <span class="small font-semibold">${d}</span>
+            <div class="bar"><span style="width: ${Math.min(100, count * 20)}%; background: var(--red);"></span></div>
+            <span class="small font-bold">${count}</span>
+          </div>
+        `).join('') || '<div class="muted small">No district flags recorded.</div>';
+
+        // Officer rates
+        const offBox = document.getElementById('officer-rates-box');
+        offBox.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Officer User ID</th>
+                  <th>Total Decisions</th>
+                  <th>Approved</th>
+                  <th>Rejected</th>
+                  <th>Approval Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${Object.entries(data.officerApprovalRates).map(([id, st]) => `
+                  <tr>
+                    <td class="mono">${id}</td>
+                    <td>${st.total}</td>
+                    <td style="color: var(--green);">${st.approved}</td>
+                    <td style="color: var(--red);">${st.rejected}</td>
+                    <td><strong>${st.approvalRate}</strong></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadReviewQueue() {
+      const tbody = document.getElementById('queue-table-body');
+      const statusFilter = document.getElementById('queue-filter-status').value;
+
+      try {
+        const queue = await Panel.api('GET', `/v1/applications/review-queue${statusFilter ? `?status=${statusFilter}` : ''}`);
+        document.getElementById('badge-queue-count').textContent = queue.length;
+
+        if (queue.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="9" class="muted">No pending applications in your review queue.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = queue.map(a => `
+          <tr>
+            <td class="mono font-semibold">${a.applicationNumber}</td>
+            <td><strong>${a.schemeName || a.schemeCode}</strong></td>
+            <td>${Panel.badge(a.grantUnit)}</td>
+            <td>${a.applicantName}</td>
+            <td>${a.applicantDistrict}</td>
+            <td>${Panel.badge(a.riskScore)}</td>
+            <td>${Panel.badge(a.status)}</td>
+            <td>
+              ${a.isEscalated ? '<span class="badge b-red">ESCALATED TO SENIOR</span>' : `<span class="small">${Panel.date(a.slaDeadline)}</span>`}
+            </td>
+            <td>
+              <button class="btn sm primary" onclick="openReviewDrawer('${a.id}')">Review Case</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="9" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function openReviewDrawer(appId) {
+      try {
+        const d = await Panel.api('GET', `/v1/applications/${appId}/detail`);
+        const html = `
+          <h2>Official Case Review: ${d.applicationNumber}</h2>
+          <div class="muted small" style="margin-bottom: 14px;">Target Scheme: ${d.schemeName} (${Panel.badge(d.grantUnit)})</div>
+
+          <!-- Risk Assessment Card -->
+          <div class="card" style="border-left: 4px solid ${d.riskScore === 'HIGH' ? 'var(--red)' : (d.riskScore === 'MEDIUM' ? 'var(--saffron)' : 'var(--green)')};">
+            <h3>Automated Duplicate & Risk Assessment: ${Panel.badge(d.riskScore)}</h3>
+            <p class="small muted">Composite Score: <strong>${d.risk?.compositeScore || 0}/100</strong> • Duplicates are flagged for officer review and NEVER auto-rejected.</p>
+            ${d.risk?.factors && d.risk.factors.length > 0 ? `
+              <ul class="list-clean small" style="margin-top: 8px;">
+                ${d.risk.factors.map(f => `<li class="fail"><strong>${f.factor} (+${f.weight} pts):</strong> ${f.details}</li>`).join('')}
+              </ul>
+            ` : '<div class="small" style="color: var(--green);">No risk or duplicate signals triggered.</div>'}
+          </div>
+
+          <!-- Advisory AI Case Summary -->
+          ${d.caseSummary ? `
+            <div class="card">
+              <h3>🤖 AI Case Summarizer (Advisory)</h3>
+              <div class="advisory">${Panel.esc(d.caseSummary.summary_text_en)}</div>
+              <div class="advisory" style="margin-top: 8px;">${Panel.esc(d.caseSummary.summary_text_hi)}</div>
+            </div>
+          ` : ''}
+
+          <!-- Applicant & Household Context -->
+          <div class="card">
+            <h3>Applicant & Property Verification</h3>
+            <div class="kv">
+              <div class="k">Applicant</div><div class="v">${d.applicantName} (<span class="mono">${d.applicantPersonUid}</span>)</div>
+              <div class="k">District</div><div class="v">${d.applicant?.district}</div>
+              <div class="k">Household UID</div><div class="v mono">${d.householdUid || 'None'}</div>
+              <div class="k">Property UID</div><div class="v mono">${d.propertyUid || 'None'}</div>
+              <div class="k">Benefit Amount</div><div class="v font-bold">${Panel.money(d.benefitAmount)}</div>
+            </div>
+          </div>
+
+          <!-- Four-Eyes Status -->
+          <div class="card">
+            <h3>Audit Review Steps (${d.reviews?.length || 0} reviews recorded)</h3>
+            ${d.reviews && d.reviews.length > 0 ? `
+              <ul class="list-clean small">
+                ${d.reviews.map(r => `<li><strong>${r.step} (${r.decision}):</strong> by <code>${r.officer || r.officer_user_id}</code> - "${r.reason}"</li>`).join('')}
+              </ul>
+            ` : '<div class="muted small">No prior officer reviews recorded yet. You are acting as Primary Reviewer.</div>'}
+          </div>
+
+          <!-- Review Decision Action Box -->
+          <div class="card" style="background: #fafbfd;">
+            <h3>Official Adjudication Decision</h3>
+            <p class="small muted">Mandatory written justification reason required by law on every decision.</p>
+
+            <div class="field">
+              <label>Justification Reason (Mandatory, min 5 chars)</label>
+              <textarea id="review-reason" placeholder="Document verified, coordinates matched with property registry..."></textarea>
+            </div>
+
+            <div class="btn-row" style="margin-top: 12px;">
+              <button class="btn success" onclick="submitOfficerDecision('${d.id}', 'APPROVE')">✔ Approve Application</button>
+              <button class="btn danger" onclick="submitOfficerDecision('${d.id}', 'REJECT')">✖ Reject Application</button>
+              <button class="btn warn" onclick="submitOfficerDecision('${d.id}', 'FLAG')">🚩 Flag for Investigation</button>
+            </div>
+          </div>
+        `;
+        Panel.openDrawer(html);
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function submitOfficerDecision(appId, decision) {
+      const reason = document.getElementById('review-reason').value.trim();
+      if (!reason || reason.length < 5) {
+        Panel.toast('Please provide a mandatory written reason (min 5 chars)', 'error');
+        return;
+      }
+
+      try {
+        const res = await Panel.api('POST', `/v1/applications/${appId}/review`, { decision, reason });
+        Panel.toast(`Decision submitted! ${res.message}`, 'ok');
+        Panel.closeDrawer();
+        loadReviewQueue();
+        loadOverview();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function loadAppeals() {
+      const tbody = document.getElementById('appeals-table-body');
+      try {
+        const appeals = await Panel.api('GET', '/v1/admin/appeals');
+        if (appeals.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="muted">No pending appeals filed by citizens.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = appeals.map(ap => `
+          <tr>
+            <td class="mono font-semibold">${ap.id.substring(0, 8)}...</td>
+            <td><strong>${ap.application?.applicationNumber || ap.application_id}</strong></td>
+            <td>${Panel.esc(ap.grounds)}</td>
+            <td>${Panel.badge(ap.status)}</td>
+            <td class="mono">${ap.original_officer_id ? ap.original_officer_id.substring(0, 8) : 'None'}</td>
+            <td>${Panel.date(ap.filed_at)}</td>
+            <td>
+              ${ap.status === 'SUBMITTED' ? `
+                <div class="btn-row">
+                  <button class="btn sm success" onclick="reviewAppealPrompt('${ap.id}', 'OVERTURNED')">Overturn & Approve</button>
+                  <button class="btn sm danger" onclick="reviewAppealPrompt('${ap.id}', 'UPHELD')">Uphold Rejection</button>
+                </div>
+              ` : 'Decided'}
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function reviewAppealPrompt(appealId, decision) {
+      const reason = await Panel.ask(`Appeal Decision: ${decision}`, 'State grounds for appeal judgment...', 10);
+      if (!reason) return;
+      try {
+        await Panel.api('POST', `/v1/appeals/${appealId}/review`, { decision, reason });
+        Panel.toast(`Appeal decision recorded: ${decision}`, 'ok');
+        loadAppeals();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function searchPersons() {
+      const q = document.getElementById('person-search-input').value.trim();
+      const tbody = document.getElementById('person-search-table');
+      if (q.length < 2) { Panel.toast('Enter at least 2 characters', 'error'); return; }
+
+      tbody.innerHTML = '<tr><td colspan="7" class="muted">Searching...</td></tr>';
+      try {
+        const results = await Panel.api('GET', `/v1/persons?q=${encodeURIComponent(q)}`);
+        if (results.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="muted">No citizen records found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = results.map(p => `
+          <tr>
+            <td class="mono">${p.personUid}</td>
+            <td><strong>${p.fullName}</strong></td>
+            <td>${Panel.date(p.dateOfBirth, false)}</td>
+            <td>${p.district}</td>
+            <td>${p.inScope ? '<span class="badge b-green">IN JURISDICTION</span>' : '<span class="badge b-amber">OUT OF DISTRICT</span>'}</td>
+            <td>${Panel.badge(p.status)}</td>
+            <td>
+              ${p.inScope ? `
+                <button class="btn sm" onclick="viewCitizenAdmin('${p.personUid}')">View Profile</button>
+              ` : `
+                <button class="btn sm warn" onclick="triggerBreakGlassPrompt('${p.personUid}')">🚨 Break-Glass Access</button>
+              `}
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function triggerBreakGlassPrompt(personUid) {
+      const reason = await Panel.ask('Emergency Break-Glass Override', 'Mandatory: Explain reason for accessing out-of-district citizen record (min 10 chars)...', 10);
+      if (!reason) return;
+      try {
+        await Panel.api('POST', '/v1/auth/break-glass', { personUid, reason });
+        Panel.toast('Break-glass emergency access granted and logged for auditor review.', 'warn');
+        viewCitizenAdmin(personUid);
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function viewCitizenAdmin(uid) {
+      try {
+        const data = await Panel.api('GET', `/v1/admin/persons/${uid}`);
+        const p = data.person;
+        const html = `
+          <h2>Citizen Profile: ${p.fullName}</h2>
+          <div class="muted mono small" style="margin-bottom: 14px;">${p.personUid} • District: ${p.district}</div>
+
+          <div class="card">
+            <h3>Identifiers & Contact</h3>
+            <div class="kv">
+              <div class="k">Mobile (Envelope KMS)</div><div class="v mono">${p.phone || 'Masked'}</div>
+              <div class="k">Address</div><div class="v">${p.addressLine}, ${p.pincode}</div>
+              <div class="k">Status</div><div class="v">${Panel.badge(p.status)}</div>
+              <div class="k">Recorded From</div><div class="v">${Panel.date(p.recordedFrom)}</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Disbursed Grants History (${data.benefits.length})</h3>
+            ${data.benefits.length > 0 ? `
+              <ul class="list-clean small">
+                ${data.benefits.map(b => `<li><strong>${b.scheme_id}:</strong> ${Panel.money(b.amount)} on ${Panel.date(b.disbursed_at)} (${b.transaction_ref})</li>`).join('')}
+              </ul>
+            ` : '<div class="muted small">No prior welfare grants disbursed.</div>'}
+          </div>
+
+          <div class="card">
+            <h3>Bitemporal History Records (${data.bitemporalHistory.length} states)</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Valid From</th><th>Valid To</th><th>Status</th><th>Address</th><th>Current?</th></tr>
+                </thead>
+                <tbody>
+                  ${data.bitemporalHistory.map(h => `
+                    <tr>
+                      <td class="small">${Panel.date(h.validFrom)}</td>
+                      <td class="small">${Panel.date(h.validTo)}</td>
+                      <td>${Panel.badge(h.status)}</td>
+                      <td class="small">${h.address}</td>
+                      <td>${h.isCurrent ? '✔ Current' : 'Closed'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        Panel.openDrawer(html);
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function loadFraudIntel() {
+      try {
+        const rings = await Panel.api('GET', '/v1/fraud/rings');
+        const container = document.getElementById('fraud-rings-container');
+        if (rings.length === 0) {
+          container.innerHTML = '<div class="muted small">No active fraud rings detected across shared identifiers.</div>';
+        } else {
+          container.innerHTML = rings.map(r => `
+            <div class="card" style="border-left: 4px solid var(--red); margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4>Cluster: ${r.clusterId}</h4>
+                <span class="badge b-red">Confidence: ${r.confidence}</span>
+              </div>
+              <div class="small muted mono" style="margin-top: 4px;">Shared Identifier Hash: ${r.sharedIdentifierHash}</div>
+              <div class="small font-bold" style="margin-top: 8px;">${r.entityCount} Citizen Profiles Sharing This Account:</div>
+              <div class="mono small" style="margin-top: 4px; color: var(--navy);">${r.entities.join(', ')}</div>
+            </div>
+          `).join('');
+        }
+
+        // Officer anomalies
+        const anomalies = await Panel.api('GET', '/v1/fraud/officer-anomalies');
+        const anomContainer = document.getElementById('officer-anomalies-container');
+        if (anomalies.length === 0) {
+          anomContainer.innerHTML = '<div class="muted small">No behavioural anomalies flagged for officials.</div>';
+        } else {
+          anomContainer.innerHTML = anomalies.map(a => `
+            <div class="alert warn">
+              <strong>${a.anomalyType} (Officer: ${a.officerId}):</strong> ${a.details}
+            </div>
+          `).join('');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function handleRunSimulation(e) {
+      e.preventDefault();
+      const name = document.getElementById('sim-name').value.trim();
+      const scheme = document.getElementById('sim-scheme').value;
+      const minAge = document.getElementById('sim-min-age').value;
+      const benefit = document.getElementById('sim-benefit').value;
+
+      const box = document.getElementById('sim-result-box');
+      box.innerHTML = Panel.loading();
+
+      try {
+        const res = await Panel.api('POST', '/v1/simulations/run', {
+          simulationName: name,
+          schemeCode: scheme,
+          proposedChanges: {
+            minAge: minAge ? parseInt(minAge, 10) : undefined,
+            newBenefitAmount: benefit ? parseInt(benefit, 10) : undefined,
+          },
+        });
+
+        box.innerHTML = `
+          <h4>Simulation Completed: ${res.name}</h4>
+          <div class="kv" style="margin-top: 10px;">
+            <div class="k">Evaluated Population</div><div class="v">${res.evaluatedPopulation} citizens</div>
+            <div class="k">Newly Eligible Citizens</div><div class="v font-bold" style="color: var(--green);">+${res.newlyEligibleCount} citizens</div>
+            <div class="k">Newly Ineligible</div><div class="v font-bold" style="color: var(--red);">${res.newlyIneligibleCount} citizens</div>
+            <div class="k">Projected Budget Delta</div><div class="v font-bold" style="font-size: 16px;">${Panel.money(res.estimatedCostDeltaInr)}</div>
+          </div>
+          <h4 style="margin-top: 14px; font-size: 13px;">Affected Districts:</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+            ${(Array.isArray(res.affectedDistricts) ? res.affectedDistricts : Object.keys(res.affectedDistricts || {})).map(d => `<span class="badge b-blue">${d}</span>`).join('') || '<span class="muted small">None</span>'}
+          </div>
+        `;
+      } catch (err) {
+        box.innerHTML = `<div class="alert danger">${err.message}</div>`;
+      }
+    }
+
+    async function verifyAuditChain() {
+      const box = document.getElementById('audit-verify-output');
+      box.innerHTML = Panel.loading();
+      try {
+        const res = await Panel.api('GET', '/v1/audit/verify');
+        if (res.valid) {
+          box.innerHTML = `
+            <div class="alert ok">
+              <strong>✔ Cryptographic Chain Validated:</strong> All ${res.totalEntries} sequential audit links have matching SHA-256 prev_hash and current_hash digests.
+            </div>
+          `;
+        } else {
+          box.innerHTML = `
+            <div class="alert danger">
+              <strong>✖ Cryptographic Tamper Detected!</strong>
+              <div>Broken Link at Sequence #${res.brokenSequence}</div>
+              <div class="mono small" style="margin-top: 4px;">Reason: ${res.reason}</div>
+            </div>
+          `;
+        }
+      } catch (err) {
+        box.innerHTML = `<div class="alert danger">${err.message}</div>`;
+      }
+    }
+
+    async function createMerkleCheckpoint() {
+      try {
+        const cp = await Panel.api('POST', '/v1/audit/checkpoints', {});
+        Panel.toast(`Epoch #${cp.epoch} Merkle Checkpoint signed with Ed25519! Root: ${cp.root_hash.substring(0, 16)}...`, 'ok');
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function simulateTamper() {
+      try {
+        const res = await Panel.api('POST', '/v1/admin/demo/tamper', {});
+        document.getElementById('tamper-status').innerHTML = `<span class="badge b-red">Tampered Sequence #${res.tamperedSequence}</span> ${res.message}`;
+        Panel.toast('Row tampered in memory. Click "Verify Hash Chain" to see instant detection.', 'warn');
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function restoreTamper() {
+      try {
+        const res = await Panel.api('POST', '/v1/admin/demo/restore', {});
+        document.getElementById('tamper-status').innerHTML = '<span class="badge b-green">Restored</span> Integrity restored.';
+        Panel.toast('Tamper restored to valid hash.', 'ok');
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function loadAuditLog() {
+      const tbody = document.getElementById('audit-log-table');
+      try {
+        const logs = await Panel.api('GET', '/v1/admin/audit-log?limit=30');
+        tbody.innerHTML = logs.map(l => `
+          <tr>
+            <td class="mono font-bold">${l.sequence_number}</td>
+            <td class="small">${Panel.date(l.timestamp)}</td>
+            <td>${l.actor_role}</td>
+            <td><strong>${l.action}</strong></td>
+            <td>${l.entity_type}:${l.entity_id.substring(0, 8)}</td>
+            <td class="mono small">${l.prev_hash.substring(0, 8)}...</td>
+            <td class="mono small">${l.current_hash.substring(0, 8)}...</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function loadBreakGlass() {
+      const tbody = document.getElementById('breakglass-table');
+      try {
+        const list = await Panel.api('GET', '/v1/admin/break-glass');
+        if (list.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="muted">No emergency break-glass overrides recorded.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = list.map(b => `
+          <tr>
+            <td>${Panel.date(b.accessed_at)}</td>
+            <td>${b.accessor_user_id}</td>
+            <td>${Panel.badge(b.accessor_role)}</td>
+            <td class="mono">${b.person_uid}</td>
+            <td style="color: var(--red); font-weight: 600;">${Panel.esc(b.break_glass_reason)}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function loadOutbox() {
+      const tbody = document.getElementById('outbox-table');
+      try {
+        const events = await Panel.api('GET', '/v1/admin/outbox');
+        if (events.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="muted">No outbox events.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = events.map(e => `
+          <tr>
+            <td class="mono">${e.id.substring(0, 8)}</td>
+            <td><strong>${e.event_type}</strong></td>
+            <td>${e.aggregate_type}:${e.aggregate_id.substring(0, 8)}</td>
+            <td>${Panel.badge(e.status)}</td>
+            <td>${e.retry_count || 0}</td>
+            <td>${Panel.date(e.scheduled_for)}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function loadUsers() {
+      const tbody = document.getElementById('users-table');
+      try {
+        const users = await Panel.api('GET', '/v1/admin/users');
+        tbody.innerHTML = users.map(u => `
+          <tr>
+            <td><strong>${u.username}</strong></td>
+            <td>${u.email}</td>
+            <td>${Panel.badge(u.role)}</td>
+            <td>${u.district || 'ALL'}</td>
+            <td>${u.totpEnabled ? '✔ Active' : 'Off'}</td>
+            <td>${u.active ? '<span class="badge b-green">ACTIVE</span>' : '<span class="badge b-red">LOCKED</span>'}</td>
+            <td>
+              <button class="btn sm" onclick="toggleUserActive('${u.id}')">${u.active ? 'Deactivate' : 'Activate'}</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="alert danger">${err.message}</td></tr>`;
+      }
+    }
+
+    async function toggleUserActive(userId) {
+      try {
+        const res = await Panel.api('POST', `/v1/admin/users/${userId}/toggle`, {});
+        Panel.toast(`User status changed: ${res.active ? 'ACTIVE' : 'DEACTIVATED'}`, 'ok');
+        loadUsers();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    // Auto-init
+    initAdminDashboard();
+  </script>
+</body>
+</html>

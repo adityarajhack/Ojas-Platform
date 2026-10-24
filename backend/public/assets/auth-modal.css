@@ -1,0 +1,341 @@
+/* JanaSetu Auth Modal - 100% Solid, High-Contrast Government Styling */
+
+#janasetuAuthModal {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(8, 15, 30, 0.82) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+}
+
+#janasetuAuthModal.hidden {
+  display: none !important;
+}
+
+#janasetuAuthModal #janasetuAuthAlert.hidden,
+#janasetuAuthModal #janasetuAuthError.hidden {
+  display: none !important;
+}
+
+#janasetuAuthModal .auth-card {
+  position: relative !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 1.25rem !important;
+  max-width: 520px !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  opacity: 1 !important;
+}
+
+#janasetuAuthModal .auth-top-strip {
+  height: 5px !important;
+  width: 100% !important;
+  background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%) !important;
+  flex-shrink: 0 !important;
+}
+
+#janasetuAuthModal .auth-header {
+  background: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 1rem 1.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-shrink: 0 !important;
+}
+
+#janasetuAuthModal .auth-header h3 {
+  font-size: 0.95rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+#janasetuAuthModal .auth-header p {
+  font-size: 0.75rem !important;
+  color: #64748b !important;
+  margin: 0.15rem 0 0 0 !important;
+  font-weight: 600 !important;
+}
+
+#janasetuAuthModal .auth-close-btn {
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid #cbd5e1 !important;
+  background: #ffffff !important;
+  color: #475569 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#janasetuAuthModal .auth-close-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+#janasetuAuthModal .auth-tabs {
+  display: flex !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 0 1.5rem !important;
+  background: #ffffff !important;
+  flex-shrink: 0 !important;
+}
+
+#janasetuAuthModal .auth-tab {
+  padding: 0.85rem 0.75rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #64748b !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#janasetuAuthModal .auth-tab.active {
+  color: #ea580c !important;
+  border-bottom-color: #ea580c !important;
+}
+
+#janasetuAuthModal .auth-body {
+  padding: 1.5rem !important;
+  overflow-y: auto !important;
+  flex-grow: 1 !important;
+  background: #ffffff !important;
+}
+
+#janasetuAuthModal .auth-alert {
+  background: #fff7ed !important;
+  border: 1px solid #fed7aa !important;
+  color: #9a3412 !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  line-height: 1.45 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+#janasetuAuthModal .auth-error {
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+  color: #b91c1c !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+#janasetuAuthModal .auth-demo-pill {
+  background: #eff6ff !important;
+  border: 1px solid #bfdbfe !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.75rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 1.25rem !important;
+}
+
+#janasetuAuthModal .auth-demo-pill.officer {
+  background: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+#janasetuAuthModal .auth-demo-pill p.title {
+  font-size: 0.8rem !important;
+  font-weight: 800 !important;
+  color: #1e3a8a !important;
+  margin: 0 !important;
+}
+
+#janasetuAuthModal .auth-demo-pill.officer p.title {
+  color: #78350f !important;
+}
+
+#janasetuAuthModal .auth-demo-pill p.desc {
+  font-size: 0.72rem !important;
+  color: #3b82f6 !important;
+  margin: 0.15rem 0 0 0 !important;
+}
+
+#janasetuAuthModal .auth-demo-pill.officer p.desc {
+  color: #d97706 !important;
+}
+
+#janasetuAuthModal .auth-demo-btn {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+#janasetuAuthModal .auth-demo-pill.officer .auth-demo-btn {
+  background: #d97706 !important;
+}
+
+#janasetuAuthModal .auth-form-group {
+  margin-bottom: 1rem !important;
+}
+
+#janasetuAuthModal .auth-form-group label {
+  display: block !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  margin-bottom: 0.35rem !important;
+  text-transform: none !important;
+}
+
+#janasetuAuthModal input[type="text"],
+#janasetuAuthModal input[type="password"],
+#janasetuAuthModal input[type="email"],
+#janasetuAuthModal input[type="date"],
+#janasetuAuthModal input[type="tel"],
+#janasetuAuthModal select {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0.75rem 0.9rem !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.875rem !important;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+  transition: all 0.15s ease !important;
+}
+
+#janasetuAuthModal input:focus,
+#janasetuAuthModal select:focus {
+  border-color: #ea580c !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18) !important;
+  background-color: #ffffff !important;
+}
+
+#janasetuAuthModal .auth-btn-submit {
+  width: 100% !important;
+  padding: 0.85rem 1rem !important;
+  border-radius: 0.75rem !important;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3) !important;
+  transition: all 0.15s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 1.25rem !important;
+}
+
+#janasetuAuthModal .auth-btn-submit:hover {
+  filter: brightness(1.05) !important;
+  transform: translateY(-1px) !important;
+}
+
+#janasetuAuthModal .auth-btn-submit.officer {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3) !important;
+}
+
+#janasetuAuthModal .auth-btn-submit.signup {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+}
+
+#janasetuAuthModal .grid-2 {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0.75rem !important;
+}
+
+#janasetuAuthModal .col-span-2 {
+  grid-column: span 2 / span 2 !important;
+}
+
+/* Officer & Staff Quick Account Switcher Pills */
+#janasetuAuthModal .auth-role-pill {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  border-radius: 9px !important;
+  background: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #1e293b !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+}
+#janasetuAuthModal .auth-role-pill:hover {
+  background: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06) !important;
+}
+#janasetuAuthModal .auth-role-pill.active {
+  background: #fffbeb !important;
+  border-color: #d97706 !important;
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.22) !important;
+}
+#janasetuAuthModal .auth-role-pill .role-icon {
+  font-size: 16px !important;
+  flex-shrink: 0 !important;
+}
+#janasetuAuthModal .auth-role-pill .role-text {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  line-height: 1.25 !important;
+}
+#janasetuAuthModal .auth-role-pill .role-text strong {
+  font-size: 0.77rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+#janasetuAuthModal .auth-role-pill .role-text small {
+  font-size: 0.67rem !important;
+  color: #64748b !important;
+  font-family: "JetBrains Mono", Consolas, monospace !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}

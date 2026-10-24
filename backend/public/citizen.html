@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ojas · Citizen Portal - Lifelong Welfare Record</title>
+  <link rel="stylesheet" href="/assets/panel.css">
+  <style>
+    /* Executive Card & QR Badge styling */
+    .qr-card-container {
+      background: linear-gradient(135deg, #081735 0%, #0f2b66 100%);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(8, 23, 53, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .qr-card-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #ea580c 0%, #ffffff 50%, #16a34a 100%);
+    }
+    .qr-card-hologram {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(234,88,12,0.8) 0%, rgba(22,163,74,0.6) 50%, rgba(59,130,246,0.8) 100%);
+      opacity: 0.9;
+      display: grid; place-items: center;
+      box-shadow: 0 0 16px rgba(255,255,255,0.4);
+      font-size: 18px;
+    }
+    .wallet-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-xs);
+    }
+    .wallet-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .wallet-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    /* Bundle Card */
+    .bundle-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      border-top: 4px solid #ea580c;
+    }
+    .bundle-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+    /* Family Tree Node Hover */
+    .tree-node-interactive {
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .tree-node-interactive:hover {
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.15));
+    }
+    /* Modal dialog */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 23, 53, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      animation: modalSlide 0.25s ease-out;
+    }
+    @keyframes modalSlide {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="tricolor"></div>
+
+  <!-- 1. LOGIN VIEW -->
+  <div id="view-login" class="login-wrap">
+    <div class="login-card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <div style="font-size: 32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));">🛡️</div>
+        <div>
+          <h2 style="margin: 0; font-size: 22px; color: #081735;">Ojas · Citizen Access Portal</h2>
+          <div class="muted small">Lifelong Welfare Record &amp; Household Document Vault</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="btn primary" id="tab-btn-signin" onclick="switchLoginTab('signin')">Sign In with Credentials</button>
+        <button class="btn" id="tab-btn-signup" onclick="switchLoginTab('signup')">New Citizen Registration</button>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="form-signin" onsubmit="handleSignIn(event)">
+        <div class="field">
+          <label>Username or Citizen Aadhaar</label>
+          <input type="text" id="signin-username" value="citizen_demo" required placeholder="Enter username">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="signin-password" value="Demo@Password123" required placeholder="Enter password">
+        </div>
+        <button type="submit" class="btn primary" style="width: 100%; justify-content: center; margin-top: 10px; font-weight: 700; padding: 11px;">
+          Authenticate Citizen Session
+        </button>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="form-signup" class="hidden" onsubmit="handleSignUp(event)">
+        <div class="form-grid">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" id="reg-fn" placeholder="Ramesh" required>
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" id="reg-ln" placeholder="Kumar" required>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Date of Birth</label>
+            <input type="date" id="reg-dob" required>
+          </div>
+          <div class="field">
+            <label>Gender</label>
+            <select id="reg-gender">
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone Number (Mobile)</label>
+          <input type="tel" id="reg-phone" placeholder="9876543210" required>
+        </div>
+        <div class="field">
+          <label>Residential Address Line</label>
+          <input type="text" id="reg-addr" placeholder="House 12, Village Rampur" required>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>District</label>
+            <select id="reg-district">
+              <option value="CENTRAL">CENTRAL</option>
+              <option value="NORTH">NORTH</option>
+              <option value="SOUTH">SOUTH</option>
+              <option value="EAST">EAST</option>
+              <option value="WEST">WEST</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Pincode</label>
+            <input type="text" id="reg-pin" placeholder="110042" required>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>New Username</label>
+            <input type="text" id="reg-user" required placeholder="Choose username">
+          </div>
+          <div class="field">
+            <label>Password (min 8 chars)</label>
+            <input type="password" id="reg-pass" required placeholder="Min 8 characters">
+          </div>
+        </div>
+        <button type="submit" class="btn primary" style="width: 100%; justify-content: center; margin-top: 10px; font-weight: 700; padding: 11px;">
+          Register Citizen &amp; Create Life Record
+        </button>
+      </form>
+
+      <div class="demo-creds">
+        <strong>⚡ One-Click Demo Citizen:</strong>
+        <span class="cred" onclick="setDemoCitizen()" style="display: block; margin-top: 4px; padding: 6px 10px; background: #fff; border: 1px solid #fed7aa; border-radius: 6px; color: #ea580c; font-weight: 700; cursor: pointer;">
+          citizen_demo / Demo@Password123
+        </span>
+        <div class="muted small" style="margin-top: 6px;">
+          Linked to Rajesh &amp; Suresh Sharma's family household (BPL Priority Category)
+        </div>
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #fed7aa; display: flex; align-items: center; justify-content: space-between;">
+          <span class="small muted">Are you a government official?</span>
+          <a href="/panel/admin" class="small font-bold" style="color: #081735;">Officer / Super Admin Console →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. AUTHENTICATED CITIZEN PORTAL (DASHBOARD) -->
+  <div id="view-dashboard" class="hidden">
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+      <div class="brand">
+        <a href="/index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+          <div class="emblem">🛡️</div>
+          <span>Ojas · Citizen Portal</span>
+        </a>
+        <span class="role" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; box-shadow: 0 1px 4px rgba(16,185,129,0.3);">CITIZEN</span>
+
+        <a href="/index.html" class="btn-back-home" title="Return to Main Ojas Welfare Portal">
+          <span>←</span>
+          <span class="t-back-home">Back to Main Website</span>
+        </a>
+      </div>
+
+      <div class="who">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); color: #fff; font-weight: 800; font-size: 12px; display: grid; place-items: center;" id="header-avatar-initials">SS</div>
+          <span id="header-user-name" style="font-weight: 700;">citizen_demo</span>
+        </div>
+        <button class="btn sm" onclick="logout()" style="background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-weight: 700; cursor: pointer;">
+          <span class="t-logout">Logout</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Shell: Sidebar + Content -->
+    <div class="shell">
+      <!-- Modern Sidebar with Exactly 8 Final Feature Modules -->
+      <div class="sidebar">
+        <!-- Citizen Mini Profile Card -->
+        <div class="sidebar-profile-card">
+          <div class="sidebar-profile-avatar" id="sidebar-avatar">SS</div>
+          <div class="sidebar-profile-info">
+            <div class="sidebar-profile-name" id="sidebar-citizen-name">Suresh Sharma</div>
+            <div class="sidebar-profile-uid" id="sidebar-citizen-uid">PER-MVLUM0F1-9453</div>
+            <div class="sidebar-profile-status">
+              <span class="pulse-dot"></span>
+              <span class="t-ekyc-active">Aadhaar e-KYC Active</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-label t-menu-welfare">Citizen Dashboard</div>
+        <div class="nav-item active" id="nav-home" onclick="showTab('home')">
+          <span>🏠</span>
+          <span class="t-nav-home">Home Overview</span>
+        </div>
+        <div class="nav-item" id="nav-applications" onclick="showTab('applications')">
+          <span>📋</span>
+          <span class="t-nav-applications">Applications &amp; Bundling</span>
+          <span class="count" id="badge-app-count">0</span>
+        </div>
+        <div class="nav-item" id="nav-family" onclick="showTab('family')">
+          <span>🌳</span>
+          <span class="t-nav-family">Family &amp; Ghar (Family Tree)</span>
+        </div>
+        <div class="nav-item" id="nav-benefits" onclick="showTab('benefits')">
+          <span>💰</span>
+          <span class="t-nav-benefits">My Benefits (DBT Ledger)</span>
+        </div>
+        <div class="nav-item" id="nav-life-events" onclick="showTab('life-events')">
+          <span>👶</span>
+          <span class="t-nav-life-events">Life Events &amp; Nominees</span>
+        </div>
+        <div class="nav-item" id="nav-wallet" onclick="showTab('wallet')">
+          <span>📁</span>
+          <span class="t-nav-wallet">Document Wallet</span>
+        </div>
+        <div class="nav-item" id="nav-privacy" onclick="showTab('privacy')">
+          <span>🔒</span>
+          <span class="t-nav-privacy">Privacy &amp; Trust</span>
+        </div>
+        <div class="nav-item" id="nav-support" onclick="showTab('support')">
+          <span>🤖</span>
+          <span class="t-nav-support">Notifications &amp; Support</span>
+          <span class="count" id="badge-notif-count">0</span>
+        </div>
+
+        <div class="section-label" style="margin-top: 18px;" class="t-menu-links">National Welfare</div>
+        <a href="/apply.html" class="nav-link-item"><span>📝</span> <span class="t-nav-apply-link">Apply Scheme Form</span></a>
+        <a href="/track.html" class="nav-link-item"><span>🔍</span> <span class="t-nav-track-link">Track Application &amp; DBT</span></a>
+        <a href="/scheme.html" class="nav-link-item"><span>📋</span> <span class="t-nav-scheme-details">Scheme Guidelines &amp; Details</span></a>
+        <a href="/index.html#schemesGrid" class="nav-link-item"><span>🏛️</span> <span class="t-nav-dir-link">All 120+ Schemes Directory</span></a>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="main">
+
+        <!-- ============================================================
+             MODULE 1: HOME (EK NAZAR MEIN / AT A GLANCE)
+             ============================================================ -->
+        <div id="tab-home">
+          <!-- Welcome Banner -->
+          <div class="dossier-hero">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <h1 style="margin: 0; font-size: 24px; color: #081735;" id="home-welcome-title">Citizen Lifelong Record</h1>
+                <span class="badge b-green" style="font-weight: 800;">
+                  <span class="pulse-dot"></span> Bitemporal Merkle Verified
+                </span>
+              </div>
+              <div class="muted small" style="display: flex; align-items: center; gap: 6px;">
+                <span class="t-home-sub">Unified Citizen Life Record &amp; Household Dwelling Cadastre.</span>
+                <span>•</span>
+                <span style="color: #059669; font-weight: 700;">NIC State Node: Live</span>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn sm" onclick="showTab('family')">🪪 <span class="t-btn-qr">View Family Tree &amp; Card</span></button>
+              <button class="btn sm primary" onclick="refreshDashboard()">🔄 <span class="t-btn-refresh">Refresh Record</span></button>
+            </div>
+          </div>
+
+          <!-- Overview KPI Cards: Parivaar Summary -->
+          <div class="dashboard-overview-grid">
+            <div class="overview-kpi-card">
+              <div class="kpi-icon-badge" style="background: #eff6ff; color: #1d4ed8;">🏠</div>
+              <div>
+                <div class="kpi-val mono" id="kpi-hh-uid">HH-22-0147</div>
+                <div class="kpi-lbl t-kpi-household">Household Cadastre UID</div>
+              </div>
+            </div>
+
+            <div class="overview-kpi-card">
+              <div class="kpi-icon-badge" style="background: #f0fdf4; color: #15803d;">👨‍👩‍👧‍👦</div>
+              <div>
+                <div class="kpi-val" id="kpi-members-count">4 Persons</div>
+                <div class="kpi-lbl t-kpi-family">Verified Family Members</div>
+              </div>
+            </div>
+
+            <div class="overview-kpi-card">
+              <div class="kpi-icon-badge" style="background: #fef2f2; color: #b91c1c;">🏷️</div>
+              <div>
+                <div class="kpi-val" id="kpi-income-cat" style="color: #b91c1c;">BPL Priority</div>
+                <div class="kpi-lbl t-kpi-income">Income Category (Antyodaya)</div>
+              </div>
+            </div>
+
+            <div class="overview-kpi-card">
+              <div class="kpi-icon-badge" style="background: #fffbeb; color: #b45309;">💰</div>
+              <div>
+                <div class="kpi-val" id="kpi-dbt-total">₹ 18,000</div>
+                <div class="kpi-lbl t-kpi-dbt">Total Direct Benefit Received</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2-Column: Running Applications + Pending Actions -->
+          <div class="grid cols-2" style="margin-bottom: 24px;">
+            <!-- Column 1: Running Applications & Status -->
+            <div class="card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">
+                <h3 style="margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+                  <span>📋</span>
+                  <span class="t-home-running-apps">Active Applications &amp; Status</span>
+                </h3>
+                <button class="btn sm" onclick="showTab('applications')"><span class="t-view-all">View All</span> →</button>
+              </div>
+              <div id="home-running-apps-list">
+                <div class="small muted">Loading running applications...</div>
+              </div>
+            </div>
+
+            <!-- Column 2: Pending Actions (Pending Kaam) -->
+            <div class="card" style="border-left: 4px solid #ea580c;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">
+                <h3 style="margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+                  <span>⚠️</span>
+                  <span class="t-home-pending-title">Pending Action Items</span>
+                </h3>
+                <span class="badge b-amber">3 Actions Needed</span>
+              </div>
+              <div class="space-y-3" id="home-pending-actions-list">
+                <!-- Action Item 1: Document Re-upload -->
+                <div style="background: #fff7ed; border: 1px solid #fed7aa; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="color: #9a3412; font-size: 13px;">1. Income Certificate Re-upload</strong>
+                    <span class="badge b-red">ACTION REQUIRED</span>
+                  </div>
+                  <div class="small" style="color: #475569; margin: 4px 0 8px;">
+                    Tehsildar desk rejected expired stamp. Re-upload FY 2025-26 certificate to unlock pending schemes.
+                  </div>
+                  <button class="btn sm primary" onclick="showTab('wallet'); triggerDocReupload('DOC-CASTE-04');">
+                    📁 Re-upload Certificate Scan
+                  </button>
+                </div>
+
+                <!-- Action Item 2: e-KYC OTP -->
+                <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="color: #1e40af; font-size: 13px;">2. Aadhaar e-KYC Mobile OTP Re-validation</strong>
+                    <span class="badge b-blue">DUE IN 14 DAYS</span>
+                  </div>
+                  <div class="small" style="color: #475569; margin: 4px 0 8px;">
+                    Annual biometric re-validation required for direct credit of Old Age Pension &amp; PM-Kisan.
+                  </div>
+                  <button class="btn sm" onclick="simulateOtpKyc()">
+                    📲 Verify via Mobile OTP
+                  </button>
+                </div>
+
+                <!-- Action Item 3: Scholarship Deadline -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="color: #0f172a; font-size: 13px;">3. Pre-Matric Scholarship Deadline: 15 Nov</strong>
+                    <span class="badge b-amber">CLOSING SOON</span>
+                  </div>
+                  <div class="small" style="color: #475569; margin: 4px 0 8px;">
+                    Apply for daughter Anjali's ₹15,000 grant before portal closure.
+                  </div>
+                  <a href="/apply.html?scheme=SCHOLARSHIP_MERIT" class="btn sm">
+                    🎓 Apply Before 15 Nov
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- "Aapko Ye Milna Chahiye" - Proactive Scheme Entitlements -->
+          <div class="card">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+              <div>
+                <h3 style="margin: 0; font-size: 16px; color: #081735; display: flex; align-items: center; gap: 8px;">
+                  <span>💡</span>
+                  <span class="t-home-suggestions-title">“Aapko Ye Milna Chahiye” — Proactive Suggestions</span>
+                </h3>
+                <div class="muted small t-home-suggestions-sub">Schemes your household is eligible for based on age, income category, and dwelling checks.</div>
+              </div>
+              <button class="btn primary sm" onclick="showTab('applications')">⚡ <span class="t-apply-bundles">Apply Scheme Bundles</span></button>
+            </div>
+
+            <div class="grid cols-3" id="home-proactive-schemes">
+              <div class="small muted">Evaluating proactive welfare matches...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 2: APPLICATIONS (BUNDLING, TIMELINE, APPEAL, WITHDRAW)
+             ============================================================ -->
+        <div id="tab-applications" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-apps-head">Welfare Benefit Applications &amp; Multi-Scheme Bundling</h2>
+              <div class="muted t-apps-sub">Track active claims, apply for multi-scheme bundles in 1 form, review rejection reasons, and file formal appeals.</div>
+            </div>
+            <div class="btn-row">
+              <a href="/apply.html" class="btn primary">➕ <span class="t-apply-new">Apply for Single Scheme</span></a>
+            </div>
+          </div>
+
+          <!-- Section 2.1: Scheme Bundling (Ek form se kai schemes) -->
+          <div class="card" style="margin-bottom: 24px; background: linear-gradient(180deg, #ffffff 0%, #fffbf5 100%);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <div>
+                <h3 style="margin: 0; font-size: 16px; color: #9a3412; display: flex; align-items: center; gap: 8px;">
+                  <span>📦</span>
+                  <span class="t-bundle-title">Scheme Bundling: 1 Form Se Kai Schemes Apply Karein</span>
+                </h3>
+                <div class="small muted t-bundle-sub">Submit a unified multi-benefit application without filing separate forms for each department.</div>
+              </div>
+              <span class="badge b-amber">Zero Duplicate Data</span>
+            </div>
+
+            <div class="grid cols-3">
+              <!-- Bundle 1 -->
+              <div class="bundle-card">
+                <div>
+                  <div style="font-size: 24px; margin-bottom: 8px;">🌾</div>
+                  <h4 style="margin: 0 0 4px; font-size: 15px; color: #081735;">Rural Farmer Assistance Package</h4>
+                  <div class="small muted" style="margin-bottom: 10px;">Includes: PM-Kisan Direct Cash (₹6,000/yr) + Ayushman Bharat Golden Family Health Card (₹5 Lakh).</div>
+                  <div class="small mono" style="color: #059669; font-weight: 700;">Combined Benefit: ₹ 5,06,000</div>
+                </div>
+                <button class="btn primary sm" style="width: 100%; justify-content: center; margin-top: 14px;" onclick="applySchemeBundle('FARMER_BUNDLE')">
+                  ⚡ Apply Farmer Bundle
+                </button>
+              </div>
+
+              <!-- Bundle 2 -->
+              <div class="bundle-card">
+                <div>
+                  <div style="font-size: 24px; margin-bottom: 8px;">👩‍👧</div>
+                  <h4 style="margin: 0 0 4px; font-size: 15px; color: #081735;">Matru Shakti &amp; Clean Household</h4>
+                  <div class="small muted" style="margin-bottom: 10px;">Includes: PM Ujjwala 2.0 LPG Connection + Matru Vandana Nutrition Cash Assistance.</div>
+                  <div class="small mono" style="color: #059669; font-weight: 700;">Combined Benefit: ₹ 9,200</div>
+                </div>
+                <button class="btn primary sm" style="width: 100%; justify-content: center; margin-top: 14px;" onclick="applySchemeBundle('WOMEN_HOUSEHOLD_BUNDLE')">
+                  ⚡ Apply Matru Bundle
+                </button>
+              </div>
+
+              <!-- Bundle 3 -->
+              <div class="bundle-card">
+                <div>
+                  <div style="font-size: 24px; margin-bottom: 8px;">🎓</div>
+                  <h4 style="margin: 0 0 4px; font-size: 15px; color: #081735;">Student Academic Merit Package</h4>
+                  <div class="small muted" style="margin-bottom: 10px;">Includes: Pre-Matric Merit Scholarship (₹15,000) + Free Textbooks &amp; School Nutrition Entitlement.</div>
+                  <div class="small mono" style="color: #059669; font-weight: 700;">Combined Benefit: ₹ 25,000</div>
+                </div>
+                <button class="btn primary sm" style="width: 100%; justify-content: center; margin-top: 14px;" onclick="applySchemeBundle('STUDENT_BUNDLE')">
+                  ⚡ Apply Student Bundle
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2.2: Tracking Timeline & Application List -->
+          <div id="applications-list">
+            <div class="empty">Loading your applications...</div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 3: FAMILY AUR GHAR (INTERACTIVE FAMILY TREE & PROPERTY)
+             ============================================================ -->
+        <div id="tab-family" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-family-head">Interactive Family Tree &amp; Household Dwelling Cadastre</h2>
+              <div class="muted t-family-sub">Explore your family network, color-coded welfare status, household partition timeline, and verified property grants.</div>
+            </div>
+            <div class="btn-row">
+              <button class="btn primary" onclick="showTab('qrcard')">🪪 View QR Family Benefit Card</button>
+            </div>
+          </div>
+
+          <!-- Color-Coding Legend -->
+          <div class="tree-legend">
+            <span style="font-weight: 800; color: #081735;">Color-Coding Key:</span>
+            <span class="legend-pill"><span class="legend-dot" style="background: #16a34a;"></span> <span class="t-leg-green">Mila (Green: Received Benefit)</span></span>
+            <span class="legend-pill"><span class="legend-dot" style="background: #eab308;"></span> <span class="t-leg-yellow">Eligible Par Apply Nahi Kiya (Yellow: Unclaimed)</span></span>
+            <span class="legend-pill"><span class="legend-dot" style="background: #94a3b8;"></span> <span class="t-leg-grey">Nahi Mila / APL Excluded (Grey)</span></span>
+            
+            <!-- Benefit Overlay Filter -->
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+              <span class="small font-bold" style="color: #475569;">Benefit Overlay:</span>
+              <select id="tree-scheme-filter" onchange="filterTreeScheme(this.value)" style="padding: 4px 8px; border-radius: 6px; font-size: 11.5px; border: 1px solid #cbd5e1;">
+                <option value="ALL">Show All Benefits</option>
+                <option value="PM_KISAN">PM-Kisan Samman Nidhi</option>
+                <option value="SBM_TOILET">Swachh Bharat Latrine (IHL)</option>
+                <option value="SCHOLARSHIP_MERIT">Pre-Matric Scholarship</option>
+                <option value="AYUSHMAN_PMJAY">Ayushman Bharat PM-JAY</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Timeline Slider: Ghar Alag Hone Se Pehle Aur Baad Ka Tree -->
+          <div class="card" style="margin-bottom: 16px; background: #fff; padding: 14px 20px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <strong style="color: #081735; font-size: 14px;">⏳ Timeline Slider: Household Dwelling Partition</strong>
+                <div class="small muted">View family composition before and after household partition into independent ration card units.</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <button type="button" class="btn sm" id="btn-tree-2023" onclick="setTreeYear(2023)">2023: Before Partition (Joint Unit)</button>
+                <button type="button" class="btn sm primary" id="btn-tree-2026" onclick="setTreeYear(2026)">2026: After Partition (Current)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive SVG Family Tree Container -->
+          <div class="tree-container">
+            <div class="tree-controls">
+              <button class="btn sm" onclick="zoomTree(1.15)" title="Zoom In">➕</button>
+              <button class="btn sm" onclick="zoomTree(0.85)" title="Zoom Out">➖</button>
+              <button class="btn sm" onclick="resetTreeZoom()" title="Reset View">🔄</button>
+            </div>
+
+            <!-- SVG Tree Canvas -->
+            <svg id="family-tree-canvas" class="family-tree-svg" viewBox="0 0 850 370">
+              <!-- Dynamic Tree Nodes injected via JS -->
+            </svg>
+          </div>
+
+          <!-- Property & Dwelling Cadastre Card -->
+          <div class="grid cols-2" style="margin-top: 20px;">
+            <div class="info-card">
+              <div class="info-card-header">
+                <h3 class="info-card-title">
+                  <span>🏠</span>
+                  <span>Property Cadastre &amp; Physical Address</span>
+                </h3>
+                <span class="badge b-purple">VERIFIED DWELING</span>
+              </div>
+              <div class="info-grid">
+                <div class="info-tile">
+                  <div class="info-tile-label">Property Cadastre UID</div>
+                  <div class="info-tile-value mono" id="prop-uid">PROP-CEN-MVLX</div>
+                </div>
+                <div class="info-tile">
+                  <div class="info-tile-label">Geo-Tagged Coordinates</div>
+                  <div class="info-tile-value mono" id="prop-coords">28.6139° N, 77.2090° E</div>
+                </div>
+                <div class="info-tile" style="grid-column: span 2;">
+                  <div class="info-tile-label">Registered Dwelling Address</div>
+                  <div class="info-tile-value" id="prop-address">House No 42, Gram Panchayat Rampur, Central District, 110042</div>
+                </div>
+              </div>
+              <div style="margin-top: 14px; display: flex; gap: 10px;">
+                <button class="btn sm" onclick="openMapPin()">📍 View on Cadastre Map</button>
+              </div>
+            </div>
+
+            <!-- Property Benefits Received Card -->
+            <div class="info-card">
+              <div class="info-card-header">
+                <h3 class="info-card-title">
+                  <span>🏛️</span>
+                  <span>Property-Level Welfare Grants</span>
+                </h3>
+                <span class="badge b-green">DISBURSED TO PLOT</span>
+              </div>
+              <div class="space-y-2.5" id="property-grants-list" style="margin-top: 10px;">
+                <div class="small muted">Loading property cadastre benefits...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 4: MERE FAAYDE (BENEFITS LEDGER & GAP VIEW)
+             ============================================================ -->
+        <div id="tab-benefits" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-benefits-head">My Benefits: Lifetime Welfare Ledger &amp; Entitlement Gaps</h2>
+              <div class="muted t-benefits-sub">Direct Benefit Transfer (DBT) credit history, recurring pension schedules, and unclaimed entitlement gap analysis.</div>
+            </div>
+            <button class="btn primary" onclick="exportBenefitsLedger()">📥 Download DBT Ledger (PDF)</button>
+          </div>
+
+          <!-- Section 4.1: Benefit Gap View ("Ye 4 faayde mil sakte hain jo abhi nahi mile") -->
+          <div class="card" style="margin-bottom: 24px; border-left: 4px solid #16a34a; background: #f0fdf4;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <div>
+                <h3 style="margin: 0; font-size: 16px; color: #15803d; display: flex; align-items: center; gap: 8px;">
+                  <span>🎯</span>
+                  <span class="t-gap-title">Benefit Gap Analysis: “Ye 4 Faayde Mil Sakte Hain Jo Abhi Nahi Mile”</span>
+                </h3>
+                <div class="small" style="color: #166534;">Your household qualifies for ₹ 5,24,600 in additional annual welfare that has not been claimed yet.</div>
+              </div>
+              <span class="badge b-green" style="font-size: 13px; font-weight: 800;">₹ 5,24,600 Gap</span>
+            </div>
+
+            <div class="grid cols-2" id="benefit-gaps-grid">
+              <div class="small muted">Evaluating household benefit gaps...</div>
+            </div>
+          </div>
+
+          <!-- Section 4.2: Recurring Pensions & Next Installment -->
+          <div class="grid cols-2" style="margin-bottom: 24px;">
+            <div class="card">
+              <h3 style="font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>🔄</span>
+                <span>Active Benefits (Recurring DBT) &amp; Next Installment</span>
+              </h3>
+              <div id="recurring-benefits-list">
+                <div class="small muted">Loading recurring installments...</div>
+              </div>
+            </div>
+
+            <!-- Section 4.3: Eligibility Calendar -->
+            <div class="card">
+              <h3 style="font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>📅</span>
+                <span>Eligibility &amp; Disbursement Calendar</span>
+              </h3>
+              <div id="benefits-calendar-list">
+                <div class="small muted">Loading welfare deadlines...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4.4: Lifetime Received Benefits Ledger -->
+          <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+              <span>📜</span>
+              <span>Disbursed Benefits (Complete DBT Credit Ledger)</span>
+            </h3>
+            <div id="benefits-ledger-box">
+              <div class="small muted">Loading ledger transactions...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 5: LIFE EVENTS & NOMINEES
+             ============================================================ -->
+        <div id="tab-life-events" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-life-head">Life Events Reporting &amp; Nominee Management</h2>
+              <div class="muted t-life-sub">Report vital life stages (birth, marriage, household partition, demise), manage dependents, and configure DBT nominees.</div>
+            </div>
+          </div>
+
+          <!-- 4 Quick Report Buttons -->
+          <div class="grid cols-4" style="margin-bottom: 24px;">
+            <div class="overview-kpi-card" style="cursor: pointer;" onclick="openLifeEventModal('BIRTH')">
+              <div class="kpi-icon-badge" style="background: #fdf2f8; color: #db2777;">👶</div>
+              <div>
+                <div class="kpi-val" style="font-size: 15px;">Report Birth</div>
+                <div class="kpi-lbl">Janm Ki Report</div>
+              </div>
+            </div>
+
+            <div class="overview-kpi-card" style="cursor: pointer;" onclick="openLifeEventModal('MARRIAGE')">
+              <div class="kpi-icon-badge" style="background: #fef3c7; color: #d97706;">💍</div>
+              <div>
+                <div class="kpi-val" style="font-size: 15px;">Report Marriage</div>
+                <div class="kpi-lbl">Shaadi Ki Report</div>
+              </div>
+            </div>
+
+            <div class="overview-kpi-card" style="cursor: pointer;" onclick="openLifeEventModal('PARTITION')">
+              <div class="kpi-icon-badge" style="background: #eff6ff; color: #2563eb;">🏡</div>
+              <div>
+                <div class="kpi-val" style="font-size: 15px;">Household Split</div>
+                <div class="kpi-lbl">Ghar Alag Karna</div>
+              </div>
+            </div>
+
+            <div class="overview-kpi-card" style="cursor: pointer;" onclick="openLifeEventModal('DEATH')">
+              <div class="kpi-icon-badge" style="background: #f1f5f9; color: #475569;">🕊️</div>
+              <div>
+                <div class="kpi-val" style="font-size: 15px;">Report Demise</div>
+                <div class="kpi-lbl">Mrityu Ki Report</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2-Column: Nominees & Dependents + Upcoming Milestones -->
+          <div class="grid cols-2">
+            <!-- Card 1: Nominee Management -->
+            <div class="card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <h3 style="margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+                  <span>🛡️</span>
+                  <span>DBT Nominee Designations</span>
+                </h3>
+                <button class="btn sm primary" onclick="setNomineePrompt()">➕ Set Nominee</button>
+              </div>
+              <div id="nominees-list">
+                <div class="small muted">Loading nominees...</div>
+              </div>
+            </div>
+
+            <!-- Card 2: Upcoming Milestones & Dependent Alerts -->
+            <div class="card">
+              <h3 style="font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>🚀</span>
+                <span>Upcoming Milestones (“Bachche ki Umar 6 Saal”)</span>
+              </h3>
+              <div id="milestones-list">
+                <div class="small muted">Loading proactive milestone predictions...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 6: DOCUMENT WALLET (UPLOAD ONCE, REUSE, ENCRYPTED)
+             ============================================================ -->
+        <div id="tab-wallet" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-wallet-head">Reusable Document Wallet</h2>
+              <div class="muted t-wallet-sub">Upload once, reuse across all 120+ schemes without physical photocopies. AES-256 envelope encrypted &amp; DigiLocker verified.</div>
+            </div>
+            <button class="btn" onclick="Panel.toast('Wallet documents synced with National DigiLocker repository.', 'ok')">
+              ☁️ Sync with DigiLocker
+            </button>
+          </div>
+
+          <!-- Document Wallet Grid -->
+          <div class="grid cols-2" id="wallet-grid">
+            <div class="small muted">Loading verified wallet documents...</div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 7: PRIVACY AUR BHAROSA (ACCESS LOG, CONSENT, 2FA)
+             ============================================================ -->
+        <div id="tab-privacy" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-privacy-head">Privacy &amp; Trust (DPDP Trust Console)</h2>
+              <div class="muted t-privacy-sub">“Mera data kisne dekha”, purpose-bound departmental consents, demographic corrections, and account security.</div>
+            </div>
+            <div class="btn-row">
+              <button class="btn sm" onclick="downloadMyData()">📥 Download My Data</button>
+              <button class="btn sm primary" onclick="toggle2FaPrompt()">🔑 2FA Security</button>
+            </div>
+          </div>
+
+          <!-- Section 7.1: Data Access History & Audit Trail (Access Audit Log) -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <div>
+                <h3 style="margin: 0; font-size: 16px; color: #081735; display: flex; align-items: center; gap: 8px;">
+                  <span>👁️</span>
+                  <span>“Mera Data Kisne Dekha” — Access Transparency Log</span>
+                </h3>
+                <div class="small muted">Real-time immutable audit trail showing who accessed your personal records, when, and for what purpose.</div>
+              </div>
+              <span class="badge b-green">DPDP Act Compliant</span>
+            </div>
+
+            <div id="access-log-table-box">
+              <div class="small muted">Loading transparent access records...</div>
+            </div>
+          </div>
+
+          <!-- Section 7.2: Active Departmental Consents -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <h3 style="margin: 0; font-size: 16px; color: #081735; display: flex; align-items: center; gap: 8px;">
+                <span>🔒</span>
+                <span>Active Departmental Consents (Ijazat Dena / Wapas Lena)</span>
+              </h3>
+            </div>
+            <div id="consents-table-box">
+              <div class="small muted">Loading consents...</div>
+            </div>
+          </div>
+
+          <!-- Section 7.3: Right to Correction -->
+          <div class="card">
+            <h3 style="margin: 0 0 12px; font-size: 16px; color: #081735; display: flex; align-items: center; gap: 8px;">
+              <span>✏️</span>
+              <span>Right to Correction (Galti Sudharne Ke Liye)</span>
+            </h3>
+            <form onsubmit="handleCorrectionSubmit(event)">
+              <div class="field">
+                <label>Field Requiring Correction</label>
+                <select id="corr-field" required>
+                  <option value="first_name">First Name</option>
+                  <option value="last_name">Last Name</option>
+                  <option value="date_of_birth">Date of Birth</option>
+                  <option value="address_line">Address Line</option>
+                  <option value="pincode">Pincode</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Requested New Value</label>
+                <input type="text" id="corr-value" required placeholder="Enter updated value">
+              </div>
+              <button type="submit" class="btn primary">Submit Correction for Field Scrutiny</button>
+            </form>
+            <div style="margin-top: 16px;" id="corrections-history">Loading history...</div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             MODULE 8: NOTIFICATIONS AUR SAHAYATA (CHATBOT, IVR, CHANNELS)
+             ============================================================ -->
+        <div id="tab-support" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2 class="t-support-head">Notifications &amp; Support Desk</h2>
+              <div class="muted t-support-sub">SMS &amp; WhatsApp preferences, missed-call IVR status, and 24/7 Ojas Sahayak AI Chatbot.</div>
+            </div>
+          </div>
+
+          <!-- 3-Column Support Grid -->
+          <div class="grid cols-3" style="margin-bottom: 24px;">
+            <!-- Channel 1: WhatsApp / SMS Preferences -->
+            <div class="card">
+              <h3 style="font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                <span>📱</span>
+                <span>SMS / WhatsApp Alerts</span>
+              </h3>
+              <div class="small muted" style="margin-bottom: 14px;">Instant alerts in Hindi or English on DBT release &amp; status.</div>
+              <div class="space-y-2">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+                  <input type="checkbox" id="pref-sms" checked onchange="savePreferences()">
+                  <span>SMS Alerts Active</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+                  <input type="checkbox" id="pref-whatsapp" checked onchange="savePreferences()">
+                  <span>WhatsApp Updates Active</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Channel 2: Missed-Call & IVR Helpline -->
+            <div class="card">
+              <h3 style="font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                <span>📞</span>
+                <span>Missed Call &amp; IVR Status</span>
+              </h3>
+              <div class="small muted" style="margin-bottom: 12px;">No internet needed. Get SMS status via single call:</div>
+              <div style="background: #f1f5f9; padding: 10px; border-radius: 8px; font-weight: 700; color: #081735; font-family: monospace;">
+                07314624949
+              </div>
+              <div class="small muted" style="margin-top: 6px;">Toll-Free Helpline: <strong>011–29581423</strong></div>
+            </div>
+
+            <!-- Channel 3: Bina Account Ke Status Check -->
+            <div class="card">
+              <h3 style="font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                <span>🔍</span>
+                <span>Bina Account Ke Check Karein</span>
+              </h3>
+              <div class="small muted" style="margin-bottom: 12px;">Track application status directly using Application No. + Mobile OTP:</div>
+              <a href="/track.html" class="btn sm primary" style="width: 100%; justify-content: center;">
+                Open Public Tracker →
+              </a>
+            </div>
+          </div>
+
+          <!-- Ojas Sahayak AI Chatbot & Voice Helper -->
+          <div class="chatbot-box">
+            <div style="background: #081735; color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 24px;">🤖</span>
+                <div>
+                  <strong style="font-size: 15px;">Ojas Sahayak (AI Voice &amp; Chat Helper)</strong>
+                  <div class="small" style="color: #94a3b8;">“Meri application kyun ruki hai?” • Natural Language Welfare Assistant</div>
+                </div>
+              </div>
+              <span class="badge b-green">ACTIVE 24/7</span>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div class="chat-messages" id="chatbot-messages">
+              <div class="chat-bubble bot">
+                Hello! I am <strong>Ojas Sahayak</strong>, your digital welfare companion. Ask me anything about your application status, reason for flag/hold, or which welfare schemes your family is eligible to receive!
+              </div>
+            </div>
+
+            <!-- Quick Suggestions Row -->
+            <div class="chat-prompts-row">
+              <button type="button" class="chat-prompt-pill" onclick="sendChatPrompt('Meri application kyun ruki hai?')">
+                ❓ Meri application kyun ruki hai?
+              </button>
+              <button type="button" class="chat-prompt-pill" onclick="sendChatPrompt('Mere parivaar ko kaun si scheme mil sakti hai?')">
+                💡 Mere parivaar ko kaun si scheme mil sakti hai?
+              </button>
+              <button type="button" class="chat-prompt-pill" onclick="sendChatPrompt('Pension ki agli kisht kab aayegi?')">
+                💰 Pension ki agli kisht kab aayegi?
+              </button>
+              <button type="button" class="chat-prompt-pill" onclick="sendChatPrompt('Ghar alag karne par toilet ka paisa milega kya?')">
+                🏡 Ghar alag karne par toilet ka paisa milega?
+              </button>
+            </div>
+
+            <!-- Chat Input Box -->
+            <form onsubmit="handleChatSubmit(event)" style="display: flex; border-top: 1px solid #e2e8f0; background: #fff;">
+              <button type="button" class="btn" style="border: none; border-radius: 0; background: #f8fafc;" onclick="simulateVoiceInput()" title="Voice Helper (Speak)">
+                🎤
+              </button>
+              <input type="text" id="chat-input-text" placeholder="Type or ask a question in Hindi or English..." style="flex: 1; border: none; padding: 14px; font-size: 13.5px; outline: none;">
+              <button type="submit" class="btn primary" style="border-radius: 0; padding: 0 24px; font-weight: 700;">
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- QR Family Benefit Card Tab (Preserved for Instant Print) -->
+        <div id="tab-qrcard" class="hidden">
+          <div class="page-head">
+            <div>
+              <h2>Family Benefit Digital QR Card</h2>
+              <div class="muted">Instant offline verification card for Fair Price Shops, hospitals, and field officers.</div>
+            </div>
+            <button class="btn primary" onclick="window.print()">🖨️ Print / Save PDF</button>
+          </div>
+
+          <div class="qr-card-container">
+            <div class="qr-card-hologram">✨</div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <div style="font-size: 24px;">🏛️</div>
+              <div>
+                <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #fed7aa; text-transform: uppercase;">Government of India · National DPI</div>
+                <div style="font-size: 17px; font-weight: 800; font-family: 'Space Grotesk', sans-serif;">Ojas Family Benefit Smart Card</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 140px; gap: 20px; align-items: center; background: rgba(255,255,255,0.06); padding: 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);">
+              <div>
+                <div style="font-size: 11px; text-transform: uppercase; color: #93c5fd; font-weight: 700;">Household Head</div>
+                <div style="font-size: 16px; font-weight: 800; margin-bottom: 10px;" id="qr-head-name">Rajesh Sharma</div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;">
+                  <div>
+                    <span style="color: #cbd5e1; font-size: 10px; display: block;">HOUSEHOLD ID</span>
+                    <strong class="mono" id="qr-hh-uid">HH-MVLUM0F2-223</strong>
+                  </div>
+                  <div>
+                    <span style="color: #cbd5e1; font-size: 10px; display: block;">CATEGORY</span>
+                    <strong style="color: #4ade80;">BPL (Priority)</strong>
+                  </div>
+                  <div>
+                    <span style="color: #cbd5e1; font-size: 10px; display: block;">DISTRICT</span>
+                    <strong id="qr-district">CENTRAL</strong>
+                  </div>
+                  <div>
+                    <span style="color: #cbd5e1; font-size: 10px; display: block;">MEMBERS</span>
+                    <strong id="qr-members-count">4 Persons</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vector QR Representation -->
+              <div style="background: #ffffff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                <div id="qr-svg-holder">
+                  <svg width="110" height="110" viewBox="0 0 100 100" style="display: block; margin: 0 auto;">
+                    <rect width="100" height="100" fill="#ffffff"/>
+                    <rect x="5" y="5" width="25" height="25" fill="#081735"/>
+                    <rect x="10" y="10" width="15" height="15" fill="#ffffff"/>
+                    <rect x="13" y="13" width="9" height="9" fill="#ea580c"/>
+                    <rect x="70" y="5" width="25" height="25" fill="#081735"/>
+                    <rect x="75" y="10" width="15" height="15" fill="#ffffff"/>
+                    <rect x="78" y="13" width="9" height="9" fill="#ea580c"/>
+                    <rect x="5" y="70" width="25" height="25" fill="#081735"/>
+                    <rect x="10" y="75" width="15" height="15" fill="#ffffff"/>
+                    <rect x="13" y="78" width="9" height="9" fill="#ea580c"/>
+                    <rect x="35" y="10" width="8" height="8" fill="#081735"/>
+                    <rect x="48" y="10" width="6" height="12" fill="#081735"/>
+                    <rect x="35" y="24" width="12" height="6" fill="#081735"/>
+                    <rect x="50" y="24" width="10" height="8" fill="#ea580c"/>
+                    <rect x="15" y="40" width="10" height="6" fill="#081735"/>
+                    <rect x="30" y="38" width="15" height="10" fill="#081735"/>
+                    <rect x="52" y="38" width="8" height="14" fill="#081735"/>
+                    <rect x="65" y="35" width="14" height="6" fill="#081735"/>
+                    <rect x="85" y="40" width="8" height="8" fill="#081735"/>
+                    <rect x="38" y="55" width="14" height="14" fill="#081735"/>
+                    <rect x="43" y="60" width="4" height="4" fill="#ffffff"/>
+                    <rect x="58" y="58" width="12" height="8" fill="#081735"/>
+                    <rect x="75" y="55" width="8" height="16" fill="#081735"/>
+                    <rect x="38" y="78" width="12" height="12" fill="#081735"/>
+                    <rect x="56" y="75" width="8" height="8" fill="#ea580c"/>
+                    <rect x="70" y="78" width="18" height="8" fill="#081735"/>
+                    <rect x="75" y="90" width="10" height="6" fill="#081735"/>
+                  </svg>
+                </div>
+                <div style="font-size: 9px; color: #475569; font-weight: 700; margin-top: 4px; font-family: monospace;">
+                  SCAN TO VERIFY
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 16px; font-size: 11px; color: rgba(255,255,255,0.7); display: flex; justify-content: space-between; align-items: center;">
+              <span>Signed with Ed25519 Central Root Key</span>
+              <span style="color: #fed7aa; font-weight: 700;">Valid Across All Districts</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Modal Dialog Component -->
+  <div id="modal-container" class="modal-overlay hidden" onclick="if(event.target === this) closeModal()">
+    <div class="modal-box" id="modal-box-content">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+  <script src="/assets/panel.js"></script>
+  <script>
+    Panel.init('ojas_citizen_session', logout);
+
+    let currentCitizen = null;
+    let currentHousehold = null;
+    let currentLang = 'EN';
+    let treeZoomLevel = 1.0;
+    let currentTreeYear = 2026;
+    let cachedFamilyGraph = null;
+
+    // Bilingual dictionary for Hindi / English toggle
+    const I18N = {
+      EN: {
+        backHome: "Back to Main Website",
+        logout: "Logout",
+        ekycActive: "Aadhaar e-KYC Active",
+        homeTitle: "Citizen Lifelong Record",
+        homeSub: "Unified Citizen Life Record & Household Dwelling Cadastre.",
+        kpiHousehold: "Household Cadastre UID",
+        kpiFamily: "Verified Family Members",
+        kpiIncome: "Income Category (Antyodaya)",
+        kpiDbt: "Total Direct Benefit Received",
+        runningApps: "Active Applications & Status",
+        pendingTitle: "Pending Action Items",
+        suggestionsTitle: "“Aapko Ye Milna Chahiye” — Proactive Suggestions",
+        suggestionsSub: "Schemes your household is eligible for based on age, income category, and dwelling checks.",
+        langBtn: "English",
+        navHome: "Home Overview",
+        navApplications: "Applications & Bundling",
+        navFamily: "Family & Household (Family Tree)",
+        navBenefits: "My Benefits (DBT Ledger)",
+        navLifeEvents: "Life Events & Nominees",
+        navWallet: "Document Wallet",
+        navPrivacy: "Privacy & Trust",
+        navSupport: "Notifications & Support",
+      },
+      HI: {
+        backHome: "Back to Main Website",
+        logout: "Logout",
+        ekycActive: "Aadhaar e-KYC Active",
+        homeTitle: "Citizen Lifelong Record",
+        homeSub: "Unified Citizen Life Record & Household Dwelling Cadastre.",
+        kpiHousehold: "Household Cadastre UID",
+        kpiFamily: "Verified Family Members",
+        kpiIncome: "Income Category (Antyodaya)",
+        kpiDbt: "Total Direct Benefit Received",
+        runningApps: "Active Applications & Status",
+        pendingTitle: "Pending Action Items",
+        suggestionsTitle: "Recommended For You — Proactive Scheme Suggestions",
+        suggestionsSub: "Schemes your household is eligible for based on age, income category, and dwelling checks.",
+        langBtn: "English",
+        navHome: "Home Overview",
+        navApplications: "Applications & Bundling",
+        navFamily: "Family & Household (Family Tree)",
+        navBenefits: "My Benefits (DBT Ledger)",
+        navLifeEvents: "Life Events & Nominees",
+        navWallet: "Document Wallet",
+        navPrivacy: "Privacy & Trust",
+        navSupport: "Notifications & Support"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'EN' ? 'HI' : 'EN';
+      applyLanguage(currentLang);
+    }
+
+    function applyLanguage(lang) {
+      const d = I18N[lang] || I18N.EN;
+      document.getElementById('lang-btn-label').textContent = d.langBtn;
+      document.querySelectorAll('.t-back-home').forEach(el => el.textContent = d.backHome);
+      document.querySelectorAll('.t-logout').forEach(el => el.textContent = d.logout);
+      document.querySelectorAll('.t-ekyc-active').forEach(el => el.textContent = d.ekycActive);
+      document.querySelectorAll('.t-home-sub').forEach(el => el.textContent = d.homeSub);
+      document.querySelectorAll('.t-kpi-household').forEach(el => el.textContent = d.kpiHousehold);
+      document.querySelectorAll('.t-kpi-family').forEach(el => el.textContent = d.kpiFamily);
+      document.querySelectorAll('.t-kpi-income').forEach(el => el.textContent = d.kpiIncome);
+      document.querySelectorAll('.t-kpi-dbt').forEach(el => el.textContent = d.kpiDbt);
+      document.querySelectorAll('.t-home-running-apps').forEach(el => el.textContent = d.runningApps);
+      document.querySelectorAll('.t-home-pending-title').forEach(el => el.textContent = d.pendingTitle);
+      document.querySelectorAll('.t-home-suggestions-title').forEach(el => el.textContent = d.suggestionsTitle);
+      document.querySelectorAll('.t-home-suggestions-sub').forEach(el => el.textContent = d.suggestionsSub);
+
+      document.querySelector('.t-nav-home').textContent = d.navHome;
+      document.querySelector('.t-nav-applications').textContent = d.navApplications;
+      document.querySelector('.t-nav-family').textContent = d.navFamily;
+      document.querySelector('.t-nav-benefits').textContent = d.navBenefits;
+      document.querySelector('.t-nav-life-events').textContent = d.navLifeEvents;
+      document.querySelector('.t-nav-wallet').textContent = d.navWallet;
+      document.querySelector('.t-nav-privacy').textContent = d.navPrivacy;
+      document.querySelector('.t-nav-support').textContent = d.navSupport;
+
+      Panel.toast('Language set to English.', 'ok');
+    }
+
+    function switchLoginTab(tab) {
+      document.getElementById('tab-btn-signin').className = tab === 'signin' ? 'btn primary' : 'btn';
+      document.getElementById('tab-btn-signup').className = tab === 'signup' ? 'btn primary' : 'btn';
+      document.getElementById('form-signin').className = tab === 'signin' ? '' : 'hidden';
+      document.getElementById('form-signup').className = tab === 'signup' ? '' : 'hidden';
+    }
+
+    function setDemoCitizen() {
+      document.getElementById('signin-username').value = 'citizen_demo';
+      document.getElementById('signin-password').value = 'Demo@Password123';
+      switchLoginTab('signin');
+    }
+
+    async function handleSignIn(e) {
+      e.preventDefault();
+      const u = document.getElementById('signin-username').value.trim();
+      const p = document.getElementById('signin-password').value;
+      try {
+        const res = await Panel.api('POST', '/v1/auth/login', { username: u, password: p }, { noAuth: true });
+        Panel.saveSession(res);
+        initCitizenPortal();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function handleSignUp(e) {
+      e.preventDefault();
+      const payload = {
+        first_name: document.getElementById('reg-fn').value.trim(),
+        last_name: document.getElementById('reg-ln').value.trim(),
+        date_of_birth: document.getElementById('reg-dob').value,
+        gender: document.getElementById('reg-gender').value,
+        phone: document.getElementById('reg-phone').value.trim(),
+        address_line: document.getElementById('reg-addr').value.trim(),
+        district: document.getElementById('reg-district').value,
+        pincode: document.getElementById('reg-pin').value.trim(),
+        username: document.getElementById('reg-user').value.trim(),
+        password: document.getElementById('reg-pass').value,
+        email: document.getElementById('reg-user').value.trim() + '@citizen.gov.in',
+      };
+
+      try {
+        const res = await Panel.api('POST', '/v1/citizen/signup', payload, { noAuth: true });
+        Panel.saveSession(res);
+        Panel.toast('Citizen Life Record created successfully!', 'ok');
+        initCitizenPortal();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    function logout() {
+      Panel.clearSession();
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-login').classList.remove('hidden');
+    }
+
+    function showTab(tabId) {
+      const tabs = ['home', 'applications', 'family', 'benefits', 'life-events', 'wallet', 'privacy', 'support', 'qrcard'];
+      tabs.forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        if (el) el.classList.toggle('hidden', t !== tabId);
+        const nav = document.getElementById('nav-' + t);
+        if (nav) nav.classList.toggle('active', t === tabId);
+      });
+
+      if (tabId === 'home') loadHomeOverview();
+      if (tabId === 'applications') loadApplications();
+      if (tabId === 'family') loadFamilyGraphView();
+      if (tabId === 'benefits') loadBenefitsModule();
+      if (tabId === 'life-events') loadLifeEventsModule();
+      if (tabId === 'wallet') loadWalletModule();
+      if (tabId === 'privacy') loadPrivacyModule();
+      if (tabId === 'support') loadSupportModule();
+    }
+
+    async function initCitizenPortal() {
+      const session = Panel.session();
+      if (!session || !session.accessToken) {
+        document.getElementById('view-login').classList.remove('hidden');
+        document.getElementById('view-dashboard').classList.add('hidden');
+        return;
+      }
+
+      document.getElementById('view-login').classList.add('hidden');
+      document.getElementById('view-dashboard').classList.remove('hidden');
+
+      await loadProfile();
+      showTab('home');
+    }
+
+    async function refreshDashboard() {
+      Panel.toast('Syncing citizen record with state node...', 'ok');
+      await loadProfile();
+      await loadHomeOverview();
+    }
+
+    async function loadProfile() {
+      try {
+        const me = await Panel.api('GET', '/v1/me');
+        currentCitizen = me.person;
+        currentHousehold = me.household;
+
+        const fullName = me.person ? `${me.person.firstName} ${me.person.lastName}` : (me.user.username || 'Citizen');
+        const initials = me.person ? `${me.person.firstName[0]}${me.person.lastName[0]}` : 'SS';
+        const uid = me.person ? me.person.personUid : 'PER-DEMO-001';
+
+        document.getElementById('header-user-name').textContent = fullName;
+        document.getElementById('header-avatar-initials').textContent = initials;
+        document.getElementById('sidebar-avatar').textContent = initials;
+        document.getElementById('sidebar-citizen-name').textContent = fullName;
+        document.getElementById('sidebar-citizen-uid').textContent = uid;
+
+        if (me.household) {
+          const hh = me.household;
+          document.getElementById('kpi-hh-uid').textContent = hh.householdUid;
+          document.getElementById('kpi-members-count').textContent = `${hh.members.length} Persons`;
+          document.getElementById('kpi-income-cat').textContent = hh.incomeCategory || 'BPL';
+          document.getElementById('qr-hh-uid').textContent = hh.householdUid;
+          document.getElementById('qr-district').textContent = me.person ? me.person.district : 'CENTRAL';
+          document.getElementById('qr-members-count').textContent = `${hh.members.length} Persons`;
+
+          const headMember = hh.members.find(m => m.role === 'HEAD') || hh.members[0];
+          if (headMember) document.getElementById('qr-head-name').textContent = headMember.fullName;
+        }
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    /* ============================================================
+       MODULE 1: HOME (EK NAZAR MEIN) LOGIC
+       ============================================================ */
+    async function loadHomeOverview() {
+      // 1. Running Applications List
+      const runningBox = document.getElementById('home-running-apps-list');
+      try {
+        const apps = await Panel.api('GET', '/v1/me/applications');
+        document.getElementById('badge-app-count').textContent = apps.length;
+
+        if (!apps || apps.length === 0) {
+          runningBox.innerHTML = '<div class="small muted">No active scheme applications found.</div>';
+        } else {
+          runningBox.innerHTML = apps.slice(0, 3).map(a => {
+            let stageIdx = 1;
+            let isFlagged = a.status === 'FLAGGED';
+            if (a.status === 'UNDER_VERIFICATION') stageIdx = 2;
+            else if (a.status === 'FLAGGED') stageIdx = 3;
+            else if (a.status === 'APPROVED') stageIdx = 4;
+            else if (a.status === 'DISBURSED') stageIdx = 5;
+
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: var(--shadow-xs);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                  <div>
+                    <strong style="color: #081735; font-size: 14px;">${Panel.esc(a.schemeName || a.schemeCode)}</strong>
+                    <div class="small muted mono" style="margin-top: 2px;">${a.applicationNumber} • Applied ${Panel.date(a.submittedAt, false)}</div>
+                  </div>
+                  <div>${Panel.badge(a.status)}</div>
+                </div>
+
+                <!-- 5-Stage Mini Visual Tracker -->
+                <div class="timeline-stages">
+                  <div class="stage-step done"><div class="stage-dot">✓</div><div class="stage-label">Submit</div></div>
+                  <div class="stage-step ${stageIdx >= 2 ? 'done' : ''}"><div class="stage-dot">${stageIdx >= 2 ? '✓' : '2'}</div><div class="stage-label">Verify</div></div>
+                  <div class="stage-step ${isFlagged ? 'flagged' : (stageIdx >= 3 ? 'done' : '')}"><div class="stage-dot">${isFlagged ? '!' : (stageIdx >= 3 ? '✓' : '3')}</div><div class="stage-label">${isFlagged ? 'Review' : 'Scrutiny'}</div></div>
+                  <div class="stage-step ${stageIdx >= 4 ? 'done' : ''}"><div class="stage-dot">${stageIdx >= 4 ? '✓' : '4'}</div><div class="stage-label">Sanction</div></div>
+                  <div class="stage-step ${stageIdx >= 5 ? 'done' : ''}"><div class="stage-dot">${stageIdx >= 5 ? '✓' : '5'}</div><div class="stage-label">DBT</div></div>
+                </div>
+
+                <div class="small" style="color: #475569; margin-top: 8px; font-weight: 500;">
+                  ${Panel.esc(a.latestNoteEn || 'Application is progressing through automated validation.')}
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        runningBox.innerHTML = `<div class="small muted">Failed to load running applications.</div>`;
+      }
+
+      // 2. Proactive Entitlement Suggestions
+      const suggBox = document.getElementById('home-proactive-schemes');
+      try {
+        const schemes = await Panel.api('GET', '/v1/me/eligible-schemes');
+        if (!schemes || schemes.length === 0) {
+          suggBox.innerHTML = '<div class="small muted">No unclaimed suggestions right now.</div>';
+        } else {
+          suggBox.innerHTML = schemes.slice(0, 3).map(s => `
+            <div class="card" style="border-top: 3px solid #16a34a; display: flex; flex-direction: column; justify-content: space-between; padding: 14px;">
+              <div>
+                <span class="badge b-green" style="font-size: 10px;">PROACTIVE MATCH</span>
+                <a href="/scheme.html?scheme=${encodeURIComponent(s.schemeCode)}" style="text-decoration:none; color:inherit;" title="Click to view scheme details">
+                  <h4 style="margin: 6px 0 4px; font-size: 14.5px; color: #081735; text-decoration: underline; text-underline-offset: 3px;">${Panel.esc(s.schemeName)}</h4>
+                </a>
+                <div class="small muted">Passed: ${s.passedRules ? s.passedRules.join(', ') : 'Age, Income, Dwelling'}</div>
+              </div>
+              <div style="margin-top: 12px; display: flex; justify-content: flex-end; gap: 8px;">
+                <a href="/scheme.html?scheme=${encodeURIComponent(s.schemeCode)}" class="btn sm" style="font-weight: 700; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;">
+                  Details
+                </a>
+                <a href="/apply.html?scheme=${encodeURIComponent(s.schemeCode)}" class="btn primary sm" style="font-weight: 700;">
+                  Apply Now →
+                </a>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        suggBox.innerHTML = '<div class="small muted">Suggestions temporarily unavailable.</div>';
+      }
+    }
+
+    /* ============================================================
+       MODULE 2: APPLICATIONS (BUNDLING, TIMELINE, REJECT/APPEAL)
+       ============================================================ */
+    async function loadApplications() {
+      const box = document.getElementById('applications-list');
+      box.innerHTML = Panel.loading();
+      try {
+        const apps = await Panel.api('GET', '/v1/me/applications');
+        document.getElementById('badge-app-count').textContent = apps.length;
+
+        if (apps.length === 0) {
+          box.innerHTML = Panel.empty('No applications found. You can apply for single schemes or bundled packages above.');
+          return;
+        }
+
+        box.innerHTML = apps.map(a => {
+          let stageIdx = 1;
+          let isFlagged = a.status === 'FLAGGED';
+          if (a.status === 'UNDER_VERIFICATION') stageIdx = 2;
+          else if (a.status === 'FLAGGED') stageIdx = 3;
+          else if (a.status === 'APPROVED') stageIdx = 4;
+          else if (a.status === 'DISBURSED') stageIdx = 5;
+
+          const isWithdrawable = ['SUBMITTED', 'UNDER_VERIFICATION', 'FLAGGED'].includes(a.status);
+          const isAppeable = a.status === 'FLAGGED' || a.status === 'REJECTED';
+
+          return `
+            <div class="card" style="margin-bottom: 20px; border-left: 4px solid ${isFlagged ? '#d97706' : (a.status === 'DISBURSED' ? '#16a34a' : '#ea580c')};">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <strong style="font-size: 16px; color: #081735;">${Panel.esc(a.schemeName || a.schemeCode)}</strong>
+                    ${Panel.badge(a.status)}
+                    ${a.appeal ? `<span class="badge b-purple">Appeal Pending</span>` : ''}
+                  </div>
+                  <div class="small muted mono" style="margin-top: 4px;">
+                    Application No: <strong>${a.applicationNumber}</strong> • Submitted: ${Panel.date(a.submittedAt)} • Grant Scope: <strong class="uppercase">${a.grantUnit || 'INDIVIDUAL'}</strong>
+                  </div>
+                </div>
+                <div class="btn-row">
+                  <a href="/track.html?app=${encodeURIComponent(a.applicationNumber)}" class="btn sm">🔍 Full Track</a>
+                  ${isWithdrawable ? `
+                    <button class="btn sm danger" onclick="withdrawApp('${a.id}')">Withdraw</button>
+                  ` : ''}
+                  ${isAppeable ? `
+                    <button class="btn sm primary" onclick="appealApp('${a.id}')">⚖️ File Formal Appeal</button>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Full 5-Stage Interactive Tracker Timeline -->
+              <div class="timeline-stages" style="margin: 16px 0 12px;">
+                <div class="stage-step done"><div class="stage-dot">✓</div><div class="stage-label">1. Submitted</div></div>
+                <div class="stage-step ${stageIdx >= 2 ? 'done' : ''}"><div class="stage-dot">${stageIdx >= 2 ? '✓' : '2'}</div><div class="stage-label">2. Verification</div></div>
+                <div class="stage-step ${isFlagged ? 'flagged' : (stageIdx >= 3 ? 'done' : '')}"><div class="stage-dot">${isFlagged ? '!' : (stageIdx >= 3 ? '✓' : '3')}</div><div class="stage-label">3. Scrutiny</div></div>
+                <div class="stage-step ${stageIdx >= 4 ? 'done' : ''}"><div class="stage-dot">${stageIdx >= 4 ? '✓' : '4'}</div><div class="stage-label">4. Sanctioned</div></div>
+                <div class="stage-step ${stageIdx >= 5 ? 'done' : ''}"><div class="stage-dot">${stageIdx >= 5 ? '✓' : '5'}</div><div class="stage-label">5. Disbursed</div></div>
+              </div>
+
+              <!-- Reject / Flagged Wajah & "Ab Kya Karein" Box -->
+              ${isFlagged ? `
+                <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 14px; margin-top: 12px;">
+                  <div style="display: flex; items-start; gap: 8px;">
+                    <span style="font-size: 18px;">⚠️</span>
+                    <div style="flex: 1;">
+                      <strong style="color: #92400e; font-size: 13.5px;">Flagged for Review: Saaf Wajah (Rejection / Hold Reason)</strong>
+                      <div class="small" style="color: #78350f; margin-top: 4px; line-height: 1.5;">
+                        ${Panel.esc(a.latestNoteEn || 'Prior sanitation benefit detected on shared household dwelling cadastre.')}
+                      </div>
+                      <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #fcd34d;">
+                        <strong style="color: #92400e; font-size: 12.5px;">💡 Ab Kya Karein (Recommended Action):</strong>
+                        <div class="small" style="color: #78350f; margin-top: 2px;">
+                          If your family has partitioned into an independent dwelling unit, click <strong>"File Formal Appeal"</strong> to submit your Registered Partition Deed or separate Electricity Consumer Bill. A Senior Appellate Officer will independently re-verify your claim within 72 hours.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ` : `
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-top: 10px;">
+                  <div class="small" style="font-weight: 700; color: #475569; margin-bottom: 2px;">Official Scrutiny Note:</div>
+                  <div class="small" style="color: #0f172a; line-height: 1.5;">${Panel.esc(a.latestNoteEn || 'Application successfully logged and submitted into the state machine verification queue.')}</div>
+                </div>
+              `}
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        box.innerHTML = `<div class="alert danger">${err.message}</div>`;
+      }
+    }
+
+    async function applySchemeBundle(bundleId) {
+      if (!confirm(`Are you sure you want to apply for this multi-scheme bundle? Your verified citizen life record will be automatically submitted.`)) return;
+      try {
+        const res = await Panel.api('POST', '/v1/me/apply-bundle', { bundleId });
+        Panel.toast(res.message || 'Bundle applications successfully filed!', 'ok');
+        loadApplications();
+        loadHomeOverview();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function appealApp(id) {
+      const grounds = await Panel.ask('File Formal Appeal (Alag Officer Dekhta Hai)', 'Explain why this decision should be reviewed and mention your partition / proof details (min 10 characters)...', 10);
+      if (!grounds) return;
+      try {
+        await Panel.api('POST', `/v1/me/applications/${id}/appeal`, { grounds });
+        Panel.toast('Appeal filed and routed to Senior Appellate Officer queue!', 'ok');
+        loadApplications();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function withdrawApp(id) {
+      if (!confirm('Are you sure you wish to withdraw this scheme application? This action cannot be reversed.')) return;
+      try {
+        await Panel.api('POST', `/v1/me/applications/${id}/withdraw`, {});
+        Panel.toast('Application withdrawn.', 'ok');
+        loadApplications();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    /* ============================================================
+       MODULE 3: FAMILY & GHAR (FAMILY TREE & CADASTRE)
+       ============================================================ */
+    async function loadFamilyGraphView() {
+      try {
+        const data = await Panel.api('GET', '/v1/me/family-graph');
+        cachedFamilyGraph = data;
+        renderFamilyTree(data, currentTreeYear, 'ALL');
+
+        // Render Property Cadastre Info
+        if (data.household) {
+          const hh = data.household;
+          document.getElementById('prop-uid').textContent = hh.propertyUid || 'PROP-CEN-MVLX';
+          document.getElementById('prop-coords').textContent = hh.coordinates || '28.6139° N, 77.2090° E';
+          document.getElementById('prop-address').textContent = hh.address;
+
+          const grantsBox = document.getElementById('property-grants-list');
+          if (hh.propertyGrants && hh.propertyGrants.length) {
+            grantsBox.innerHTML = hh.propertyGrants.map(g => `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="color: #081735; font-size: 13px;">${Panel.esc(g.schemeName)}</strong>
+                  <div class="small muted">Sanction Year: ${g.year} • Amount: ₹ ${Number(g.amount).toLocaleString('en-IN')}</div>
+                </div>
+                <span class="badge b-green">${g.status}</span>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        Panel.toast('Failed to load family graph: ' + e.message, 'error');
+      }
+    }
+
+    function renderFamilyTree(data, year, filterScheme) {
+      const svg = document.getElementById('family-tree-canvas');
+      if (!svg) return;
+
+      const isPartitioned = year === 2026;
+      filterScheme = filterScheme || 'ALL';
+
+      // Scheme status helper for color coding & badges
+      function getSchemeStatus(memberKey) {
+        if (filterScheme === 'PM_KISAN') {
+          if (memberKey === 'rajesh') {
+            return { stroke: '#16a34a', dotBg: '#16a34a', badgeBg: '#dcfce7', badgeText: '#15803d', label: '● PM-KISAN REC’D' };
+          }
+          return { stroke: '#94a3b8', dotBg: '#94a3b8', badgeBg: '#f1f5f9', badgeText: '#64748b', label: 'NOT APPLICABLE' };
+        }
+        if (filterScheme === 'SBM_TOILET') {
+          if (memberKey === 'rajesh') {
+            return { stroke: '#16a34a', dotBg: '#16a34a', badgeBg: '#dcfce7', badgeText: '#15803d', label: '● SBM LATRINE REC’D' };
+          }
+          if (memberKey === 'sunita' || memberKey === 'anjali') {
+            return { stroke: '#16a34a', dotBg: '#16a34a', badgeBg: '#dcfce7', badgeText: '#15803d', label: '● CO-BENEFICIARY' };
+          }
+          return { stroke: '#94a3b8', dotBg: '#94a3b8', badgeBg: '#f1f5f9', badgeText: '#64748b', label: isPartitioned ? 'SEPARATE UNIT' : 'CO-HABITING' };
+        }
+        if (filterScheme === 'SCHOLARSHIP_MERIT') {
+          if (memberKey === 'anjali') {
+            return { stroke: '#eab308', dotBg: '#eab308', badgeBg: '#fef9c3', badgeText: '#a16207', label: '○ SCHOLARSHIP ELIGIBLE' };
+          }
+          return { stroke: '#94a3b8', dotBg: '#94a3b8', badgeBg: '#f1f5f9', badgeText: '#64748b', label: 'AGE NOT ELIGIBLE' };
+        }
+        if (filterScheme === 'AYUSHMAN_PMJAY') {
+          if (memberKey === 'rajesh' || memberKey === 'sunita' || memberKey === 'anjali') {
+            return { stroke: '#16a34a', dotBg: '#16a34a', badgeBg: '#dcfce7', badgeText: '#15803d', label: '● AYUSHMAN VERIFIED' };
+          }
+          return { stroke: '#94a3b8', dotBg: '#94a3b8', badgeBg: '#f1f5f9', badgeText: '#64748b', label: 'APL EXCLUDED' };
+        }
+        // Default: 'ALL'
+        if (memberKey === 'rajesh') {
+          return { stroke: '#16a34a', dotBg: '#16a34a', badgeBg: '#dcfce7', badgeText: '#15803d', label: '● BENEFIT REC’D' };
+        }
+        if (memberKey === 'sunita') {
+          return { stroke: '#eab308', dotBg: '#eab308', badgeBg: '#fef9c3', badgeText: '#a16207', label: '○ ELIGIBLE UNAPPLIED' };
+        }
+        if (memberKey === 'anjali') {
+          return { stroke: '#eab308', dotBg: '#eab308', badgeBg: '#fef9c3', badgeText: '#a16207', label: '○ SCHOLARSHIP ELIGIBLE' };
+        }
+        return { stroke: '#94a3b8', dotBg: '#94a3b8', badgeBg: '#f1f5f9', badgeText: '#475569', label: 'APL EXCLUDED' };
+      }
+
+      const rajeshSt = getSchemeStatus('rajesh');
+      const sunitaSt = getSchemeStatus('sunita');
+      const anjaliSt = getSchemeStatus('anjali');
+      const sureshSt = getSchemeStatus('suresh');
+
+      svg.innerHTML = `
+        <defs>
+          <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.1"/>
+          </filter>
+        </defs>
+
+        <!-- Dwelling Unit Boundaries -->
+        ${isPartitioned ? `
+          <!-- Dwelling Unit 1: Rajesh Sharma (Head - BPL) -->
+          <rect x="30" y="20" width="490" height="330" rx="16" fill="rgba(59, 130, 246, 0.03)" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <rect x="46" y="30" width="22" height="22" rx="6" fill="#eff6ff" stroke="#bfdbfe"/>
+          <text x="57" y="45" text-anchor="middle" font-size="12">🏠</text>
+          <text x="76" y="46" font-size="11.5" font-weight="800" fill="#1d4ed8" letter-spacing="0.04em">DWELLING UNIT 1: HH-22-0147 (RAJESH - BPL)</text>
+
+          <!-- Dwelling Unit 2: Suresh Sharma (Brother - APL) -->
+          <rect x="545" y="20" width="275" height="330" rx="16" fill="rgba(100, 116, 139, 0.03)" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <rect x="561" y="30" width="22" height="22" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+          <text x="572" y="45" text-anchor="middle" font-size="12">🏚️</text>
+          <text x="591" y="46" font-size="11.5" font-weight="800" fill="#64748b" letter-spacing="0.04em">DWELLING UNIT 2: HH-26-0994 (SURESH - APL)</text>
+        ` : `
+          <!-- Unified Joint Household (Before Partition) -->
+          <rect x="30" y="20" width="790" height="330" rx="16" fill="rgba(16, 185, 129, 0.03)" stroke="#86efac" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <rect x="46" y="30" width="22" height="22" rx="6" fill="#ecfdf5" stroke="#a7f3d0"/>
+          <text x="57" y="45" text-anchor="middle" font-size="12">🏡</text>
+          <text x="76" y="46" font-size="11.5" font-weight="800" fill="#059669" letter-spacing="0.04em">JOINT HOUSEHOLD: HH-2023-ORIGINAL (BEFORE PARTITION - UNDIVIDED)</text>
+        `}
+
+        <!-- Marriage Bridge: Rajesh (Head) <-> Sunita (Wife) -->
+        <path d="M 230 108 L 315 108" stroke="#cbd5e1" stroke-width="2.5" fill="none"/>
+        <circle cx="272.5" cy="108" r="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="272.5" y="112.5" text-anchor="middle" font-size="12">💍</text>
+        <rect x="250" y="126" width="45" height="15" rx="7.5" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="272.5" y="137" text-anchor="middle" font-size="8.5" font-weight="800" fill="#64748b">MARRIED</text>
+
+        <!-- Vertical Descent Line: Parents -> Child (Anjali) -->
+        <path d="M 272.5 141 L 272.5 235" stroke="#cbd5e1" stroke-width="2.5" fill="none"/>
+        <rect x="245" y="179" width="55" height="18" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="272.5" y="191.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="#64748b">DAUGHTER</text>
+
+        <!-- Sibling Connection: Sunita/Rajesh <-> Suresh -->
+        ${isPartitioned ? `
+          <path d="M 490 108 L 590 108" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" fill="none"/>
+          <rect x="506" y="98" width="68" height="20" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+          <text x="540" y="111.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="#64748b">🤝 SIBLING</text>
+          <text x="540" y="131" text-anchor="middle" font-size="8" font-weight="700" fill="#ef4444">PARTITIONED</text>
+        ` : `
+          <path d="M 490 108 L 590 108" stroke="#10b981" stroke-width="2.5" fill="none"/>
+          <rect x="508" y="98" width="64" height="20" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+          <text x="540" y="111.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="#047857">🤝 JOINT</text>
+          <text x="540" y="131" text-anchor="middle" font-size="8" font-weight="700" fill="#059669">CO-HABITING</text>
+        `}
+
+        <!-- ==================== GENERATION 1 ==================== -->
+
+        <!-- Node 1: Rajesh Sharma (Head - Self) -->
+        <g class="tree-node-interactive" onclick="openMemberModal('PER-MVLX-RAJESH', 'Rajesh Sharma', 44, 'HEAD', 'BPL', true, ['PM-Kisan (₹6,000)', 'PMAY Toilet Grant (₹12,000)', 'Ayushman Bharat PM-JAY'], false)" transform="translate(55, 70)">
+          <rect width="175" height="76" rx="12" fill="#ffffff" stroke="${rajeshSt.stroke}" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle cx="28" cy="38" r="16" fill="${rajeshSt.dotBg}"/>
+          <text x="28" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="11">RS</text>
+          <text x="52" y="29" font-size="13" font-weight="800" fill="#081735">Rajesh Sharma</text>
+          <text x="52" y="45" font-size="10.5" fill="#64748b">Head (Self) • Age 44</text>
+          <rect x="52" y="52" width="112" height="16" rx="4" fill="${rajeshSt.badgeBg}"/>
+          <text x="108" y="63.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="${rajeshSt.badgeText}">${rajeshSt.label}</text>
+        </g>
+
+        <!-- Node 2: Sunita Devi (Wife / Spouse) -->
+        <g class="tree-node-interactive" onclick="openMemberModal('PER-MVLX-SUNITA', 'Sunita Devi', 41, 'WIFE', 'BPL', false, ['PM Ujjwala 2.0 (Eligible)', 'Matru Vandana (Eligible)', 'Ayushman Bharat PM-JAY'], false)" transform="translate(315, 70)">
+          <rect width="175" height="76" rx="12" fill="#ffffff" stroke="${sunitaSt.stroke}" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle cx="28" cy="38" r="16" fill="${sunitaSt.dotBg}"/>
+          <text x="28" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="11">SD</text>
+          <text x="52" y="29" font-size="13" font-weight="800" fill="#081735">Sunita Devi</text>
+          <text x="52" y="45" font-size="10.5" fill="#64748b">Wife • Age 41</text>
+          <rect x="52" y="52" width="115" height="16" rx="4" fill="${sunitaSt.badgeBg}"/>
+          <text x="109.5" y="63.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="${sunitaSt.badgeText}">${sunitaSt.label}</text>
+        </g>
+
+        <!-- Node 4: Suresh Sharma (Brother) -->
+        <g class="tree-node-interactive" onclick="openMemberModal('PER-MVLX-SURESH', 'Suresh Sharma', 39, 'BROTHER', 'APL', false, [], false)" transform="translate(590, 70)">
+          <rect width="180" height="76" rx="12" fill="#ffffff" stroke="${sureshSt.stroke}" stroke-width="2" filter="url(#shadow)"/>
+          <circle cx="28" cy="38" r="16" fill="${sureshSt.dotBg}"/>
+          <text x="28" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="11">SS</text>
+          <text x="52" y="29" font-size="13" font-weight="800" fill="#081735">Suresh Sharma</text>
+          <text x="52" y="45" font-size="10.5" fill="#64748b">Brother • Age 39</text>
+          <rect x="52" y="52" width="115" height="16" rx="4" fill="${sureshSt.badgeBg}"/>
+          <text x="109.5" y="63.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="${sureshSt.badgeText}">${sureshSt.label}</text>
+        </g>
+
+        <!-- ==================== GENERATION 2 ==================== -->
+
+        <!-- Node 3: Anjali Sharma (Daughter / Student) -->
+        <g class="tree-node-interactive" onclick="openMemberModal('PER-MVLX-ANJALI', 'Anjali Sharma', 15, 'DAUGHTER', 'BPL', false, ['Pre-Matric Scholarship (Eligible ₹15,000)', 'Ayushman Bharat PM-JAY'], true)" transform="translate(185, 235)">
+          <rect width="175" height="76" rx="12" fill="#ffffff" stroke="${anjaliSt.stroke}" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle cx="28" cy="38" r="16" fill="${anjaliSt.dotBg}"/>
+          <text x="28" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="11">AS</text>
+          <text x="52" y="29" font-size="13" font-weight="800" fill="#081735">Anjali Sharma</text>
+          <text x="52" y="45" font-size="10.5" fill="#64748b">Daughter • Age 15</text>
+          <rect x="52" y="52" width="115" height="16" rx="4" fill="${anjaliSt.badgeBg}"/>
+          <text x="109.5" y="63.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="${anjaliSt.badgeText}">${anjaliSt.label}</text>
+        </g>
+      `;
+    }
+
+    function zoomTree(factor) {
+      treeZoomLevel *= factor;
+      document.getElementById('family-tree-canvas').style.transform = `scale(${treeZoomLevel})`;
+    }
+
+    function resetTreeZoom() {
+      treeZoomLevel = 1.0;
+      document.getElementById('family-tree-canvas').style.transform = 'scale(1)';
+    }
+
+    function setTreeYear(year) {
+      currentTreeYear = year;
+      document.getElementById('btn-tree-2023').className = year === 2023 ? 'btn sm primary' : 'btn sm';
+      document.getElementById('btn-tree-2026').className = year === 2026 ? 'btn sm primary' : 'btn sm';
+      renderFamilyTree(cachedFamilyGraph, year, document.getElementById('tree-scheme-filter').value);
+      Panel.toast(`Switched timeline to ${year}: ${year === 2023 ? 'Before Partition' : 'After Partition'}`, 'ok');
+    }
+
+    function filterTreeScheme(schemeCode) {
+      renderFamilyTree(cachedFamilyGraph, currentTreeYear, schemeCode);
+    }
+
+    function openMemberModal(uid, name, age, role, category, hasBenefits, benefitsList, isDependent) {
+      const html = `
+        <div style="padding: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 38px; height: 38px; border-radius: 50%; background: #ea580c; color: #fff; font-weight: 800; display: grid; place-items: center;">
+                ${name.split(' ').map(n=>n[0]).join('')}
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 16px; color: #081735;">${Panel.esc(name)}</h3>
+                <div class="small muted mono">${uid}</div>
+              </div>
+            </div>
+            <button class="btn sm" onclick="closeModal()">✕</button>
+          </div>
+
+          <div class="info-grid" style="margin-bottom: 16px;">
+            <div class="info-tile">
+              <div class="info-tile-label">Age &amp; Role</div>
+              <div class="info-tile-value">${age} Years (${role})</div>
+            </div>
+            <div class="info-tile">
+              <div class="info-tile-label">Income Category</div>
+              <div class="info-tile-value font-bold" style="color: ${category === 'BPL' ? '#b91c1c' : '#1e40af'};">${category}</div>
+            </div>
+            <div class="info-tile">
+              <div class="info-tile-label">Dependent Status</div>
+              <div class="info-tile-value">${isDependent ? '<span class="badge b-amber">DEPENDENT (CHILD/SENIOR)</span>' : 'Independent'}</div>
+            </div>
+            <div class="info-tile">
+              <div class="info-tile-label">Vital Status</div>
+              <div class="info-tile-value" style="color: #16a34a;">● ALIVE &amp; VERIFIED</div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid #f1f5f9; padding-top: 12px;">
+            <strong style="font-size: 13px; color: #081735;">Benefits Received &amp; Entitlements:</strong>
+            <div class="space-y-1.5" style="margin-top: 8px;">
+              ${benefitsList.length ? benefitsList.map(b => `
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; font-size: 12.5px; display: flex; justify-content: space-between;">
+                  <span>${Panel.esc(b)}</span>
+                  <span class="badge b-green">ACTIVE</span>
+                </div>
+              `).join('') : '<div class="small muted">No active cash benefits disbursed under this individual profile.</div>'}
+            </div>
+          </div>
+        </div>
+      `;
+      showModalContent(html);
+    }
+
+    function openMapPin() {
+      Panel.toast('Opening Cadastre Plot #42 at coordinates 28.6139° N, 77.2090° E', 'ok');
+      window.open('https://www.google.com/maps?q=28.6139,77.2090', '_blank');
+    }
+
+    /* ============================================================
+       MODULE 4: MERE FAAYDE (BENEFITS LEDGER & GAPS)
+       ============================================================ */
+    async function loadBenefitsModule() {
+      try {
+        const data = await Panel.api('GET', '/v1/me/benefits');
+
+        // 1. Benefit Gaps
+        const gapsBox = document.getElementById('benefit-gaps-grid');
+        if (data.gaps && data.gaps.length) {
+          gapsBox.innerHTML = data.gaps.map(g => `
+            <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 10px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <a href="/scheme.html?scheme=${encodeURIComponent(g.schemeCode)}" style="text-decoration:none; color:inherit;" title="Click to view scheme details">
+                    <strong style="color: #15803d; font-size: 14px; text-decoration: underline; text-underline-offset: 3px;">${Panel.esc(g.schemeName)}</strong>
+                  </a>
+                  <div class="small muted" style="margin-top: 2px;">Target: <strong>${g.targetMember}</strong></div>
+                </div>
+                <span class="badge b-green">${g.annualBenefit}</span>
+              </div>
+              <div class="small" style="color: #475569; margin: 8px 0;">Reason: ${Panel.esc(g.reason)}</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #e2e8f0; padding-top: 8px;">
+                <span class="small muted">Deadline: ${g.deadline}</span>
+                <div style="display: flex; gap: 8px;">
+                  <a href="/scheme.html?scheme=${encodeURIComponent(g.schemeCode)}" class="btn sm" style="background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;">Details</a>
+                  <a href="/apply.html?scheme=${encodeURIComponent(g.schemeCode)}" class="btn primary sm">Claim Now →</a>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // 2. Recurring Benefits
+        const recBox = document.getElementById('recurring-benefits-list');
+        if (data.recurring && data.recurring.length) {
+          recBox.innerHTML = data.recurring.map(r => `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>${Panel.esc(r.schemeName)}</strong>
+                <span class="badge b-green">₹ ${Number(r.cycleAmount).toLocaleString('en-IN')} / cycle</span>
+              </div>
+              <div class="small muted" style="margin-top: 4px;">Beneficiary: ${r.beneficiaryName} • Frequency: ${r.frequency}</div>
+              <div class="small" style="color: #ea580c; font-weight: 700; margin-top: 6px;">
+                📅 Next Installment Scheduled: ${Panel.date(r.nextInstallmentDate, false)}
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // 3. Calendar
+        const calBox = document.getElementById('benefits-calendar-list');
+        if (data.calendar && data.calendar.length) {
+          calBox.innerHTML = data.calendar.map(c => `
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
+              <div>
+                <strong style="font-size: 13px; color: #081735;">${Panel.esc(c.title)}</strong>
+                <div class="small muted">Date: <strong>${Panel.date(c.date, false)}</strong></div>
+              </div>
+              <span class="badge ${c.type === 'DEADLINE' ? 'b-red' : 'b-blue'}">${c.badge}</span>
+            </div>
+          `).join('');
+        }
+
+        // 4. Ledger
+        const ledgerBox = document.getElementById('benefits-ledger-box');
+        if (data.received && data.received.length) {
+          ledgerBox.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Welfare Scheme</th>
+                  <th>Credit Date</th>
+                  <th>Amount</th>
+                  <th>Beneficiary</th>
+                  <th>DBT Reference / Bank Account</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.received.map(b => `
+                  <tr>
+                    <td><strong>${Panel.esc(b.schemeName)}</strong></td>
+                    <td class="small">${Panel.date(b.disbursedAt, false)}</td>
+                    <td style="font-weight: 800; color: #16a34a;">₹ ${Number(b.amount).toLocaleString('en-IN')}</td>
+                    <td>${Panel.esc(b.beneficiaryName)}</td>
+                    <td><span class="small mono">${b.txReference} • ${b.bankAccountMasked}</span></td>
+                    <td><span class="badge b-green">CREDITED</span></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+        } else {
+          ledgerBox.innerHTML = '<div class="small muted">No lifetime ledger transactions recorded yet.</div>';
+        }
+      } catch (e) {
+        Panel.toast('Benefits ledger error: ' + e.message, 'error');
+      }
+    }
+
+    function exportBenefitsLedger() {
+      Panel.toast('Generating digitally signed National DBT Ledger PDF...', 'ok');
+      window.print();
+    }
+
+    /* ============================================================
+       MODULE 5: LIFE EVENTS & NOMINEES
+       ============================================================ */
+    async function loadLifeEventsModule() {
+      try {
+        const data = await Panel.api('GET', '/v1/me/life-events');
+
+        // Nominees
+        const nomBox = document.getElementById('nominees-list');
+        if (data.nominees && data.nominees.length) {
+          nomBox.innerHTML = data.nominees.map(n => `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>${Panel.esc(n.schemeName)}</strong>
+                <span class="badge b-green">${n.sharePercentage}% Share</span>
+              </div>
+              <div class="small muted" style="margin-top: 4px;">Nominee: <strong>${n.nomineeName}</strong> (${n.relationship})</div>
+              <div class="small mono muted" style="margin-top: 2px;">Aadhaar Seeded: ${n.nomineeAadhaarMasked}</div>
+            </div>
+          `).join('');
+        }
+
+        // Milestones
+        const mileBox = document.getElementById('milestones-list');
+        if (data.milestones && data.milestones.length) {
+          mileBox.innerHTML = data.milestones.map(m => `
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong style="color: #1e40af;">${Panel.esc(m.title)}</strong>
+                <span class="badge b-blue">Milestone</span>
+              </div>
+              <div class="small" style="color: #1e3a8a; margin-top: 4px;">${Panel.esc(m.alert)}</div>
+              <div class="small muted" style="margin-top: 4px;">Estimated Date: ${Panel.date(m.date, false)}</div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        Panel.toast(e.message, 'error');
+      }
+    }
+
+    function openLifeEventModal(type) {
+      const titles = {
+        BIRTH: 'Report Newborn Child',
+        MARRIAGE: 'Report Marriage',
+        PARTITION: 'Report Household Partition',
+        DEATH: 'Report Demise'
+      };
+
+      const html = `
+        <div style="padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;">
+            <h3 style="margin: 0; font-size: 16px; color: #081735;">${titles[type] || 'Report Life Event'}</h3>
+            <button class="btn sm" onclick="closeModal()">✕</button>
+          </div>
+          <form onsubmit="handleLifeEventSubmit(event, '${type}')">
+            <div class="field">
+              <label>Event Narrative / Details</label>
+              <textarea id="le-narrative" required placeholder="Enter certificate registration number, date, and family details..." style="width: 100%; height: 90px; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 13px;"></textarea>
+            </div>
+            <div class="field">
+              <label>Upload Supporting Certificate (PDF / Image)</label>
+              <input type="file" id="le-file" accept="image/*,application/pdf">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;">
+              <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+              <button type="submit" class="btn primary">Submit Event for Verification</button>
+            </div>
+          </form>
+        </div>
+      `;
+      showModalContent(html);
+    }
+
+    async function handleLifeEventSubmit(e, eventType) {
+      e.preventDefault();
+      const narrative = document.getElementById('le-narrative').value.trim();
+      try {
+        await Panel.api('POST', '/v1/me/life-events', { eventType, narrative });
+        Panel.toast('Life event logged and assigned to Block Welfare Officer for verification.', 'ok');
+        closeModal();
+        loadLifeEventsModule();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    function setNomineePrompt() {
+      Panel.toast('Nominee update form opened. Link direct heir for pension continuity.', 'ok');
+    }
+
+    /* ============================================================
+       MODULE 6: DOCUMENT WALLET (UPLOAD ONCE, REUSE, RE-UPLOAD)
+       ============================================================ */
+    async function loadWalletModule() {
+      const grid = document.getElementById('wallet-grid');
+      try {
+        const docs = await Panel.api('GET', '/v1/me/documents');
+        grid.innerHTML = docs.map(d => {
+          const isRejected = d.verificationStatus === 'REJECTED';
+          return `
+            <div class="wallet-card" style="border-left: 4px solid ${isRejected ? '#b91c1c' : '#16a34a'}; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="wallet-icon" style="background: ${isRejected ? '#fef2f2' : '#eff6ff'}; color: ${isRejected ? '#b91c1c' : '#1d4ed8'};">
+                    ${isRejected ? '⚠️' : '📁'}
+                  </div>
+                  <div>
+                    <div style="font-weight: 700; color: #0f172a; font-size: 14px;">${Panel.esc(d.docType)}</div>
+                    <div class="small muted mono">${d.filename} • ${d.encryptionType}</div>
+                  </div>
+                </div>
+                <div>${Panel.badge(d.verificationStatus)}</div>
+              </div>
+
+              ${isRejected ? `
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 10px; margin-top: 10px;">
+                  <strong style="color: #991b1b; font-size: 12px;">Rejection Wajah:</strong>
+                  <div class="small" style="color: #7f1d1d; margin-top: 2px;">${Panel.esc(d.rejectionReason)}</div>
+                  <button class="btn sm primary" style="margin-top: 8px;" onclick="triggerDocReupload('${d.id}')">
+                    📤 Upload Fresh Certificate Scan
+                  </button>
+                </div>
+              ` : `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid #f1f5f9;">
+                  <span class="small muted">Uploaded: ${Panel.date(d.uploadedAt, false)}</span>
+                  <span class="badge b-green" style="font-size: 10px;">Reusable Across All Schemes</span>
+                </div>
+              `}
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        grid.innerHTML = `<div class="small muted">Failed to load document wallet.</div>`;
+      }
+    }
+
+    function triggerDocReupload(docId) {
+      const html = `
+        <div style="padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;">
+            <h3 style="margin: 0; font-size: 16px; color: #081735;">Re-upload Rejected Document</h3>
+            <button class="btn sm" onclick="closeModal()">✕</button>
+          </div>
+          <form onsubmit="handleDocReuploadSubmit(event, '${docId}')">
+            <div class="field">
+              <label>Select Fresh Document File (PDF, JPG, PNG)</label>
+              <input type="file" id="reupload-file-input" required accept="image/*,application/pdf">
+            </div>
+            <div class="small muted" style="margin-bottom: 14px;">
+              Document will be encrypted with AES-256 envelope and queued for fast-track officer review.
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px;">
+              <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+              <button type="submit" class="btn primary">Upload &amp; Reset to Pending</button>
+            </div>
+          </form>
+        </div>
+      `;
+      showModalContent(html);
+    }
+
+    async function handleDocReuploadSubmit(e, documentId) {
+      e.preventDefault();
+      const file = document.getElementById('reupload-file-input').files[0];
+      try {
+        await Panel.api('POST', '/v1/me/documents/reupload', { documentId, filename: file ? file.name : 'updated_scan.pdf' });
+        Panel.toast('Fresh document uploaded! Status reset to PENDING for fast scrutiny.', 'ok');
+        closeModal();
+        loadWalletModule();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    /* ============================================================
+       MODULE 7: PRIVACY AUR BHAROSA (ACCESS LOG, CONSENT, 2FA)
+       ============================================================ */
+    async function loadPrivacyModule() {
+      // 1. Access Log (Data Access History & Audit Trail)
+      const accessBox = document.getElementById('access-log-table-box');
+      try {
+        const logs = await Panel.api('GET', '/v1/me/access-log');
+        accessBox.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Kaun (Officer &amp; Role)</th>
+                <th>Department</th>
+                <th>Kyun (Authorized Purpose)</th>
+                <th>Accessed Fields</th>
+                <th>Kab (Timestamp)</th>
+                <th>Security Tag</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${logs.map(l => `
+                <tr>
+                  <td><strong>${Panel.esc(l.officerName)}</strong> <span class="badge b-grey small">${l.role}</span></td>
+                  <td>${Panel.esc(l.department)}</td>
+                  <td>${Panel.esc(l.purpose)}</td>
+                  <td><span class="small mono">${Panel.esc(l.accessedFields)}</span></td>
+                  <td class="small">${Panel.date(l.accessedAt)}</td>
+                  <td>${l.isBreakGlass ? '<span class="badge b-red">BREAK-GLASS</span>' : '<span class="badge b-green">NORMAL</span>'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (e) {
+        accessBox.innerHTML = '<div class="small muted">Failed to load access logs.</div>';
+      }
+
+      // 2. Consents
+      loadConsents();
+
+      // 3. Corrections
+      loadCorrections();
+    }
+
+    async function loadConsents() {
+      const box = document.getElementById('consents-table-box');
+      try {
+        const list = await Panel.api('GET', '/v1/me/consents');
+        if (list.length === 0) {
+          box.innerHTML = '<div class="muted small">No active purpose-bound consents recorded.</div>';
+          return;
+        }
+
+        box.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Authorized Purpose</th>
+                <th>Permitted Fields</th>
+                <th>Valid Until</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map(c => `
+                <tr>
+                  <td><strong>${Panel.esc(c.department_id)}</strong></td>
+                  <td>${Panel.esc(c.purpose)}</td>
+                  <td><span class="small mono">${Array.isArray(c.permitted_fields) ? c.permitted_fields.join(', ') : c.permitted_fields}</span></td>
+                  <td class="small">${Panel.date(c.expires_at, false)}</td>
+                  <td>${Panel.badge(c.status)}</td>
+                  <td>
+                    ${c.status === 'ACTIVE' ? `
+                      <button class="btn sm danger" onclick="revokeConsent('${c.id}')">Revoke Access</button>
+                    ` : '<span class="muted small">—</span>'}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        box.innerHTML = `<div class="alert danger">${err.message}</div>`;
+      }
+    }
+
+    async function revokeConsent(id) {
+      if (!confirm('Are you sure you want to revoke this department consent under DPDP Act provisions?')) return;
+      try {
+        await Panel.api('POST', `/v1/me/consents/${id}/revoke`, {});
+        Panel.toast('Consent revoked successfully.', 'ok');
+        loadConsents();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function handleCorrectionSubmit(e) {
+      e.preventDefault();
+      const fieldName = document.getElementById('corr-field').value;
+      const requestedValue = document.getElementById('corr-value').value.trim();
+      try {
+        await Panel.api('POST', '/v1/me/corrections', { fieldName, requestedValue });
+        Panel.toast('Correction request submitted to Block Verifying Officer!', 'ok');
+        document.getElementById('corr-value').value = '';
+        loadCorrections();
+      } catch (err) {
+        Panel.toast(err.message, 'error');
+      }
+    }
+
+    async function loadCorrections() {
+      const box = document.getElementById('corrections-history');
+      try {
+        const list = await Panel.api('GET', '/v1/me/corrections');
+        if (list.length === 0) {
+          box.innerHTML = '<div class="muted small">No previous correction requests filed.</div>';
+          return;
+        }
+        box.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Requested Value</th>
+                <th>Filed Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map(c => `
+                <tr>
+                  <td><strong>${c.field_name}</strong></td>
+                  <td>${Panel.esc(c.requested_value)}</td>
+                  <td class="small">${Panel.date(c.created_at)}</td>
+                  <td>${Panel.badge(c.status)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        box.innerHTML = `<div class="alert danger">${err.message}</div>`;
+      }
+    }
+
+    async function downloadMyData() {
+      Panel.toast('Preparing cryptographically signed complete data dump...', 'ok');
+      try {
+        const data = await Panel.api('POST', '/v1/me/download-data', {});
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ojas_citizen_data_${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        Panel.toast('Download complete: Signed citizen data archive saved.', 'ok');
+      } catch (e) {
+        Panel.toast(e.message, 'error');
+      }
+    }
+
+    async function toggle2FaPrompt() {
+      try {
+        const res = await Panel.api('POST', '/v1/me/2fa/toggle', {});
+        Panel.toast(res.message, 'ok');
+      } catch (e) {
+        Panel.toast(e.message, 'error');
+      }
+    }
+
+    /* ============================================================
+       MODULE 8: NOTIFICATIONS & SAHAYATA (CHATBOT, IVR, PREFERENCES)
+       ============================================================ */
+    async function loadSupportModule() {
+      // Preferences
+      savePreferences(true);
+    }
+
+    function savePreferences(readOnly) {
+      if (!readOnly) {
+        Panel.toast('Notification channel preferences updated.', 'ok');
+      }
+    }
+
+    function simulateOtpKyc() {
+      Panel.toast('OTP 8419 sent to registered mobile •••• 1122. Aadhaar e-KYC renewed!', 'ok');
+    }
+
+    function simulateVoiceInput() {
+      Panel.toast('Listening... "Meri application kyun ruki hai?" captured via voice recognition.', 'ok');
+      document.getElementById('chat-input-text').value = 'Meri application kyun ruki hai?';
+      sendChatPrompt('Meri application kyun ruki hai?');
+    }
+
+    function sendChatPrompt(promptText) {
+      document.getElementById('chat-input-text').value = promptText;
+      handleChatSubmit(new Event('submit'));
+    }
+
+    async function handleChatSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const input = document.getElementById('chat-input-text');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('chatbot-messages');
+      // Add user bubble
+      const userBubble = document.createElement('div');
+      userBubble.className = 'chat-bubble user';
+      userBubble.textContent = text;
+      chatBox.appendChild(userBubble);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Call assistant API
+      try {
+        const res = await Panel.api('POST', '/v1/me/assistant', { query: text, lang: currentLang });
+        const botBubble = document.createElement('div');
+        botBubble.className = 'chat-bubble bot';
+        const replyText = currentLang === 'HI' ? (res.answerHi || res.answerEn) : res.answerEn;
+        botBubble.innerHTML = `<p style="margin: 0 0 8px;">${Panel.esc(replyText)}</p>`;
+
+        if (res.suggestedActions && res.suggestedActions.length) {
+          botBubble.innerHTML += `
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;">
+              ${res.suggestedActions.map(act => `
+                <button type="button" class="btn sm primary" onclick="runChatAction('${act.action}', '${act.targetId || ''}')">
+                  ${act.label}
+                </button>
+              `).join('')}
+            </div>
+          `;
+        }
+        chatBox.appendChild(botBubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (err) {
+        const errBubble = document.createElement('div');
+        errBubble.className = 'chat-bubble bot';
+        errBubble.textContent = 'Sahayak error: ' + err.message;
+        chatBox.appendChild(errBubble);
+      }
+    }
+
+    function runChatAction(action, targetId) {
+      if (action === 'appealApp') appealApp(targetId);
+      else if (action === 'openTrack') window.location.href = `/track.html?app=${encodeURIComponent(targetId)}`;
+      else if (action === 'applyScheme') window.location.href = `/apply.html?scheme=${encodeURIComponent(targetId)}`;
+      else if (action === 'applyBundle') applySchemeBundle(targetId);
+      else if (action === 'openTab') showTab(targetId);
+    }
+
+    /* Modal dialog helper */
+    function showModalContent(html) {
+      const container = document.getElementById('modal-container');
+      const box = document.getElementById('modal-box-content');
+      box.innerHTML = html;
+      container.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-container').classList.add('hidden');
+    }
+
+    // Auto-init on page load
+    initCitizenPortal();
+  </script>
+</body>
+</html>

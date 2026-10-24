@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Track Application &amp; Document Processing Stage - Ojas National Portal</title>
+  <meta name="description" content="Official Government of India Document Processing &amp; Welfare Application Tracker. Track live scrutiny, field inspection, and DBT payment stage."/>
+  <link rel="stylesheet" href="assets/styles-Dig2zqxS.css" data-precedence="default"/>
+  <link rel="stylesheet" href="assets/glass.css"/>
+  <link rel="stylesheet" href="assets/auth-modal.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800;900&amp;family=Sora:wght@500;600;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" data-precedence="default"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+</head>
+<body class="min-h-screen glass-ambient-bg flex flex-col">
+  <!-- National Welfare Portal Signature Header -->
+  <header class="aicte-header-wrapper">
+    <!-- Row 1: Official Deep Navy Top Ribbon -->
+    <div class="aicte-top-ribbon">
+      <div class="flex items-center gap-2">
+        <span class="inline-block h-3.5 w-5 rounded-[2px] shadow-2xs border border-white/20" style="background:linear-gradient(180deg, #FF9933 33%, #FFFFFF 33% 66%, #138808 66%)"></span>
+        <span class="text-xs font-semibold text-white tracking-tight">Government of India</span>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Important Note Pill -->
+        <button type="button" onclick="toggleImportantNote(true)" class="aicte-top-pill-note" aria-label="Important Note">
+          <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Important Note</span>
+        </button>
+
+        <!-- Helpline & Support Dropdown Pill -->
+        <div class="relative aicte-dropdown-wrap">
+          <button type="button" onclick="toggleDropdown('helplineDropdown', event)" class="aicte-top-pill-helpline" aria-label="Helpline and Support">
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>Helpline &amp; Support</span>
+            <svg class="size-3 transition-transform opacity-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+
+          <div id="helplineDropdown" class="aicte-dropdown-card right-0 w-80">
+            <div class="p-3 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100 rounded-t-xl">
+              <p class="text-xs font-black text-slate-900">National Welfare Support Desk</p>
+              <p class="text-[11px] font-semibold text-amber-800">Toll-free official assistance</p>
+            </div>
+            <div class="p-2 space-y-1.5">
+              <a href="tel:01129581423" class="aicte-dropdown-item">
+                <span class="size-7 rounded-lg bg-orange-500 text-white grid place-items-center text-xs shrink-0 font-bold">📞</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">011-29581423</span>
+                  <span class="block text-[10px] text-slate-500">Mon-Fri · 9am-6pm IST</span>
+                </div>
+              </a>
+              <a href="mailto:support@ojas.gov.in" class="aicte-dropdown-item">
+                <span class="size-7 rounded-lg bg-emerald-600 text-white grid place-items-center text-xs shrink-0 font-bold">✉️</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">support@ojas.gov.in</span>
+                  <span class="block text-[10px] text-slate-500">24/7 Citizen Grievance Portal</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Indian Tricolor Divider -->
+    <div class="aicte-tricolor-bar">
+      <span class="bg-[#FF9933]"></span>
+      <span class="bg-[#FFFFFF]"></span>
+      <span class="bg-[#138808]"></span>
+    </div>
+
+    <!-- Row 3: Main Navigation Bar -->
+    <div class="aicte-main-nav">
+      <!-- Left: Logo & National Emblem Branding -->
+      <a href="index.html" class="aicte-brand-group">
+        <span class="ojas-emblem-badge">
+          <span class="ojas-emblem-inner">OJ</span>
+        </span>
+        <div class="leading-tight">
+          <span class="block aicte-brand-title">Ojas</span>
+          <span class="block aicte-brand-sub">Application &amp; Document Tracker</span>
+        </div>
+      </a>
+
+      <!-- Center: Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+        <a href="index.html" class="aicte-nav-link">
+          <span>Home</span>
+        </a>
+
+        <!-- Citizen Services Dropdown -->
+        <div class="relative aicte-dropdown-wrap">
+          <button type="button" onclick="toggleDropdown('citizenDropdown', event)" class="aicte-nav-dropdown-btn">
+            <span>Citizen Services</span>
+            <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div id="citizenDropdown" class="aicte-dropdown-card left-0 w-72">
+            <a href="apply.html?mode=check" class="aicte-dropdown-item bg-amber-50/50 hover:bg-amber-100/60 transition">
+              <span class="text-base">⚡</span>
+              <div>
+                <span class="block text-xs font-bold text-amber-900">Check Eligibility</span>
+                <span class="block text-[10px] text-amber-700">Instant rules &amp; duplicate check</span>
+              </div>
+            </a>
+            <a href="track.html" class="aicte-dropdown-item bg-orange-50/60 font-bold text-orange-900">
+              <span class="text-base">🔍</span>
+              <div>
+                <span class="block text-xs font-bold text-orange-700">Track Application &amp; DBT</span>
+                <span class="block text-[10px] text-slate-500">Real-time Aadhaar payment bridge</span>
+              </div>
+            </a>
+            <a href="apply.html" class="aicte-dropdown-item">
+              <span class="text-base">📝</span>
+              <div>
+                <span class="block text-xs font-bold text-slate-900">Apply for Welfare Scheme</span>
+                <span class="block text-[10px] text-slate-500">One-click online application</span>
+              </div>
+            </a>
+            <a href="citizen.html" class="aicte-dropdown-item">
+              <span class="text-base">👤</span>
+              <div>
+                <span class="block text-xs font-bold text-slate-900">Citizen Life Record</span>
+                <span class="block text-[10px] text-slate-500">Jan Aadhaar single source of truth</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Flagship Schemes Dropdown -->
+        <div class="relative aicte-dropdown-wrap">
+          <button type="button" onclick="toggleDropdown('schemesDropdown', event)" class="aicte-nav-dropdown-btn">
+            <span>Flagship Schemes</span>
+            <svg class="size-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div id="schemesDropdown" class="aicte-dropdown-card left-0 w-80">
+            <a href="apply.html?scheme=pmkisan" class="aicte-dropdown-item justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="text-base">🌾</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">PM-Kisan Samman Nidhi</span>
+                  <span class="block text-[10px] text-slate-500">Direct income support ₹6,000/yr</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">ACTIVE</span>
+            </a>
+            <a href="apply.html?scheme=pmayg" class="aicte-dropdown-item justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="text-base">🏠</span>
+                <div>
+                  <span class="block text-xs font-bold text-slate-900">PMAY-G Rural Sanitation</span>
+                  <span class="block text-[10px] text-slate-500">Household toilet unit grant</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">DIRECT</span>
+            </a>
+            <a href="apply.html?scheme=ayushman" class="aicte-dropdown-item">
+              <span class="text-base">🏥</span>
+              <div>
+                <span class="block text-xs font-bold text-slate-900">Ayushman Bharat PM-JAY</span>
+                <span class="block text-[10px] text-slate-500">₹5 Lakh cashless health cover</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="official.html" class="aicte-nav-link">
+          <span>Anti-Fraud Desk</span>
+        </a>
+      </nav>
+
+      <!-- Right: Action Buttons (Login + Track Application + Hamburger on Mobile) -->
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- Button 1: Login Dropdown -->
+        <div class="relative aicte-dropdown-wrap">
+          <button type="button" onclick="toggleDropdown('loginDropdown', event)" class="aicte-btn-white" aria-label="Login Options">
+            <svg class="size-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+            <span>Login</span>
+            <svg class="size-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div id="loginDropdown" class="aicte-dropdown-card right-0 w-64">
+            <button type="button" onclick="(window.JanasetuAuth||window.OjasAuth).showModal({mode:'login'})" class="w-full text-left aicte-dropdown-item">
+              <span class="text-base">🔐</span>
+              <div>
+                <span class="block text-xs font-bold text-slate-900">Sign In</span>
+                <span class="block text-[10px] text-slate-500">Citizen or Government Officer</span>
+              </div>
+            </button>
+            <button type="button" onclick="(window.JanasetuAuth||window.OjasAuth).showModal({mode:'signup'})" class="w-full text-left aicte-dropdown-item">
+              <span class="text-base">📝</span>
+              <div>
+                <span class="block text-xs font-bold text-emerald-700">New Citizen Registration</span>
+                <span class="block text-[10px] text-slate-500">Create lifelong citizen record</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Button 2: Active Track Button -->
+        <a href="track.html" class="aicte-btn-register aicte-btn-nav-action" title="Track Application Status">
+          <svg class="size-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <span>Track Application</span>
+        </a>
+
+        <!-- Button 3: Mobile Hamburger Menu Button (Visible on < 1024px) -->
+        <button type="button" onclick="toggleMobileNav()" class="aicte-hamburger-btn lg:hidden" aria-label="Toggle Navigation Menu" aria-expanded="false" id="mobileMenuBtn">
+          <svg class="size-5 hamburger-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+          <svg class="size-5 hamburger-icon-close hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu (Responsive for Phones & Tablets) -->
+    <div id="mobileDrawerNav" class="hidden border-t border-slate-200 bg-white/95 backdrop-blur-xl px-4 py-4 lg:hidden shadow-xl">
+      <div class="space-y-3">
+        <div class="pb-3 border-b border-slate-100 flex items-center gap-2">
+          <a class="aicte-btn-register w-full justify-center py-2.5 text-xs" href="track.html">
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+            <span>Track Scheme Application</span>
+          </a>
+          <button type="button" onclick="(window.JanasetuAuth||window.OjasAuth).showModal({mode:'login'})" class="aicte-btn-white py-2.5 px-3 text-xs shrink-0">
+            <span>🔑 Sign In</span>
+          </button>
+        </div>
+        <div class="space-y-1">
+          <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="index.html">
+            <span>🏠</span> Home
+          </a>
+          <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="index.html#schemesGrid">
+            <span>🏛️</span> All Welfare Directory (120+ Central &amp; State Schemes)
+          </a>
+          <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-amber-900 bg-amber-50/80 hover:bg-amber-100 transition" href="apply.html?mode=check">
+            <span>⚡</span> Instant Eligibility Checker
+          </a>
+          <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="apply.html">
+            <span>📝</span> Apply for Welfare Benefits
+          </a>
+          <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="citizen.html">
+            <span>👤</span> Citizen Life Record (Jan Aadhaar)
+          </a>
+          <a class="flex items-center gap-2.5 p-2.5 rounded-xl font-bold text-sm text-slate-800 hover:bg-slate-50 transition" href="official.html">
+            <span>🛡️</span> Officer Review &amp; Anti-Fraud Console
+          </a>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+          <span>Toll Free: <strong>011–29581423</strong></span>
+          <span>National DPI • Synthetic Data</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content: Application Tracker -->
+  <main class="flex-1">
+    <!-- Hero Banner with Interactive Tracker -->
+    <section class="tracker-section py-12 sm:py-16 relative overflow-hidden" id="track">
+      <!-- Ambient glowing background blobs -->
+      <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute animate-float-slow rounded-blob blur-3xl opacity-25" style="width:520px;height:520px;top:-10%;left:-8%;background:radial-gradient(circle, rgba(245,130,32,0.40) 0%, transparent 70%);"></div>
+        <div class="absolute animate-float-slow rounded-blob blur-3xl opacity-20" style="width:460px;height:460px;right:-8%;bottom:-10%;background:radial-gradient(circle, rgba(19,136,8,0.35) 0%, transparent 70%);animation-delay:4s;"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-7xl px-4">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <div class="inline-flex items-center gap-2 mb-3">
+            <span class="tracker-badge">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              National Welfare Document &amp; Application Tracker
+            </span>
+          </div>
+          <h1 class="tracker-heading">
+            Track Application &amp; <span class="tracker-heading-highlight">Document Processing Stage</span>
+          </h1>
+          <p class="tracker-subtitle">
+            Anyone who has submitted an application for any welfare scheme can enter their Application Reference ID to track in real time which departmental desk, verification stage, and officer scrutiny their documents are currently undergoing.
+          </p>
+        </div>
+
+        <!-- Central Search Bar Card -->
+        <div class="tracker-search-card max-w-3xl">
+          <div class="tracker-search-header">
+            <span class="tracker-search-label">Enter Scheme Application ID / Reference No.</span>
+            <span class="tracker-node-chip">
+              <span class="size-1.5 rounded-full bg-emerald-400"></span>
+              NIC Live Node
+            </span>
+          </div>
+
+          <div class="tracker-search-row">
+            <div class="relative flex-1">
+              <input type="text" id="homeTrackInput" value="" placeholder="e.g. APP/2026/08412 or APP/2026/10488" class="tracker-search-input"/>
+            </div>
+            <button type="button" onclick="runHomeTrack()" class="tracker-submit-btn">
+              <span>Track Document Status</span>
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </button>
+          </div>
+
+          <!-- Quick Click Sample Pills -->
+          <div class="tracker-sample-bar">
+            <span class="tracker-sample-label">Click sample application:</span>
+            <button type="button" onclick="trackSample('APP/2026/08412')" class="tracker-pill-btn tracker-pill-emerald">
+              APP/2026/08412 (Ramesh · Stage 5: DBT Disbursed)
+            </button>
+            <button type="button" onclick="trackSample('APP/2026/10488')" class="tracker-pill-btn tracker-pill-amber">
+              APP/2026/10488 (Suresh · Stage 3: Field Inspection)
+            </button>
+            <button type="button" onclick="trackSample('APP/2026/11940')" class="tracker-pill-btn tracker-pill-blue">
+              APP/2026/11940 (Anjali · Stage 2: Document Scrutiny)
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Document Processing & Status Dashboard Card -->
+        <div id="homeTrackResult" class="max-w-4xl mx-auto shadow-2xl hidden" style="display: none;">
+          
+          <!-- 1. Header Information Block -->
+          <div class="pb-5 mb-6 border-b border-white/15">
+            <div class="tracker-header-row">
+              <div>
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <h3 class="tracker-applicant-name" id="trackApplicantName">Ramesh Kumar</h3>
+                  <span class="tracker-id-badge" id="trackAppId">APP/2026/08412</span>
+                  <span class="tracker-status-chip status-disbursed" id="trackStatusBadge">✓ Disbursed</span>
+                </div>
+                <p class="tracker-meta-line">
+                  <span class="tracker-scheme-text" id="trackSchemeName">Swachh Bharat Rural Sanitation (PMAY-G Toilet)</span>
+                  <span>·</span>
+                  <span>Applied: <strong id="trackAppliedDate">18 Feb 2026</strong></span>
+                  <span>·</span>
+                  <span>Current Desk: <strong class="tracker-desk-text" id="trackCurrentDesk">District Ayodhya · DBT Disbursal Cell</strong></span>
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <a href="citizen.html" class="tracker-btn-record">
+                  <span>Full Life Record</span>
+                  <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Active Processing Stage Highlight Box -->
+            <div class="tracker-highlight-box" id="trackStageHighlightBox">
+              <span class="text-xl">📍</span>
+              <div class="min-w-0 flex-1">
+                <p class="tracker-highlight-title" id="trackCurrentStageTitle">Current Document Processing Stage</p>
+                <p class="tracker-highlight-remark" id="trackOfficerRemark">
+                  Sanction grant ₹12,000 successfully released via Direct Benefit Transfer into SBI A/c ••••4092.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Attached Documents Verification Checklist -->
+          <div class="mb-6">
+            <div class="tracker-subhead-row">
+              <span class="tracker-subhead-title">Uploaded Documents &amp; Verification Status</span>
+              <span class="tracker-subhead-badge">Mandatory KYC Attachments</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3" id="trackDocumentsGrid">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- 3. Step-by-Step Processing Pipeline -->
+          <div>
+            <div class="tracker-subhead-row">
+              <span class="tracker-subhead-title">Step-by-Step Document Processing Pipeline</span>
+              <span class="tracker-subhead-badge font-mono">End-to-End Tracking</span>
+            </div>
+            
+            <div class="space-y-1" id="trackResultStages">
+              <!-- 5 Processing Steps Populated by renderTrackApp() -->
+            </div>
+          </div>
+
+          <!-- 4. Bottom Footer Info & Helpline -->
+          <div class="track-footer-row">
+            <div class="flex items-center gap-2">
+              <span class="size-2 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px]">Real-time status synced with State Welfare Registry &amp; PFMS Gateway</span>
+            </div>
+            <div class="flex items-center gap-4 text-[11px]">
+              <span>Helpline: <strong>011–29581423</strong></span>
+              <span>SMS Updates: <strong class="highlight-text">Active (••••3419)</strong></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Information Cards: How Document Processing Works -->
+    <section class="py-14 sm:py-16 max-w-7xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <p class="text-xs font-bold uppercase tracking-widest text-saffron">Guaranteed Welfare Delivery</p>
+        <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl mt-1">How Documents Move Through The Verification Pipeline</h2>
+        <p class="text-sm text-slate-600 mt-2">Every application undergoes an immutable four-eyes verification cycle before public funds are disbursed.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 border border-slate-200">
+          <div class="size-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg mb-4">1</div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Automated Rules &amp; Cadastre Check</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            The rules engine validates age, caste, and income eligibility against the state cadastre. For household benefits like sanitary toilets, family rosters prevent duplicate disbursements.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 border border-slate-200">
+          <div class="size-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg mb-4">2</div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Human Field Officer Scrutiny</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            If a household condition is flagged, the application is never auto-rejected. It routes automatically to the Block Development Officer for geo-tagged ground inspection and report submission.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 border border-slate-200">
+          <div class="size-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg mb-4">3</div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Aadhaar Payment Bridge (DBT)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Once sanctioned, funds are pushed directly through the Public Financial Management System (PFMS) into the citizen's Aadhaar-seeded bank account with zero middleman deductions.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Official AICTE-Inspired Footer -->
+  <footer class="mt-auto border-t border-slate-200/90 bg-slate-900 text-white">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="size-8 rounded-lg bg-white/10 flex items-center justify-center text-saffron font-bold text-sm">OJ</div>
+          <div>
+            <p class="text-xs font-bold text-white">Ojas Public Welfare Registry</p>
+            <p class="text-[10px] text-slate-400">Digital Public Infrastructure · Government of India</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 text-center sm:text-right">
+          Toll-Free Grievance Helpline: <span class="text-white font-bold">011-29581423</span> | <a href="index.html" class="text-saffron hover:underline">Back to Home</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/lenis.min.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/auth-bridge.js"></script>
+</body>
+</html>

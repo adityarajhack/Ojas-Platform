@@ -1,0 +1,340 @@
+{
+  "info": {
+    "name": "Unified Digital Platform for Accessible Public Documentation API",
+    "description": "Production-grade backend collection for the Hackathon Unified Platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "authToken", "value": "" },
+    { "key": "officerToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication & Security",
+      "item": [
+        {
+          "name": "Login - Citizen",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"citizen_demo\",\n  \"password\": \"Demo@Password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/auth/login" }
+          }
+        },
+        {
+          "name": "Login - Officer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"officer_sharma\",\n  \"password\": \"Demo@Password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/auth/login" }
+          }
+        },
+        {
+          "name": "Refresh Token Rotation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"<PASTE_REFRESH_TOKEN>\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/auth/refresh" }
+          }
+        },
+        {
+          "name": "Break-Glass Emergency Access",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{officerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"personUid\": \"PER-EAST-999\",\n  \"reason\": \"Disaster response: Verifying flood victim family in relief camp.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/auth/break-glass" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Records & Lifelong Timeline",
+      "item": [
+        {
+          "name": "Get Person Record (Scoped by ABAC)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/persons/PER-MVLOB8SO-6714" }
+          }
+        },
+        {
+          "name": "Get Person Lifelong Timeline",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/persons/PER-MVLOB8SO-6714/timeline" }
+          }
+        },
+        {
+          "name": "Execute Life Event (Household Separation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{officerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type\": \"HOUSEHOLD_SEPARATION\",\n  \"person_uid\": \"PER-MVLOB8SP-3489\",\n  \"payload\": {\n    \"old_household_uid\": \"HH-MVLOB8SQ-979\",\n    \"new_property_uid\": \"PROP-NEW-88\",\n    \"separating_member_uids\": [\"PER-MVLOB8SP-3489\"],\n    \"new_head_uid\": \"PER-MVLOB8SP-3489\",\n    \"income_category\": \"BPL\",\n    \"district\": \"CENTRAL\"\n  }\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/life-events" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Family Graph & QR Card",
+      "item": [
+        {
+          "name": "Get Family Graph (Nodes & Edges with Benefits)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/family-graph/PER-MVLOB8SO-6714?depth=2" }
+          }
+        },
+        {
+          "name": "Generate Family QR Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{officerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"householdUid\": \"HH-MVLOB8SQ-979\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/family-cards/generate" }
+          }
+        },
+        {
+          "name": "Scan Family QR Card Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{officerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"signedJwt\": \"<PASTE_SIGNED_JWT>\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/family-cards/scan" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Schemes & Rules Engine",
+      "item": [
+        {
+          "name": "List Active Schemes",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/v1/schemes" }
+          }
+        },
+        {
+          "name": "Dry-Run Scheme Evaluation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemeCode\": \"SBM_TOILET\",\n  \"applicantPersonUid\": \"PER-MVLOB8SP-3489\",\n  \"propertyUid\": \"PROP-CEN-MVLOB8SO\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/schemes/evaluate" }
+          }
+        },
+        {
+          "name": "Proactive Eligible Schemes",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/v1/schemes/proactive/PER-MVLOB8SO-6714" }
+          }
+        },
+        {
+          "name": "Evaluate Scheme Bundle",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bundleCode\": \"BUNDLE_VULNERABLE_SUPPORT\",\n  \"applicantPersonUid\": \"PER-MVLOB8SO-6714\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/schemes/bundles/evaluate" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Applications & Workflow",
+      "item": [
+        {
+          "name": "Submit Application (with Idempotency Key)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Idempotency-Key", "value": "IDEM-SUBMIT-001" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicantPersonUid\": \"PER-MVLOB8SP-3489\",\n  \"schemeCode\": \"SBM_TOILET\",\n  \"propertyUid\": \"PROP-CEN-MVLOB8SO\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/applications" }
+          }
+        },
+        {
+          "name": "Review Queue (Risk & SLA Sorted)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/applications/review-queue" }
+          }
+        },
+        {
+          "name": "Officer Review Decision",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{officerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"decision\": \"APPROVE\",\n  \"reason\": \"Field verification verified property coordinates and genuine applicant.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/applications/<APP_ID>/review" }
+          }
+        },
+        {
+          "name": "Application Tracking Timeline",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/v1/applications/<APP_NUMBER>/tracking" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Fraud & Duplicate Intelligence",
+      "item": [
+        {
+          "name": "Detect Fraud Rings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/fraud/rings" }
+          }
+        },
+        {
+          "name": "Officer Behaviour Anomalies",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/fraud/officer-anomalies" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Trust & Audit Log",
+      "item": [
+        {
+          "name": "Verify Hash-Chain Integrity",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/v1/audit/verify" }
+          }
+        },
+        {
+          "name": "Generate Merkle Checkpoint",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{officerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/audit/checkpoints" }
+          }
+        },
+        {
+          "name": "Get Inclusion Proof for Sequence",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/v1/audit/proof/1" }
+          }
+        },
+        {
+          "name": "Who Accessed My Data (Citizen Audit)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/v1/audit/access-history/PER-MVLOB8SO-6714" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Analytics & What-if Policy Simulator",
+      "item": [
+        {
+          "name": "Live Analytics Dashboard & Savings Counter",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/v1/analytics/dashboard" }
+          }
+        },
+        {
+          "name": "Run What-if Policy Simulation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"simulationName\": \"Lower Pension Age to 55\",\n  \"schemeCode\": \"OLD_AGE_PENSION\",\n  \"proposedChanges\": {\n    \"minAge\": 55,\n    \"newBenefitAmount\": 3500\n  }\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v1/simulations/run" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. System & Observability",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/health" } }
+        },
+        {
+          "name": "Readiness Probe",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/ready" } }
+        },
+        {
+          "name": "Prometheus Metrics",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/metrics" } }
+        }
+      ]
+    }
+  ]
+}

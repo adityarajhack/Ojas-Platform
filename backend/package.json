@@ -1,0 +1,49 @@
+{
+  "name": "gov-unified-platform-backend",
+  "version": "1.0.0",
+  "description": "Unified Digital Platform for Accessible Public Documentation - Backend",
+  "main": "dist/api/server.js",
+  "scripts": {
+    "build": "tsc && node -e \"const fs=require('fs'); fs.mkdirSync('dist/core/database', {recursive:true}); fs.copyFileSync('src/core/database/init.sql', 'dist/core/database/init.sql');\"",
+    "dev:api": "tsx watch src/api/server.ts",
+    "dev:worker": "tsx watch src/worker/worker.ts",
+    "start:api": "node dist/api/server.js",
+    "start:worker": "node dist/worker/worker.js",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "seed": "tsx src/seeds/seed.ts",
+    "demo": "tsx src/seeds/demo-runner.ts",
+    "benchmark": "tsx src/tests/benchmark.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@fastify/helmet": "^11.1.1",
+    "@fastify/rate-limit": "^9.1.0",
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^3.0.0",
+    "bullmq": "^5.7.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "otplib": "^12.0.1",
+    "pg": "^8.11.5",
+    "pino": "^9.0.0",
+    "pino-pretty": "^11.0.0",
+    "prom-client": "^15.1.2",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.7",
+    "@types/pg": "^8.11.5",
+    "@types/qrcode": "^1.5.5",
+    "@types/uuid": "^9.0.8",
+    "fast-check": "^3.18.0",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
+  }
+}

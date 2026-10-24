@@ -1,0 +1,16 @@
+{
+  "name": "gov-unified-platform",
+  "version": "1.0.0",
+  "description": "Unified Digital Platform for Accessible Public Documentation",
+  "scripts": {
+    "start": "cd backend && npm run build && npm run start:api",
+    "dev": "cd backend && npm run dev:api",
+    "build": "cd backend && npm run build",
+    "test": "cd backend && npm test",
+    "demo": "cd backend && npm run demo",
+    "benchmark": "cd backend && npm run benchmark",
+    "seed": "cd backend && npm run seed",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down -v"
+  }
+}
